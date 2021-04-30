@@ -11,7 +11,7 @@ export class ContextePersonnage {
     tailleMetrique = 1.65;
     motDeDemence = "Bazinga!"
 
-    // Caractéristiques
+    // Caractéristiques (entre 6 et 15)
     volonte = 11;
     intellect = 11;
     sensitif = 11;
@@ -20,29 +20,31 @@ export class ContextePersonnage {
     perception = 11;
     agilite = 11;
 
-    // Compétences révélées
+    // Compétences révélées (entre 0 et 20)
     competences = []; // Compentence[]
     pointsDeGeneration = 12;
 
-    // Compétences démentielles
+    // Compétences démentielles (entre 0 et 20)
     competencesDementielles = []; // Compentence[]
 
-    // Santé Physique
+    // Santé Physique (sans limite)
     douleurs = []; // Douleur[]
 
-    // Santé Mentale
+    // Santé Mentale (sans limite)
     pointsDeCrise = 0;
     chocsParano = 0;
     chocsSchizo = 0;
     chocsProfonds = 0;
     etatDeChoc = false;
     totalAccomplissement = 0;
-    niveauAccomplissement = 0;
 
     // Equipement
     equipements = []; // String[]
 
     // caractéristiques dérivées
+    get niveauAccomplissement() {
+        return calculerNiveauAccomplissement(this.totalAccomplissement);
+    }
     get entendement() {
         return +Math.floor(((+this.intellect) + (+this.sensitif))/2);
     }
@@ -150,6 +152,37 @@ function calculerLaTendance(intellect, sensitif) {
         return "Schizo";
     }
     return "Parano/Schizo";
+}
+
+function calculerNiveauAccomplissement(totalAccomplissement) {
+    totalAccomplissement = +totalAccomplissement;
+
+    if (totalAccomplissement < 15) {
+        return 0;
+    } else if (totalAccomplissement < 30) {
+        return 1;
+    } else if (totalAccomplissement < 50) {
+        return 2;
+    } else if (totalAccomplissement < 80) {
+        return 3;
+    } else if (totalAccomplissement < 130) {
+        return 4;
+    } else if (totalAccomplissement < 200) {
+        return 5;
+    } else if (totalAccomplissement < 300) {
+        return 6;
+    } else if (totalAccomplissement < 450) {
+        return 7;
+    } else if (totalAccomplissement < 650) {
+        return 8;
+    } else if (totalAccomplissement < 1000) {
+        return 9;
+    } else if (totalAccomplissement >= 1000) {
+        return 10;
+    }
+    // au delà c'est +1 niveau tous les 500 points au dessus de 1000...
+
+    return 0;
 }
 
 export const infosCaracteristiques = {
