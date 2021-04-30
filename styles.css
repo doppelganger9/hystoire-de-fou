@@ -11,6 +11,10 @@ input {
     padding: 0 5px;
     margin: 0;
 }
+label {
+    width: 30%;
+    display: inline-block;
+}
 
 .popup {
     position: absolute;

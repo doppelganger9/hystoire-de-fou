@@ -72,39 +72,43 @@
         </ul>
         <span v-else>Aucune</span>
                         
-        <h2>Caractéristiques</h2>
+        <h2>Caractéristiques (mode {{mode}})</h2>
+        <p v-if="mode === 'création'">Points restant à répartir : {{ perso.pointsCaracteristiqueRestant }}
+            <button v-if="!perso.pointsCaracteristiqueRestant" v-on:click="terminerRepartitionCaracteristiques">Répartition terminée !</button>
+        </p>
+        
         <div :class="'popup '+(hiddenInfos ? 'hidden' : '')">
             <div class="contents" v-html="infos"></div>
             <button v-on:click="masquerInfos">Fermer</button>
         </div>
 
         <label for="perso.volonte">VOLONTE :</label><button v-on:click="afficherInfos('volonté')">Infos</button>
-        <input v-model="perso.volonte" type="number">
+        <input v-model="perso.volonte" type="number" :readonly="mode==='jeu'">
         <br/>
         <label for="perso.intellect">INTELLECT :</label><button v-on:click="afficherInfos('intellect')">Infos</button>
-        <input v-model="perso.intellect" type="number">
+        <input v-model="perso.intellect" type="number" :readonly="mode==='jeu'">
         <br/>
         <label for="perso.sensitif">SENSITIF :</label><button v-on:click="afficherInfos('sensitif')">Infos</button>
-        <input v-model="perso.sensitif" type="number">
+        <input v-model="perso.sensitif" type="number" :readonly="mode==='jeu'">
         <br/>
         <label for="perso.entendement">Entendement :</label><button v-on:click="afficherInfos('entendement')">Infos</button>
         <input readonly="readonly" :value="perso.entendement">
         <br/>
         <label for="perso.charisme">CHARISME :</label><button v-on:click="afficherInfos('charisme')">Infos</button>
-        <input v-model="perso.charisme" type="number">
+        <input v-model="perso.charisme" type="number" :readonly="mode==='jeu'">
         <br/>
         <label for="perso.constitution">CONSTITUTION :</label><button v-on:click="afficherInfos('constitution')">Infos</button>
-        <input v-model="perso.constitution" type="number">
+        <input v-model="perso.constitution" type="number" :readonly="mode==='jeu'">
         <br/>
         <label for="perso.perception">PERCEPTION :</label><button v-on:click="afficherInfos('perception')">Infos</button>
-        <input v-model="perso.perception" type="number">
+        <input v-model="perso.perception" type="number" :readonly="mode==='jeu'">
         <br/>
         <label for="perso.agilite">AGILITE :</label><button v-on:click="afficherInfos('agilité')">Infos</button>
-        <input v-model="perso.agilite" type="number">
+        <input v-model="perso.agilite" type="number" :readonly="mode==='jeu'">
         <br/>
         <h2>Compétences</h2>
         <label for="perso.pointsDeGeneration">Points de Génération :</label>
-        <input v-model="perso.pointsDeGeneration" type="number">
+        <input v-model="perso.pointsDeGeneration" type="number" readonly="readonly">
         <br/>
         <ul v-if="perso.competences.length">
             <li v-for="competence of perso.competences">

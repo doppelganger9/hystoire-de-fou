@@ -12,6 +12,9 @@ export class ContextePersonnage {
     motDeDemence = "Bazinga!"
 
     // Caractéristiques (entre 6 et 15)
+    get pointsCaracteristiqueRestant() {
+        return 80 -this.volonte -this.intellect -this.sensitif -this.charisme -this.constitution -this.perception -this.agilite;
+    }
     volonte = 11;
     intellect = 11;
     sensitif = 11;

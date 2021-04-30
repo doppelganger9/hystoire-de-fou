@@ -9,6 +9,7 @@ export const app = new Vue({
         perso: new ContextePersonnage(),
         infos: '',
         hiddenInfos: true,
+        mode: 'création',
     },
     methods: {
         genererEquipementSaintFrusquin: function() {
@@ -22,6 +23,9 @@ export const app = new Vue({
         masquerInfos: function() {
             this.infos = '';
             this.hiddenInfos = true;    
+        },
+        terminerRepartitionCaracteristiques: function () {
+            this.mode = 'jeu';
         }
     }
 });
