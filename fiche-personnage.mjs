@@ -1,6 +1,4 @@
 // @ts-check
-import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
-
 // ---------------------------------------------------------
 // Fiche de Personnage
 // ---------------------------------------------------------
@@ -42,7 +40,7 @@ export class ContextePersonnage {
     niveauAccomplissement = 0;
 
     // Equipement
-    equipements = habillerALaSaintFrusquin(); // String[]
+    equipements = []; // String[]
 
     // caractéristiques dérivées
     get entendement() {

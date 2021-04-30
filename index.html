@@ -115,6 +115,7 @@
         </ul>
         <span v-else>Aucune</span>
         <h2>Equipement</h2>
+        <button v-on:click="genererEquipementSaintFrusquin">Saint-Frusquin</button>
         <ul v-if="perso.equipements.length">
             <li v-for="equipement of perso.equipements">
                 {{ equipement }}
