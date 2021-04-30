@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>Vue App without bundler ! EcmaScript Modules !</title>
+    </head>
+    <body>
+        <h1>Hystoire de Fou</h1>
+        <h2>Fiche de Personnage intéractive</h2>
+        <p>Pour le moment un exemple de code dont les effets seront visible dans console.log</p>
+        <p>Pour aller plus loin, brancher un joli formulaire à boutons permettant de créer puis faire 
+            vivre un personnage pendant une partie. </p>
+        <p>L'idée étant de faciliter ce jeu qui parfois demande beaucoup de jets de dés répétitifs...</p>
+        <p>Quand les joueurs en ont marre de tirer les dés, on peut pousser les boutons et se concentrer sur le reste</p>
+        <p>Le code peut aussi permettre d'effectuer des simulations.</p>
+        <script type="module" src="vue-app.mjs"></script>
+
+    <div id="app">
+        <h2>Etat Civil</h2>
+        <label for="perso.nom">Nom :</label>
+        <input v-model="perso.nom" type="text" placeholder="Nom du personnage">
+        <br/>
+        <label for="perso.profession">Profession :</label>
+        <input v-model="perso.profession" type="text" placeholder="Profession du personnage">
+        <br/>
+        <label for="perso.age">Âge :</label>
+        <input v-model="perso.age" type="text" placeholder="Âge du personnage">ans
+        <br/>
+        <label for="perso.poids">Poids (kg) :</label>
+        <input v-model="perso.poids" type="text" placeholder="Poids du personnage">kg
+        <br/>
+        <label for="perso.tailleMetrique">Taille (m) :</label>
+        <input v-model="perso.tailleMetrique" type="text" placeholder="Taille du personnage">m ({{ perso.tailleScore }})
+        <br/>
+        <label for="perso.bonusAuxDommages">+dom :</label>
+        <input readonly="readonly" :value="perso.bonusAuxDommages">
+        <br/>
+        <label for="perso.description">Description :</label>
+        <textarea v-model="perso.description" placeholder="Description du personnage"></textarea>
+        <br/>
+        <h2>Santé Mentale</h2>
+        <label for="perso.motDeDemence">Mot de Démence :</label>
+        <input v-model="perso.motDeDemence" type="text" placeholder="Mot de démence du personnage">
+        <br/>
+        <label for="perso.tendance">Tendance :</label>
+        <input readonly="readonly" :value="perso.tendance">
+        <br/>
+        <label for="perso.totalAccomplissement">Total Accomplissement :</label>
+        <input v-model="perso.totalAccomplissement" type="number">
+        <br/>
+        <label for="perso.niveauAccomplissement">Niveau Accomplissement :</label>
+        <input readonly="readonly" :value="perso.niveauAccomplissement" type="number">
+        <br/>
+        <label for="perso.pointsDeCrise">Points de Crise :</label>
+        <input v-model="perso.pointsDeCrise" type="number">
+        <br/>
+        <label for="perso.chocsParano">Chocs Parano :</label>
+        <input v-model="perso.chocsParano" type="number">
+        <br/>
+        <label for="perso.chocsSchizo">Chocs Schizo :</label>
+        <input v-model="perso.chocsSchizo" type="number">
+        <br/>
+        <label for="perso.chocsProfonds">Chocs Profonds :</label>
+        <input v-model="perso.chocsProfonds" type="number">
+        <br/>
+
+        <h2>Santé</h2>
+        Douleurs :
+        <ul v-if="perso.douleurs.length">
+            <li v-for="douleur of perso.douleurs">
+                {{douleur.valeur}} ({{ douleur.provenance }})
+            </li>    
+        </ul>
+        <span v-else>Aucune</span>
+                        
+        <h2>Caractéristiques</h2>
+        <label for="perso.volonte">VOLONTE :</label>
+        <input v-model="perso.volonte" type="number">
+        <br/>
+        <label for="perso.intellect">INTELLECT :</label>
+        <input v-model="perso.intellect" type="number">
+        <br/>
+        <label for="perso.sensitif">SENSITIF :</label>
+        <input v-model="perso.sensitif" type="number">
+        <br/>
+        <label for="perso.entendement">Entendement :</label>
+        <input readonly="readonly" :value="perso.entendement">
+        <br/>
+        <label for="perso.charisme">CHARISME :</label>
+        <input v-model="perso.charisme" type="number">
+        <br/>
+        <label for="perso.constitution">CONSTITUTION :</label>
+        <input v-model="perso.constitution" type="number">
+        <br/>
+        <label for="perso.perception">PERCEPTION :</label>
+        <input v-model="perso.perception" type="number">
+        <br/>
+        <label for="perso.agilite">AGILITE :</label>
+        <input v-model="perso.agilite" type="number">
+        <br/>
+        <h2>Compétences</h2>
+        <label for="perso.pointsDeGeneration">Points de Génération :</label>
+        <input v-model="perso.pointsDeGeneration" type="number">
+        <br/>
+        <ul v-if="perso.competences.length">
+            <li v-for="competence of perso.competences">
+                {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} base {{ competence.base }}) = {{ competence.valeur }}
+            </li>    
+        </ul>
+        <span v-else>Aucune</span>
+
+        <h2>Compétences Démentielles</h2>
+        <ul v-if="perso.competencesDementielles.length">
+            <li v-for="competence of perso.competencesDementielles">
+                {{competence.intitule}} = {{ competence.valeur }}
+            </li>
+        </ul>
+        <span v-else>Aucune</span>
+        <h2>Equipement</h2>
+        <ul v-if="perso.equipements.length">
+            <li v-for="equipement of perso.equipements">
+                {{ equipement }}
+            </li>    
+        </ul>
+        <span v-else>Aucun</span>
+    </div>
+    </body>
+</html>
