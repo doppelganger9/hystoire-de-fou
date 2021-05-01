@@ -26,7 +26,9 @@ export class ContextePersonnage {
 
     // Compétences révélées (entre 0 et 20)
     competences = []; // Compentence[]
-    pointsDeGeneration = 12;
+    get pointsDeGeneration() {
+        return 12 - this.competences.reduce((total, competence) => (+total) + (+competence.pointsDeGeneration), 0);
+    }
 
     // Compétences démentielles (entre 0 et 20)
     competencesDementielles = []; // Compentence[]
@@ -84,7 +86,7 @@ export class Competence {
         } else {
             // si pas encore révélée.. investir des points de génération ou pas.
             // palliers 0: 0% / 1: 50% / 2: 75% / 3: 100%
-            const pallier = this.base + this.pointsDeGeneration;
+            const pallier = (+this.base) + (+this.pointsDeGeneration);
             if (pallier == 0) {
                 return 0;
             } else if (pallier == 1) {

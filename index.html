@@ -15,8 +15,66 @@
         <h1>Hystoire de Fou</h1>
         <h2>Fiche de Personnage intéractive</h2>
         <div id="app" :class="'visible'" class="hidden">
+            <!-- affiché avant que l'app soit prête -->
             <h3 v-if="false" class="visible">En cours de chargement...</h3>
-            <div :class="hiddenVoile ? 'voile hidden' : 'voile'" @click.prevent.stop="masqueInfos"></div>
+            <!-- affichage d'un voile sous les popups -->
+            <div :class="hiddenVoile ? 'voile hidden' : 'voile'" @click.prevent.stop="masqueTout"></div>
+            <!-- popup d'info -->
+            <div :class="'popup '+(hiddenInfos ? 'hidden' : '')">
+                <button class="abs-top-right-10" v-on:click="masqueInfos">X</button>
+                <div class="contents" v-html="infos"></div>
+                <button v-on:click="masqueInfos">Fermer</button>
+            </div>
+            <button v-if="creationFinie && mode === 'création'" v-on:click="passerEnMode('jeu')">Création de personnage terminée</button>
+            <!-- popup ajout compétence (professionnelle, normal ou démentielle) -->
+            <div :class="'popup '+(hiddenPopupCompetence ? 'hidden' : '')">
+                <button class="abs-top-right-10" v-on:click="masqueTout">X</button>
+                <div class="contents">
+                    <h3>Nouvelle Compétence {{ nouvelleCompetence.dementielle ? "Démentielle" : ""}}{{ nouvelleCompetence.professionnelle ? "Professionnelle" : ""}}</h3>
+                    <div>
+                        <label for="nouvelleCompetence.intitule">Intitulé :</label>
+                        <input name="nouvelleCompetence.intitule" v-model="nouvelleCompetence.intitule" type="text" class="handwritten">
+                        <br/>
+                    </div>
+                    <div>
+                        <label for="nouvelleCompetence.nomCaracteristiqueDirectrice">Caractéristique directrice :</label>
+                        <select v-model="nouvelleCompetence.nomCaracteristiqueDirectrice"
+                                name="nouvelleCompetence.nomCaracteristiqueDirectrice"
+                                v-on:change="nouvelleCompetenceNomCaracteristiqueDirectriceChanged">
+                            <option disabled value="">Please select one</option>
+                            <option value="charisme">CHARISME</option>
+                            <option value="perception">PERCEPTION</option>
+                            <option value="constitution">CONSTITUTION</option>
+                            <option value="agilite">AGILITE</option>
+                            <option value="entendement">Entendement</option>
+                        </select>
+                        <br/>
+                    </div>
+                    <div>
+                        <label for="nouvelleCompetence.valeurCaracteristiqueDirectrice">Valeur caractéristique directrice :</label>
+                        <input name="nouvelleCompetence.valeurCaracteristiqueDirectrice" :value="nouvelleCompetence.valeurCaracteristiqueDirectrice" type="number" min="6" max="15" class="handwritten" readonly="readonly">
+                        <br/>
+                    </div>
+
+                    <div v-if="!nouvelleCompetence.dementielle&&!nouvelleCompetence.professionnelle">
+                        <label for="nouvelleCompetence.base">Base :</label>
+                        <input name="nouvelleCompetence.base" v-model="nouvelleCompetence.base" type="number" class="handwritten" min="0" max="1">
+                        <br/>
+                    </div>
+                    <div v-if="!nouvelleCompetence.dementielle && !nouvelleCompetence.professionnelle && perso.pointsDeGeneration>0">
+                        <label for="nouvelleCompetence.pointsDeGeneration">Points de Génération :</label>
+                        <input name="nouvelleCompetence.pointsDeGeneration" v-model="nouvelleCompetence.pointsDeGeneration" type="number" min="0" max="4" class="handwritten">
+                        <br/>
+                    </div>
+                    <div>
+                        <label for="nouvelleCompetence.valeur">Valeur :</label>
+                        <input name="nouvelleCompetence.valeur" :value="nouvelleCompetence.valeur" type="number" class="handwritten" readonly="readonly">
+                        <br/>
+                    </div>
+                </div>
+                <button v-on:click="valideAjoutCompetence(nouvelleCompetence)">Valider</button>
+                <button v-on:click="masqueTout">Annuler</button>
+            </div>
 
             <hdf-bloc-fiche title="Etat Civil">
                 <div>
@@ -119,15 +177,8 @@
             </hdf-bloc-fiche>
 
             <hdf-bloc-fiche :title="`Caractéristiques (mode ${mode})`">
-                <p v-if="mode === 'création'">Points restant à répartir : {{ perso.pointsCaracteristiqueRestant }}
-                    <button v-if="!perso.pointsCaracteristiqueRestant" v-on:click="termineRepartitionCaracteristiques">Répartition terminée !</button>
-                </p>
+                <p v-if="mode === 'création'">Points restant à répartir : {{ perso.pointsCaracteristiqueRestant }}</p>
                 
-                <div :class="'popup '+(hiddenInfos ? 'hidden' : '')">
-                    <button class="abs-top-right-10" v-on:click="masqueInfos">X</button>
-                    <div class="contents" v-html="infos"></div>
-                    <button v-on:click="masqueInfos">Fermer</button>
-                </div>
                 <div>
                     <label for="perso.volonte">VOLONTE :</label>
                     <button v-on:click="afficheInfos('volonté')">Infos</button>
@@ -183,18 +234,18 @@
                 <input v-model="perso.pointsDeGeneration" type="number" readonly="readonly">
                 <br/>
                 <ul v-if="perso.competences.length">
-                    <li v-for="competence of perso.competences">
-                        {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} base {{ competence.base }}) = {{ competence.valeur }}
+                    <li v-for="(competence, indexCompetence) of perso.competences">
+                        {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} {{ competence.professionnelle ? "(Profession)" : "base " + competence.base }}) = {{ competence.valeur }} <button v-if="competence.professionnelle && mode==='création'" v-on:click="supprimeLigneCompetence(indexCompetence)">Supprimer</button>
                     </li>    
                 </ul>
                 <span v-else>Aucune</span><br/>
                 <button v-if="mode==='jeu'" v-on:click="reveleCompetence">Révéler une Compétence</button>
-                <button v-if="mode==='création'" v-on:click="choisitCompetenceProfessionnelle">Choisir sa Compétence Professionnelle</button>
+                <button v-if="mode==='création' && !perso.competences.some(_ => _.professionnelle)" v-on:click="choisitCompetenceProfessionnelle">Choisir sa Compétence Professionnelle</button>
             </hdf-bloc-fiche>
 
             <hdf-bloc-fiche title="Compétences Démentielles" v-if="mode==='jeu'">
                 <ul v-if="perso.competencesDementielles.length">
-                    <li v-for="competence of perso.competencesDementielles" class="handwritten">
+                    <li v-for="(competence, indexCompetence) of perso.competencesDementielles" class="handwritten">
                         {{ competence.intitule }} = {{ competence.valeur }}
                     </li>
                 </ul>
