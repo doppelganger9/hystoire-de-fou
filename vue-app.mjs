@@ -70,27 +70,32 @@ export const app = new Vue({
             this.perso.douleurs.push(this.nouvelleDouleur);
             this.nouvelleDouleur = new Douleur();
         },
-        choisitCompetenceProfessionnelle: function() {
+        initNouvelleCompetence() {
             this.nouvelleCompetence = new Competence();
-            this.nouvelleCompetence.professionnelle = true;
-            this.nouvelleCompetence.revelee = true;
+            this.nouvelleCompetence.professionnelle = false;
+            this.nouvelleCompetence.revelee = false;
             this.nouvelleCompetence.dementielle = false;
             this.nouvelleCompetence.intitule = "";
             this.nouvelleCompetence.valeurCaracteristiqueDirectrice = 0;
             this.nouvelleCompetence.nomCaracteristiqueDirectrice = ""
             this.nouvelleCompetence.pointsDeGeneration = 0;
+        },
+        choisitCompetenceProfessionnelle: function() {
+            this.initNouvelleCompetence();
+            this.nouvelleCompetence.professionnelle = true;
+            this.nouvelleCompetence.revelee = true;
 
             this.hiddenPopupCompetence = false;
         },
         reveleCompetence: function() {
-            this.nouvelleCompetence = new Competence();
-            this.nouvelleCompetence.professionnelle = false;
+            this.initNouvelleCompetence();
             this.nouvelleCompetence.revelee = true;
-            this.nouvelleCompetence.dementielle = false;
-            this.nouvelleCompetence.intitule = "";
-            this.nouvelleCompetence.valeurCaracteristiqueDirectrice = 0;
-            this.nouvelleCompetence.nomCaracteristiqueDirectrice = ""
-            this.nouvelleCompetence.pointsDeGeneration = 0;
+
+            this.hiddenPopupCompetence = false;
+        },
+        acquiertCompetenceDementielle: function() {
+            this.initNouvelleCompetence();
+            this.nouvelleCompetence.dementielle = true;
 
             this.hiddenPopupCompetence = false;
         },
@@ -101,14 +106,28 @@ export const app = new Vue({
             this.nouvelleCompetence.valeurCaracteristiqueDirectrice = this.perso[this.nouvelleCompetence.nomCaracteristiqueDirectrice];
         },
         valideAjoutCompetence: function(competence) {
-            // TODO : si compétence professionnelle est sous Entendement, Culture Générale à 100% en bonus
-            this.perso.competences.push(competence);
+            if (competence.dementielle) {
+                this.perso.competencesDementielles.push(competence);
+                // TODO déclencher l'effet démentiel ?
+            } else {
+                if (competence.professionnelle && competence.nomCaracteristiqueDirectrice === 'entendement') {
+                    // si compétence professionnelle est sous Entendement, alors Culture Générale à 100% en bonus
+                    const cultureGeneraleEnBonus = new Competence();
+                    cultureGeneraleEnBonus.professionnelle = false;
+                    cultureGeneraleEnBonus.revelee = true;
+                    cultureGeneraleEnBonus.dementielle = false;
+                    cultureGeneraleEnBonus.intitule = "Culture Générale";
+                    cultureGeneraleEnBonus.valeurCaracteristiqueDirectrice = this.perso.entendement;
+                    cultureGeneraleEnBonus.nomCaracteristiqueDirectrice = "entendement"
+                    cultureGeneraleEnBonus.pointsDeGeneration = 0;
+                    cultureGeneraleEnBonus.base = 3; // 100%
+                    this.perso.competences.push(cultureGeneraleEnBonus);
+                }
+                this.perso.competences.push(competence);
+            }
             this.nouvelleCompetence = new Competence();
 
             this.masqueTout();
-        },
-        acquiertCompetenceDementielle: function() {
-            // TODO
         },
         afficheVoile: function() {
             this.hiddenVoile = false;
@@ -123,4 +142,3 @@ export const app = new Vue({
         }
     }
 });
-
