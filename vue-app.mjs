@@ -36,7 +36,6 @@ export const app = new Vue({
             this.mode = 'jeu';
         },
         supprimerLigneEquipement: function(indexEquipement) {
-            //this.perso.equipements = this.perso.equipements.filter(ligne => ligne !== equipement);
             this.perso.equipements = this.perso.equipements.filter((_, index) => index !== indexEquipement);
         },
         ajouterLigneEquipement: function() {
@@ -47,9 +46,6 @@ export const app = new Vue({
             this.perso.douleurs = this.perso.douleurs.filter((_, index) => index !== indexDouleur);
         },
         ajouterLigneDouleur: function() {
-            // TODO vérifier si les références ne se mélangent pas ?
-            //const douleur = {...this.nouvelleDouleur};
-            //this.perso.douleurs.push(douleur);
             this.perso.douleurs.push(this.nouvelleDouleur);
             this.nouvelleDouleur = new Douleur();
         },
