@@ -19,37 +19,37 @@
             <h2>Etat Civil</h2>
             <div>
                 <label for="perso.nom">Nom :</label>
-                <input v-model="perso.nom" type="text" placeholder="Nom du personnage" :readonly="mode==='jeu'">
+                <input name="perso.nom" v-model="perso.nom" type="text" placeholder="Nom du personnage" :readonly="mode==='jeu'">
                 <br/>
             </div>
             <div>
                 <label for="perso.profession">Profession :</label>
-                <input v-model="perso.profession" type="text" placeholder="Profession du personnage" :readonly="mode==='jeu'">
+                <input name="perso.profession" v-model="perso.profession" type="text" placeholder="Profession du personnage" :readonly="mode==='jeu'">
                 <br/>
             </div>
             <div>
                 <label for="perso.age">Âge :</label>
-                <input v-model="perso.age" type="number" min="8" max="100" placeholder="Âge du personnage" :readonly="mode==='jeu'">ans
+                <input name="perso.age" v-model="perso.age" type="number" min="8" max="100" placeholder="Âge du personnage" :readonly="mode==='jeu'">ans
                 <br/>
             </div>
             <div>
                 <label for="perso.poids">Poids (kg) :</label>
-                <input v-model="perso.poids" type="number" min="40" max="150" placeholder="Poids du personnage" :readonly="mode==='jeu'">kg
+                <input name="perso.poids" v-model="perso.poids" type="number" min="40" max="150" placeholder="Poids du personnage" :readonly="mode==='jeu'">kg
                 <br/>
             </div>
             <div>
                 <label for="perso.tailleCm">Taille (cm) :</label>
-                <input v-model="perso.tailleCm" type="number" min="120" max="210" placeholder="Taille du personnage" :readonly="mode==='jeu'">cm ({{ perso.tailleScore }})
+                <input name="perso.tailleCm" v-model="perso.tailleCm" type="number" min="120" max="210" placeholder="Taille du personnage" :readonly="mode==='jeu'">cm ({{ perso.tailleScore }})
                 <br/>
             </div>
             <div>
                 <label for="perso.bonusAuxDommages">+dom :</label>
-                <input readonly="readonly" :value="perso.bonusAuxDommages">
+                <input name="perso.bonusAuxDommages" readonly="readonly" :value="perso.bonusAuxDommages">
                 <br/>
             </div>
             <div>
                 <label for="perso.description">Description :</label>
-                <textarea v-model="perso.description" placeholder="Description du personnage" :readonly="mode==='jeu'"></textarea>
+                <textarea name="perso.description" v-model="perso.description" placeholder="Description du personnage" :readonly="mode==='jeu'"></textarea>
                 <br/>
             </div>
         </div>
@@ -58,42 +58,42 @@
             <h2>Santé Mentale</h2>
             <div>
                 <label for="perso.motDeDemence">Mot de Démence :</label>
-                <input v-model="perso.motDeDemence" type="text" placeholder="Mot de démence du personnage" :readonly="mode==='jeu'">
+                <input name="perso.motDeDemence" v-model="perso.motDeDemence" type="text" placeholder="Mot de démence du personnage" :readonly="mode==='jeu'">
                 <br/>
             </div>
             <div v-if="mode==='jeu'">
                 <label for="perso.tendance">Tendance :</label>
-                <input readonly="readonly" :value="perso.tendance">
+                <input name="perso.tendance" readonly="readonly" :value="perso.tendance">
                 <br/>
             </div>
             <div v-if="mode==='jeu'">
                 <label for="perso.totalAccomplissement">Total Accomplissement :</label>
-                <input v-model="perso.totalAccomplissement" type="number" min="0">
+                <input name="perso.totalAccomplissement" v-model="perso.totalAccomplissement" type="number" min="0">
                 <br/>
             </div>
             <div v-if="mode==='jeu'">
                 <label for="perso.niveauAccomplissement">Niveau Accomplissement :</label>
-                <input readonly="readonly" :value="perso.niveauAccomplissement" type="number">
+                <input name="perso.niveauAccomplissement" readonly="readonly" :value="perso.niveauAccomplissement" type="number">
                 <br/>
             </div>
             <div v-if="mode==='jeu'">
                 <label for="perso.pointsDeCrise">Points de Crise :</label>
-                <input v-model="perso.pointsDeCrise" type="number" min="0">
+                <input name="perso.pointsDeCrise" v-model="perso.pointsDeCrise" type="number" min="0">
                 <br/>
             </div>
             <div v-if="mode==='jeu'">
                 <label for="perso.chocsParano">Chocs Parano :</label>
-                <input v-model="perso.chocsParano" type="number" min="0">
+                <input name="perso.chocsParano" v-model="perso.chocsParano" type="number" min="0">
                 <br/>
             </div>
             <div v-if="mode==='jeu'">
                 <label for="perso.chocsSchizo">Chocs Schizo :</label>
-                <input v-model="perso.chocsSchizo" type="number" min="0">
+                <input name="perso.chocsSchizo" v-model="perso.chocsSchizo" type="number" min="0">
                 <br/>
             </div>
             <div v-if="mode==='jeu'">
                 <label for="perso.chocsProfonds">Chocs Profonds :</label>
-                <input v-model="perso.chocsProfonds" type="number" min="0">
+                <input name="perso.chocsProfonds" v-model="perso.chocsProfonds" type="number" min="0">
                 <br/>
             </div>
         </div>
@@ -110,10 +110,10 @@
             <span v-else>Aucune</span><br/>
             
             <label for="nouvelleDouleur.valeur">Valeur :</label>
-            <input v-model="nouvelleDouleur.valeur" type="number" min="1" max="4">
+            <input name="nouvelleDouleur.valeur" v-model="nouvelleDouleur.valeur" type="number" min="1" max="4">
             
             <label for="nouvelleDouleur.provenance">Provenance :</label>
-            <input v-model="nouvelleDouleur.provenance" type="text">
+            <input name="nouvelleDouleur.provenance" v-model="nouvelleDouleur.provenance" type="text">
             
             <button v-on:click="ajouterLigneDouleur">Ajouter Douleur</button>
         </div>
@@ -128,39 +128,54 @@
                 <div class="contents" v-html="infos"></div>
                 <button v-on:click="masquerInfos">Fermer</button>
             </div>
-
-            <label for="perso.volonte">VOLONTE :</label>
-            <button v-on:click="afficherInfos('volonté')">Infos</button>
-            <input v-model="perso.volonte" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
-            <label for="perso.intellect">INTELLECT :</label>
-            <button v-on:click="afficherInfos('intellect')">Infos</button>
-            <input v-model="perso.intellect" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
-            <label for="perso.sensitif">SENSITIF :</label>
-            <button v-on:click="afficherInfos('sensitif')">Infos</button>
-            <input v-model="perso.sensitif" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
-            <label for="perso.entendement">Entendement :</label>
-            <button v-on:click="afficherInfos('entendement')">Infos</button>
-            <input readonly="readonly" :value="perso.entendement">
-            <br/>
-            <label for="perso.charisme">CHARISME :</label>
-            <button v-on:click="afficherInfos('charisme')">Infos</button>
-            <input v-model="perso.charisme" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
-            <label for="perso.constitution">CONSTITUTION :</label>
-            <button v-on:click="afficherInfos('constitution')">Infos</button>
-            <input v-model="perso.constitution" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
-            <label for="perso.perception">PERCEPTION :</label>
-            <button v-on:click="afficherInfos('perception')">Infos</button>
-            <input v-model="perso.perception" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
-            <label for="perso.agilite">AGILITE :</label>
-            <button v-on:click="afficherInfos('agilité')">Infos</button>
-            <input v-model="perso.agilite" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <div>
+                <label for="perso.volonte">VOLONTE :</label>
+                <button v-on:click="afficherInfos('volonté')">Infos</button>
+                <input name="perso.volonte" v-model="perso.volonte" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                <br/>
+            </div>
+            <div>
+                <label for="perso.intellect">INTELLECT :</label>
+                <button v-on:click="afficherInfos('intellect')">Infos</button>
+                <input name="perso.intellect" v-model="perso.intellect" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                <br/>
+            </div>
+            <div>
+                <label for="perso.sensitif">SENSITIF :</label>
+                <button v-on:click="afficherInfos('sensitif')">Infos</button>
+                <input name="perso.sensitif" v-model="perso.sensitif" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                <br/>
+            </div>
+            <div>
+                <label for="perso.entendement">Entendement :</label>
+                <button v-on:click="afficherInfos('entendement')">Infos</button>
+                <input name="perso.entendement" readonly="readonly" :value="perso.entendement">
+                <br/>
+            </div>
+            <div>
+                <label for="perso.charisme">CHARISME :</label>
+                <button v-on:click="afficherInfos('charisme')">Infos</button>
+                <input name="perso.charisme" v-model="perso.charisme" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                <br/>
+            </div>
+            <div>
+                <label for="perso.constitution">CONSTITUTION :</label>
+                <button v-on:click="afficherInfos('constitution')">Infos</button>
+                <input name="perso.constitution" v-model="perso.constitution" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                <br/>
+            </div>
+            <div>
+                <label for="perso.perception">PERCEPTION :</label>
+                <button v-on:click="afficherInfos('perception')">Infos</button>
+                <input name="perso.perception" v-model="perso.perception" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                <br/>
+            </div>
+            <div>
+                <label for="perso.agilite">AGILITE :</label>
+                <button v-on:click="afficherInfos('agilité')">Infos</button>
+                <input name="perso.agilite" v-model="perso.agilite" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                <br/>
+            </div>
         </div>
         
         <div class="blocCompetences">
