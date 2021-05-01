@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Vue App without bundler ! EcmaScript Modules !</title>
+        <title>Hystoire de Fou</title>
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
@@ -127,11 +127,13 @@
         <h2>Equipement</h2>
         <button v-on:click="genererEquipementSaintFrusquin">Saint-Frusquin</button>
         <ul v-if="perso.equipements.length">
-            <li v-for="equipement of perso.equipements">
-                {{ equipement }}
-            </li>    
+            <li v-for="(equipement, indexEquipement) of perso.equipements">
+                {{indexEquipement+1}} : {{ equipement }} <button v-on:click="supprimerLigneEquipement(indexEquipement)">Supprimer</button>
+            </li>
         </ul>
         <span v-else>Aucun</span>
+        <br/>
+        <input v-model="nouvelEquipement" type="text"><button v-on:click="ajouterLigneEquipement">Ajouter</button>
     </div>
     </body>
 </html>

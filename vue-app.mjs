@@ -10,6 +10,7 @@ export const app = new Vue({
         infos: '',
         hiddenInfos: true,
         mode: 'création',
+        nouvelEquipement: '',
     },
     methods: {
         genererEquipementSaintFrusquin: function() {
@@ -26,7 +27,15 @@ export const app = new Vue({
         },
         terminerRepartitionCaracteristiques: function () {
             this.mode = 'jeu';
-        }
+        },
+        supprimerLigneEquipement: function(indexEquipement) {
+            //this.perso.equipements = this.perso.equipements.filter(ligne => ligne !== equipement);
+            this.perso.equipements = this.perso.equipements.filter((_, index) => index !== indexEquipement);
+        },
+        ajouterLigneEquipement: function() {
+            this.perso.equipements.push(''+this.nouvelEquipement);
+            this.nouvelEquipement = '';
+        } 
     }
 });
 
