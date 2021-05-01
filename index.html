@@ -13,8 +13,8 @@
         <p>L'idée étant de faciliter ce jeu qui parfois demande beaucoup de jets de dés répétitifs...</p>
         <p>Quand les joueurs en ont marre de tirer les dés, on peut pousser les boutons et se concentrer sur le reste</p>
         <p>Le code peut aussi permettre d'effectuer des simulations.</p>
-
-        <div id="app">
+        <div id="app" :class="'visible'" class="hidden">
+            <h3 v-if="false" class="visible">En cours de chargement...</h3>
 
             <hdf-bloc-fiche title="Etat Civil">
                 <div>
