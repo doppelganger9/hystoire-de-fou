@@ -53,6 +53,15 @@ export const app = new Vue({
             this.perso.douleurs.push(this.nouvelleDouleur);
             this.nouvelleDouleur = new Douleur();
         },
+        choisirCompetenceProfessionnelle: function() {
+            // TODO
+        },
+        revelerCompetence: function() {
+            // TODO
+        },
+        acquerirCompetenceDementielle: function() {
+            // TODO
+        }
     }
 });
 

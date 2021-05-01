@@ -8,8 +8,9 @@ export class ContextePersonnage {
     description = "Personnage de test";
     profession = "Artiste";
     age = 20;
-    tailleMetrique = 1.65;
+    tailleCm = 165;
     motDeDemence = "Bazinga!"
+    poids = 60;
 
     // Caractéristiques (entre 6 et 15)
     get pointsCaracteristiqueRestant() {
@@ -52,7 +53,7 @@ export class ContextePersonnage {
         return +Math.floor(((+this.intellect) + (+this.sensitif))/2);
     }
     get tailleScore() {
-        return +calculerScoreTaille(this.tailleMetrique);
+        return +calculerScoreTaille(this.tailleCm);
     }
     get bonusAuxDommages() {
         return +calculerBonusAuxDommages(this.constitution, this.tailleScore);
@@ -102,27 +103,27 @@ export class Competence {
     pointsDeGeneration = 0;
 }
 
-function calculerScoreTaille(tailleMetrique) {
-    tailleMetrique = +tailleMetrique; //pour être sûr que c'est un nombre.
-    if (tailleMetrique <= 1.54) {
+function calculerScoreTaille(tailleCm) {
+    tailleCm = +tailleCm; //pour être sûr que c'est un nombre.
+    if (tailleCm <= 154) {
         return 6;
-    } else if (tailleMetrique > 1.54 && tailleMetrique <= 1.59) {
+    } else if (tailleCm > 154 && tailleCm <= 159) {
         return 7;
-    } else if (tailleMetrique > 1.59 && tailleMetrique <= 1.64) {
+    } else if (tailleCm > 159 && tailleCm <= 164) {
         return 8;
-    } else if (tailleMetrique > 1.64 && tailleMetrique <= 1.69) {
+    } else if (tailleCm > 164 && tailleCm <= 169) {
         return 9;
-    } else if (tailleMetrique > 1.69 && tailleMetrique <= 1.74) {
+    } else if (tailleCm > 169 && tailleCm <= 174) {
         return 10;
-    } else if (tailleMetrique > 1.74 && tailleMetrique <= 1.79) {
+    } else if (tailleCm > 174 && tailleCm <= 179) {
         return 11;
-    } else if (tailleMetrique > 1.79 && tailleMetrique <= 1.84) {
+    } else if (tailleCm > 179 && tailleCm <= 184) {
         return 12;
-    } else if (tailleMetrique > 1.84 && tailleMetrique <= 1.89) {
+    } else if (tailleCm > 184 && tailleCm <= 189) {
         return 13;
-    } else if (tailleMetrique > 1.89 && tailleMetrique <= 1.94) {
+    } else if (tailleCm > 189 && tailleCm <= 194) {
         return 14;
-    } else if (tailleMetrique > 1.94) {
+    } else if (tailleCm > 194) {
         return 15;
     }
 }
