@@ -65,13 +65,17 @@
 
         <h2>Santé</h2>
         Douleurs :
+        <h3>Total des malus : {{ totalDouleurs }}</h3>
         <ul v-if="perso.douleurs.length">
-            <li v-for="douleur of perso.douleurs">
-                {{douleur.valeur}} ({{ douleur.provenance }})
+            <li v-for="(douleur, index) of perso.douleurs">
+                {{douleur.valeur}} ({{ douleur.provenance }}) <button v-on:click="supprimerLigneDouleur(index)">Supprimer</button>
             </li>    
         </ul>
-        <span v-else>Aucune</span>
-                        
+        <span v-else>Aucune</span><br/>
+        <label for="nouvelleDouleur.valeur">Valeur :</label><input v-model="nouvelleDouleur.valeur" type="text">
+        <label for="nouvelleDouleur.provenance">Provenance :</label><input v-model="nouvelleDouleur.provenance" type="text">
+        <button v-on:click="ajouterLigneDouleur">Ajouter Douleur</button>
+
         <h2>Caractéristiques (mode {{mode}})</h2>
         <p v-if="mode === 'création'">Points restant à répartir : {{ perso.pointsCaracteristiqueRestant }}
             <button v-if="!perso.pointsCaracteristiqueRestant" v-on:click="terminerRepartitionCaracteristiques">Répartition terminée !</button>
@@ -106,6 +110,7 @@
         <label for="perso.agilite">AGILITE :</label><button v-on:click="afficherInfos('agilité')">Infos</button>
         <input v-model="perso.agilite" type="number" :readonly="mode==='jeu'">
         <br/>
+        
         <h2>Compétences</h2>
         <label for="perso.pointsDeGeneration">Points de Génération :</label>
         <input v-model="perso.pointsDeGeneration" type="number" readonly="readonly">
@@ -131,8 +136,7 @@
                 {{indexEquipement+1}} : {{ equipement }} <button v-on:click="supprimerLigneEquipement(indexEquipement)">Supprimer</button>
             </li>
         </ul>
-        <span v-else>Aucun</span>
-        <br/>
+        <span v-else>Aucun</span><br/>
         <input v-model="nouvelEquipement" type="text"><button v-on:click="ajouterLigneEquipement">Ajouter</button>
     </div>
     </body>
