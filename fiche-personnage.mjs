@@ -236,3 +236,33 @@ Cette caractéristique est indépendante de la musculature : un efant peut être
 AGILITE est rarement utilisée telle quelle en cours de jeu, mais sert à déterminer toutes sortes de compétences : escalade, combat, discrétion, etc.<p/>
 <p class="exemple">Avec 13 en AGILITE, Caroline a une bonne prédisposition pour esquiver les attaques des aveugles ou sauter dans l'arène sans tomber.</p>`,
 };
+
+const motsInsolites = [
+    "Branquignol",
+    "Foutriquet", // individu maigrichon
+    "Embrouillamini",
+    "Bacchanale",
+    "Cacostomie", // puer de la gueule
+    "Compos Mentis", // être maître de son esprit/rationnel
+    "Obvie", // Obvious mais français
+    "Parpaing",
+    "Gynécomaste", // homme qui a des mamelles comme une femme
+    "Chionosphéréphile", // qui aime collectionner les objet boules de neiges
+    "Anatidaephobie", // peur d'être observé par un canard quelque part dans le monde
+    "Sacqueboute", // ancêtre du saxophone
+    "écouvillon", // brosse pour nettoyer des bouteilles
+    "vinculum", // barre de fraction dans la division
+    "Triskaïdekaphobie", // peur du vendredi 13
+    "Cucurbitaciste", // collectionneur d'étiquette de melons
+    "Croque-lardon", // parasite
+    "Fébricule", // 37.8, petite fièvre
+    "Zinzolin", // violet tirant sur le rouge -- couleur que prend un ciel dégagé lorsque le soleil se couche
+    "Quantième", // "combientième" en bon français
+    "Adelphie", // une fratrie avec aussi des soeurs, pas que des garçons.
+    "Mâche-dru", // gros-mangeur
+    "Crépine", // grille à saleté de la douche
+    "Remugle", // odeur de fauve/renfermé
+    "Abave", // arrière-arrière-grand-père ou arrière-arrière-grand-mère
+    "Cacochyme", // constitution faible, santé déficiente
+    // n'importe quel mot de http://golfes-dombre.nuxit.net/mots-rares/a.html
+];
