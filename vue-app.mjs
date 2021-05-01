@@ -3,6 +3,15 @@ import { Douleur } from "./fiche-personnage.mjs";
 import { ContextePersonnage, infosCaracteristiques } from "./fiche-personnage.mjs"
 import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
 
+Vue.component('hdf-bloc-fiche', {
+    props: ['title'],
+    template: `
+    <div class="bloc">
+        <h2>{{ title }}</h2>
+        <slot></slot>
+    </div>
+    `,
+});
 
 export const app = new Vue({
     el: '#app',

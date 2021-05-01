@@ -2,6 +2,7 @@
     <head>
         <title>Hystoire de Fou</title>
         <link rel="stylesheet" href="styles.css">
+        <script type="module" src="vue-app.mjs"></script>
     </head>
     <body>
         <h1>Hystoire de Fou</h1>
@@ -12,209 +13,202 @@
         <p>L'idée étant de faciliter ce jeu qui parfois demande beaucoup de jets de dés répétitifs...</p>
         <p>Quand les joueurs en ont marre de tirer les dés, on peut pousser les boutons et se concentrer sur le reste</p>
         <p>Le code peut aussi permettre d'effectuer des simulations.</p>
-        <script type="module" src="vue-app.mjs"></script>
 
-    <div id="app">
-        <div class="blocEtatCivil">
-            <h2>Etat Civil</h2>
-            <div>
-                <label for="perso.nom">Nom :</label>
-                <input name="perso.nom" v-model="perso.nom" type="text" placeholder="Nom du personnage" :readonly="mode==='jeu'">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.profession">Profession :</label>
-                <input name="perso.profession" v-model="perso.profession" type="text" placeholder="Profession du personnage" :readonly="mode==='jeu'">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.age">Âge :</label>
-                <input name="perso.age" v-model="perso.age" type="number" min="8" max="100" placeholder="Âge du personnage" :readonly="mode==='jeu'">ans
-                <br/>
-            </div>
-            <div>
-                <label for="perso.poids">Poids (kg) :</label>
-                <input name="perso.poids" v-model="perso.poids" type="number" min="40" max="150" placeholder="Poids du personnage" :readonly="mode==='jeu'">kg
-                <br/>
-            </div>
-            <div>
-                <label for="perso.tailleCm">Taille (cm) :</label>
-                <input name="perso.tailleCm" v-model="perso.tailleCm" type="number" min="120" max="210" placeholder="Taille du personnage" :readonly="mode==='jeu'">cm ({{ perso.tailleScore }})
-                <br/>
-            </div>
-            <div>
-                <label for="perso.bonusAuxDommages">+dom :</label>
-                <input name="perso.bonusAuxDommages" readonly="readonly" :value="perso.bonusAuxDommages">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.description">Description :</label>
-                <textarea name="perso.description" v-model="perso.description" placeholder="Description du personnage" :readonly="mode==='jeu'"></textarea>
-                <br/>
-            </div>
-        </div>
+        <div id="app">
 
-        <div class="blocSanteMentale">
-            <h2>Santé Mentale</h2>
-            <div>
-                <label for="perso.motDeDemence">Mot de Démence :</label>
-                <input name="perso.motDeDemence" v-model="perso.motDeDemence" type="text" placeholder="Mot de démence du personnage" :readonly="mode==='jeu'">
-                <br/>
-            </div>
-            <div v-if="mode==='jeu'">
-                <label for="perso.tendance">Tendance :</label>
-                <input name="perso.tendance" readonly="readonly" :value="perso.tendance">
-                <br/>
-            </div>
-            <div v-if="mode==='jeu'">
-                <label for="perso.totalAccomplissement">Total Accomplissement :</label>
-                <input name="perso.totalAccomplissement" v-model="perso.totalAccomplissement" type="number" min="0">
-                <br/>
-            </div>
-            <div v-if="mode==='jeu'">
-                <label for="perso.niveauAccomplissement">Niveau Accomplissement :</label>
-                <input name="perso.niveauAccomplissement" readonly="readonly" :value="perso.niveauAccomplissement" type="number">
-                <br/>
-            </div>
-            <div v-if="mode==='jeu'">
-                <label for="perso.pointsDeCrise">Points de Crise :</label>
-                <input name="perso.pointsDeCrise" v-model="perso.pointsDeCrise" type="number" min="0">
-                <br/>
-            </div>
-            <div v-if="mode==='jeu'">
-                <label for="perso.chocsParano">Chocs Parano :</label>
-                <input name="perso.chocsParano" v-model="perso.chocsParano" type="number" min="0">
-                <br/>
-            </div>
-            <div v-if="mode==='jeu'">
-                <label for="perso.chocsSchizo">Chocs Schizo :</label>
-                <input name="perso.chocsSchizo" v-model="perso.chocsSchizo" type="number" min="0">
-                <br/>
-            </div>
-            <div v-if="mode==='jeu'">
-                <label for="perso.chocsProfonds">Chocs Profonds :</label>
-                <input name="perso.chocsProfonds" v-model="perso.chocsProfonds" type="number" min="0">
-                <br/>
-            </div>
-        </div>
+            <hdf-bloc-fiche title="Etat Civil">
+                <div>
+                    <label for="perso.nom">Nom :</label>
+                    <input name="perso.nom" v-model="perso.nom" type="text" placeholder="Nom du personnage" :readonly="mode==='jeu'">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.profession">Profession :</label>
+                    <input name="perso.profession" v-model="perso.profession" type="text" placeholder="Profession du personnage" :readonly="mode==='jeu'">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.age">Âge :</label>
+                    <input name="perso.age" v-model="perso.age" type="number" min="8" max="100" placeholder="Âge du personnage" :readonly="mode==='jeu'">ans
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.poids">Poids (kg) :</label>
+                    <input name="perso.poids" v-model="perso.poids" type="number" min="40" max="150" placeholder="Poids du personnage" :readonly="mode==='jeu'">kg
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.tailleCm">Taille (cm) :</label>
+                    <input name="perso.tailleCm" v-model="perso.tailleCm" type="number" min="120" max="210" placeholder="Taille du personnage" :readonly="mode==='jeu'">cm ({{ perso.tailleScore }})
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.bonusAuxDommages">+dom :</label>
+                    <input name="perso.bonusAuxDommages" readonly="readonly" :value="perso.bonusAuxDommages">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.description">Description :</label>
+                    <textarea name="perso.description" v-model="perso.description" placeholder="Description du personnage" :readonly="mode==='jeu'"></textarea>
+                    <br/>
+                </div>
+            </hdf-bloc-fiche>
 
-        <div v-if="mode==='jeu'" class="blocDouleurs">
-            <h2>Santé</h2>
-            Douleurs :
-            <h3>Total des malus : {{ totalDouleurs }}</h3>
-            <ul v-if="perso.douleurs.length">
-                <li v-for="(douleur, index) of perso.douleurs">
-                    {{douleur.valeur}} ({{ douleur.provenance }}) <button v-on:click="supprimerLigneDouleur(index)">Supprimer</button>
-                </li>    
-            </ul>
-            <span v-else>Aucune</span><br/>
+            <hdf-bloc-fiche title="Santé Mentale">
+                <div>
+                    <label for="perso.motDeDemence">Mot de Démence :</label>
+                    <input name="perso.motDeDemence" v-model="perso.motDeDemence" type="text" placeholder="Mot de démence du personnage" :readonly="mode==='jeu'">
+                    <br/>
+                </div>
+                <div v-if="mode==='jeu'">
+                    <label for="perso.tendance">Tendance :</label>
+                    <input name="perso.tendance" readonly="readonly" :value="perso.tendance">
+                    <br/>
+                </div>
+                <div v-if="mode==='jeu'">
+                    <label for="perso.totalAccomplissement">Total Accomplissement :</label>
+                    <input name="perso.totalAccomplissement" v-model="perso.totalAccomplissement" type="number" min="0">
+                    <br/>
+                </div>
+                <div v-if="mode==='jeu'">
+                    <label for="perso.niveauAccomplissement">Niveau Accomplissement :</label>
+                    <input name="perso.niveauAccomplissement" readonly="readonly" :value="perso.niveauAccomplissement" type="number">
+                    <br/>
+                </div>
+                <div v-if="mode==='jeu'">
+                    <label for="perso.pointsDeCrise">Points de Crise :</label>
+                    <input name="perso.pointsDeCrise" v-model="perso.pointsDeCrise" type="number" min="0">
+                    <br/>
+                </div>
+                <div v-if="mode==='jeu'">
+                    <label for="perso.chocsParano">Chocs Parano :</label>
+                    <input name="perso.chocsParano" v-model="perso.chocsParano" type="number" min="0">
+                    <br/>
+                </div>
+                <div v-if="mode==='jeu'">
+                    <label for="perso.chocsSchizo">Chocs Schizo :</label>
+                    <input name="perso.chocsSchizo" v-model="perso.chocsSchizo" type="number" min="0">
+                    <br/>
+                </div>
+                <div v-if="mode==='jeu'">
+                    <label for="perso.chocsProfonds">Chocs Profonds :</label>
+                    <input name="perso.chocsProfonds" v-model="perso.chocsProfonds" type="number" min="0">
+                    <br/>
+                </div>
+            </hdf-bloc-fiche>
+
+            <hdf-bloc-fiche title="Santé" v-if="mode==='jeu'">
+                <h3 v-if="perso.douleurs.length">Total des malus : {{ totalDouleurs }}</h3>
+                <h3>Douleurs :</h3>
+                <ul v-if="perso.douleurs.length">
+                    <li v-for="(douleur, index) of perso.douleurs">
+                        {{douleur.valeur}} ({{ douleur.provenance }}) <button v-on:click="supprimerLigneDouleur(index)">Supprimer</button>
+                    </li>    
+                </ul>
+                <span v-else>Aucune</span><br/>
+                
+                <label for="nouvelleDouleur.valeur">Valeur :</label>
+                <input name="nouvelleDouleur.valeur" v-model="nouvelleDouleur.valeur" type="number" min="1" max="4">
+                
+                <label for="nouvelleDouleur.provenance">Provenance :</label>
+                <input name="nouvelleDouleur.provenance" v-model="nouvelleDouleur.provenance" type="text">
+                
+                <button v-on:click="ajouterLigneDouleur">Ajouter Douleur</button>
+            </hdf-bloc-fiche>
+
+            <hdf-bloc-fiche :title="`Caractéristiques (mode ${mode})`">
+                <p v-if="mode === 'création'">Points restant à répartir : {{ perso.pointsCaracteristiqueRestant }}
+                    <button v-if="!perso.pointsCaracteristiqueRestant" v-on:click="terminerRepartitionCaracteristiques">Répartition terminée !</button>
+                </p>
+                
+                <div :class="'popup '+(hiddenInfos ? 'hidden' : '')">
+                    <div class="contents" v-html="infos"></div>
+                    <button v-on:click="masquerInfos">Fermer</button>
+                </div>
+                <div>
+                    <label for="perso.volonte">VOLONTE :</label>
+                    <button v-on:click="afficherInfos('volonté')">Infos</button>
+                    <input name="perso.volonte" v-model="perso.volonte" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.intellect">INTELLECT :</label>
+                    <button v-on:click="afficherInfos('intellect')">Infos</button>
+                    <input name="perso.intellect" v-model="perso.intellect" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.sensitif">SENSITIF :</label>
+                    <button v-on:click="afficherInfos('sensitif')">Infos</button>
+                    <input name="perso.sensitif" v-model="perso.sensitif" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.entendement">Entendement :</label>
+                    <button v-on:click="afficherInfos('entendement')">Infos</button>
+                    <input name="perso.entendement" readonly="readonly" :value="perso.entendement">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.charisme">CHARISME :</label>
+                    <button v-on:click="afficherInfos('charisme')">Infos</button>
+                    <input name="perso.charisme" v-model="perso.charisme" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.constitution">CONSTITUTION :</label>
+                    <button v-on:click="afficherInfos('constitution')">Infos</button>
+                    <input name="perso.constitution" v-model="perso.constitution" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.perception">PERCEPTION :</label>
+                    <button v-on:click="afficherInfos('perception')">Infos</button>
+                    <input name="perso.perception" v-model="perso.perception" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                    <br/>
+                </div>
+                <div>
+                    <label for="perso.agilite">AGILITE :</label>
+                    <button v-on:click="afficherInfos('agilité')">Infos</button>
+                    <input name="perso.agilite" v-model="perso.agilite" type="number" :readonly="mode==='jeu'" min="6" max="15">
+                    <br/>
+                </div>
+            </hdf-bloc-fiche>
             
-            <label for="nouvelleDouleur.valeur">Valeur :</label>
-            <input name="nouvelleDouleur.valeur" v-model="nouvelleDouleur.valeur" type="number" min="1" max="4">
-            
-            <label for="nouvelleDouleur.provenance">Provenance :</label>
-            <input name="nouvelleDouleur.provenance" v-model="nouvelleDouleur.provenance" type="text">
-            
-            <button v-on:click="ajouterLigneDouleur">Ajouter Douleur</button>
-        </div>
+            <hdf-bloc-fiche title="Compétences">
+                <label for="perso.pointsDeGeneration">Points de Génération :</label>
+                <input v-model="perso.pointsDeGeneration" type="number" readonly="readonly">
+                <br/>
+                <ul v-if="perso.competences.length">
+                    <li v-for="competence of perso.competences">
+                        {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} base {{ competence.base }}) = {{ competence.valeur }}
+                    </li>    
+                </ul>
+                <span v-else>Aucune</span><br/>
+                <button v-if="mode==='jeu'" v-on:click="revelerCompetence">Révéler une Compétence</button>
+                <button v-if="mode==='création'" v-on:click="choisirCompetenceProfessionnelle">Choisir sa Compétence Professionnelle</button>
+            </hdf-bloc-fiche>
 
-        <div class="blocCaracteristiques">
-            <h2>Caractéristiques (mode {{mode}})</h2>
-            <p v-if="mode === 'création'">Points restant à répartir : {{ perso.pointsCaracteristiqueRestant }}
-                <button v-if="!perso.pointsCaracteristiqueRestant" v-on:click="terminerRepartitionCaracteristiques">Répartition terminée !</button>
-            </p>
-            
-            <div :class="'popup '+(hiddenInfos ? 'hidden' : '')">
-                <div class="contents" v-html="infos"></div>
-                <button v-on:click="masquerInfos">Fermer</button>
-            </div>
-            <div>
-                <label for="perso.volonte">VOLONTE :</label>
-                <button v-on:click="afficherInfos('volonté')">Infos</button>
-                <input name="perso.volonte" v-model="perso.volonte" type="number" :readonly="mode==='jeu'" min="6" max="15">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.intellect">INTELLECT :</label>
-                <button v-on:click="afficherInfos('intellect')">Infos</button>
-                <input name="perso.intellect" v-model="perso.intellect" type="number" :readonly="mode==='jeu'" min="6" max="15">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.sensitif">SENSITIF :</label>
-                <button v-on:click="afficherInfos('sensitif')">Infos</button>
-                <input name="perso.sensitif" v-model="perso.sensitif" type="number" :readonly="mode==='jeu'" min="6" max="15">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.entendement">Entendement :</label>
-                <button v-on:click="afficherInfos('entendement')">Infos</button>
-                <input name="perso.entendement" readonly="readonly" :value="perso.entendement">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.charisme">CHARISME :</label>
-                <button v-on:click="afficherInfos('charisme')">Infos</button>
-                <input name="perso.charisme" v-model="perso.charisme" type="number" :readonly="mode==='jeu'" min="6" max="15">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.constitution">CONSTITUTION :</label>
-                <button v-on:click="afficherInfos('constitution')">Infos</button>
-                <input name="perso.constitution" v-model="perso.constitution" type="number" :readonly="mode==='jeu'" min="6" max="15">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.perception">PERCEPTION :</label>
-                <button v-on:click="afficherInfos('perception')">Infos</button>
-                <input name="perso.perception" v-model="perso.perception" type="number" :readonly="mode==='jeu'" min="6" max="15">
-                <br/>
-            </div>
-            <div>
-                <label for="perso.agilite">AGILITE :</label>
-                <button v-on:click="afficherInfos('agilité')">Infos</button>
-                <input name="perso.agilite" v-model="perso.agilite" type="number" :readonly="mode==='jeu'" min="6" max="15">
-                <br/>
-            </div>
-        </div>
-        
-        <div class="blocCompetences">
-            <h2>Compétences</h2>
-            <label for="perso.pointsDeGeneration">Points de Génération :</label>
-            <input v-model="perso.pointsDeGeneration" type="number" readonly="readonly">
-            <br/>
-            <ul v-if="perso.competences.length">
-                <li v-for="competence of perso.competences">
-                    {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} base {{ competence.base }}) = {{ competence.valeur }}
-                </li>    
-            </ul>
-            <span v-else>Aucune</span><br/>
-            <button v-if="mode==='jeu'" v-on:click="revelerCompetence">Révéler une Compétence</button>
-            <button v-if="mode==='création'" v-on:click="choisirCompetenceProfessionnelle">Choisir sa Compétence Professionnelle</button>
-        </div>
+            <hdf-bloc-fiche title="Compétences Démentielles" v-if="mode==='jeu'">
+                <ul v-if="perso.competencesDementielles.length">
+                    <li v-for="competence of perso.competencesDementielles">
+                        {{ competence.intitule }} = {{ competence.valeur }}
+                    </li>
+                </ul>
+                <span v-else>Aucune</span><br/>
+                <button v-on:click="acquerirCompetenceDementielle">Acquérir une Compétence Démentielle (+1pt de Crise)</button>
+            </hdf-bloc-fiche>
 
-        <div class="blocCompetencesDementielles" v-if="mode==='jeu'">
-            <h2>Compétences Démentielles</h2>
-            <ul v-if="perso.competencesDementielles.length">
-                <li v-for="competence of perso.competencesDementielles">
-                    {{ competence.intitule }} = {{ competence.valeur }}
-                </li>
-            </ul>
-            <span v-else>Aucune</span><br/>
-            <button v-on:click="acquerirCompetenceDementielle">Acquérir une Compétence Démentielle (+1pt de Crise)</button>
+            <hdf-bloc-fiche title="Equipement" v-if="mode==='jeu'">
+                <button v-on:click="genererEquipementSaintFrusquin">Saint-Frusquin</button>
+                <ul v-if="perso.equipements.length">
+                    <li v-for="(equipement, indexEquipement) of perso.equipements">
+                        {{indexEquipement+1}} : {{ equipement }} <button v-on:click="supprimerLigneEquipement(indexEquipement)">Supprimer</button>
+                    </li>
+                </ul>
+                <span v-else>Aucun</span><br/>
+                <input v-model="nouvelEquipement" type="text"><button v-on:click="ajouterLigneEquipement">Ajouter</button>
+            </hdf-bloc-fiche>
         </div>
-
-        <div class="blocEquipement" v-if="mode==='jeu'">
-            <h2>Equipement</h2>
-            <button v-on:click="genererEquipementSaintFrusquin">Saint-Frusquin</button>
-            <ul v-if="perso.equipements.length">
-                <li v-for="(equipement, indexEquipement) of perso.equipements">
-                    {{indexEquipement+1}} : {{ equipement }} <button v-on:click="supprimerLigneEquipement(indexEquipement)">Supprimer</button>
-                </li>
-            </ul>
-            <span v-else>Aucun</span><br/>
-            <input v-model="nouvelEquipement" type="text"><button v-on:click="ajouterLigneEquipement">Ajouter</button>
-        </div>
-    </div>
     </body>
 </html>
