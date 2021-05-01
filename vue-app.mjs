@@ -22,6 +22,7 @@ export const app = new Vue({
         mode: 'création',
         nouvelEquipement: '',
         nouvelleDouleur: new Douleur(),
+        hiddenVoile: true,
     },
     computed: {
         totalDouleurs: function() {
@@ -29,43 +30,50 @@ export const app = new Vue({
         }
     },
     methods: {
-        genererEquipementSaintFrusquin: function() {
+        genereEquipementSaintFrusquin: function() {
             this.perso.equipements = habillerALaSaintFrusquin();
         },
-        afficherInfos: function(typeInfos) {
-            console.debug("ici")
+        afficheInfos: function(typeInfos) {
             this.infos = infosCaracteristiques[typeInfos];
-            this.hiddenInfos = false;    
+            this.hiddenInfos = false;   
+            this.afficheVoile(); 
         },
-        masquerInfos: function() {
+        masqueInfos: function() {
             this.infos = '';
             this.hiddenInfos = true;    
+            this.masqueVoile();
         },
-        terminerRepartitionCaracteristiques: function () {
+        termineRepartitionCaracteristiques: function () {
             this.mode = 'jeu';
         },
-        supprimerLigneEquipement: function(indexEquipement) {
+        supprimeLigneEquipement: function(indexEquipement) {
             this.perso.equipements = this.perso.equipements.filter((_, index) => index !== indexEquipement);
         },
-        ajouterLigneEquipement: function() {
+        ajouteLigneEquipement: function() {
             this.perso.equipements.push(''+this.nouvelEquipement);
             this.nouvelEquipement = '';
         },
-        supprimerLigneDouleur: function(indexDouleur) {
+        supprimeLigneDouleur: function(indexDouleur) {
             this.perso.douleurs = this.perso.douleurs.filter((_, index) => index !== indexDouleur);
         },
-        ajouterLigneDouleur: function() {
+        ajouteLigneDouleur: function() {
             this.perso.douleurs.push(this.nouvelleDouleur);
             this.nouvelleDouleur = new Douleur();
         },
-        choisirCompetenceProfessionnelle: function() {
+        choisitCompetenceProfessionnelle: function() {
             // TODO
         },
-        revelerCompetence: function() {
+        reveleCompetence: function() {
             // TODO
         },
-        acquerirCompetenceDementielle: function() {
+        acquiertCompetenceDementielle: function() {
             // TODO
+        },
+        afficheVoile: function() {
+            this.hiddenVoile = false;
+        },
+        masqueVoile: function() {
+            this.hiddenVoile = true;
         }
     }
 });

@@ -1,11 +1,15 @@
 html {
-    margin: 10px auto;
+    margin: 10px;
     padding: 0;
+    background-color: lightgrey;
 }
 body {
-    margin: 0 10px;
-    padding: 0;
-    font-size: 14px;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: white;
+    width: 400px;
+    font-size: 16px;
+    font-family: 'Garamond', serif;
 }
 input {
     padding: 0 5px;
@@ -15,6 +19,22 @@ label {
     width: 30%;
     display: inline-block;
 }
+h1 {
+    font-family: 'Garamond';
+}
+h2 {
+    font-family: 'Brush Script MT', cursive;
+}
+.handwritten {
+    font-family: 'Caveat', cursive;
+}
+
+.abs-top-right-10 {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
 
 .popup {
     position: absolute;
@@ -32,9 +52,19 @@ label {
     overflow: scroll;
 }
 .popup .contents {
-    padding: 10px;
+    padding: 20px;
 }
-
+.voile {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(1,1,1,.6);
+    z-index: 1;
+}
 .hidden {
     visibility: hidden;
 }
