@@ -9,7 +9,9 @@ import { BlocCompetencesComponent } from "./hdf-bloc-competences.mjs";
 import { BlocCompetencesDementiellesComponent } from "./hdf-bloc-competences-dementielles.mjs";
 import { BlocEquipementComponent } from "./hdf-bloc-equipement.mjs";
 import { BlocSanteMentaleComponent } from "./hdf-bloc-sante-mentale.mjs";
+import { BlocEtatCivilComponent } from "./hdf-bloc-etat-civil.mjs";
 
+Vue.component('hdf-bloc-etat-civil', BlocEtatCivilComponent);
 Vue.component('hdf-bloc-fiche', BlocFicheComponent);
 Vue.component('hdf-bloc-caracteristiques', BlocCaracteristiquesComponent);
 Vue.component('hdf-bloc-sante', BlocSanteComponent);
