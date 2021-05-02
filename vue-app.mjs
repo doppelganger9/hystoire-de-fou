@@ -3,20 +3,13 @@ import Vue from "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js";
 import { Competence } from "./fiche-personnage.mjs";
 import { ContextePersonnage } from "./fiche-personnage.mjs";
 import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
+import { BlocFicheComponent } from "./hdf-bloc-fiche.mjs";
 import { BlocSanteComponent } from "./hdf-bloc-sante.mjs";
+import { BlocCaracteristiquesComponent } from "./hdf-bloc-caracteristiques.mjs";
 
-Vue.component('hdf-bloc-fiche', {
-    props: ['title'],
-    template: `
-    <div class="bloc">
-        <h2>{{ title }}</h2>
-        <slot></slot>
-    </div>
-    `,
-});
-
+Vue.component('hdf-bloc-fiche', BlocFicheComponent);
+Vue.component('hdf-bloc-caracteristiques', BlocCaracteristiquesComponent);
 Vue.component('hdf-bloc-sante', BlocSanteComponent);
-
 
 export const app = new Vue({
     el: '#app',
@@ -45,8 +38,8 @@ export const app = new Vue({
         genereEquipementSaintFrusquin: function() {
             this.perso.equipements = habillerALaSaintFrusquin();
         },
-        afficheInfos: function(typeInfos) {
-            this.infos = infosCaracteristiques[typeInfos];
+        afficheInfos: function(event) {
+            this.infos = event;
             this.hiddenInfos = false;   
             this.afficheVoile();
         },

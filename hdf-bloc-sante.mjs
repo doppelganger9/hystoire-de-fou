@@ -1,6 +1,5 @@
 // @ts-check
 import { Douleur } from "./fiche-personnage.mjs";
-import { infosCaracteristiques } from "./fiche-personnage.mjs";
 
 export const BlocSanteComponent = {
     props: ['mode', 'perso'],
@@ -16,10 +15,6 @@ export const BlocSanteComponent = {
         },
     },
     methods: {
-        afficheInfos: function(typeInfos) {
-            this.infos = infosCaracteristiques[typeInfos];
-            this.$emit("afficheInfo", this.infos);
-        },
         supprimeLigneDouleur: function(indexDouleur) {
             this.perso.douleurs = this.perso.douleurs.filter((_, index) => index !== indexDouleur);
         },
