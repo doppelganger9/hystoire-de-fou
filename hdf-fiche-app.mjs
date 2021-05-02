@@ -12,6 +12,8 @@ export const FicheAppComponent = {
             hiddenVoile: true,
             hiddenPopupCompetence: true,
             nouvelleCompetence: new Competence(),
+            hiddenPopupJet: true,
+            etatJet: '',
         };
     },
     computed: {
@@ -39,8 +41,8 @@ export const FicheAppComponent = {
         },
         onNouvelleCompetence: function(event) {
             this.nouvelleCompetence = event;
-            this.hiddenVoile = false;
             this.hiddenPopupCompetence = false;
+            this.afficheVoile();
         },
         afficheVoile: function() {
             this.hiddenVoile = false;
@@ -48,10 +50,16 @@ export const FicheAppComponent = {
         masqueVoile: function() {
             this.hiddenVoile = true;
         },
+        affichePopupJet: function(event) {
+            this.etatJet = event;
+            this.hiddenPopupJet = false;
+            this.afficheVoile();
+        },
         masqueTout: function() {
             this.hiddenInfos = true;
             this.hiddenPopupCompetence = true;
-            this.hiddenVoile = true;
+            this.masqueVoile();
+            this.hiddenPopupJet = true;
         },
         sauvegardePerso: function() {
             document.location.hash = btoa(JSON.stringify(this.perso));

@@ -11,7 +11,7 @@ import { BlocEtatCivilComponent } from "./hdf-bloc-etat-civil.mjs";
 import { PopupCreationCompetenceComponent } from "./hdf-popup-creation-competence.mjs";
 import { PopupInfosComponent } from "./hdf-popup-infos.mjs";
 import { VoileComponent } from "./hdf-voile.mjs";
-import { FicheAppComponent } from "./hdf-fiche-app-component.mjs";
+import { FicheAppComponent } from "./hdf-fiche-app.mjs";
 
 
 Vue.component('hdf-voile', VoileComponent);
