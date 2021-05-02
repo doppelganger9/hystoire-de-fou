@@ -62,6 +62,7 @@ export const app = new Vue({
         },
         onNouvelleCompetence: function(event) {
             this.nouvelleCompetence = event;
+            this.hiddenVoile = false;
             this.hiddenPopupCompetence = false;
         },
         afficheVoile: function() {
