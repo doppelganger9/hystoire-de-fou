@@ -1,25 +1,23 @@
 // @ts-check
 import { Douleur } from "./fiche-personnage.mjs";
+import { mapState, mapGetters } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const BlocSanteComponent = {
-    props: ['mode', 'perso'],
     data: function() {
         return {
             nouvelleDouleur: new Douleur(),
-            infos: '',
         };
     },
     computed: {
-        totalDouleurs: function() {
-            return this.perso.douleurs.reduce((total, douleur) => (+total)+(+douleur.valeur), 0);
-        },
+        ...mapState(['mode', 'perso']),
+        ...mapGetters(['totalDouleurs']),
     },
     methods: {
         supprimeLigneDouleur: function(indexDouleur) {
-            this.perso.douleurs = this.perso.douleurs.filter((_, index) => index !== indexDouleur);
+            this.$store.commit('supprimeLigneDouleur', indexDouleur);
         },
         ajouteLigneDouleur: function() {
-            this.perso.douleurs.push(this.nouvelleDouleur);
+            this.$store.commit('ajouteLigneDouleur', this.nouvelleDouleur);
             this.nouvelleDouleur = new Douleur();
         },
     },

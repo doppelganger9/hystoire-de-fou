@@ -1,12 +1,15 @@
 // @ts-check
 import { Competence, initNouvelleCompetence } from "./fiche-personnage.mjs";
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const BlocCompetencesComponent = {
-    props: [ 'mode', 'perso' ],
     data: function() {
         return {
             nouvelleCompetence: new Competence(),
         };
+    },
+    computed: {
+        ...mapState(['mode', 'perso']),
     },
     methods: {
         choisitCompetenceProfessionnelle: function() {
@@ -14,16 +17,16 @@ export const BlocCompetencesComponent = {
             this.nouvelleCompetence.professionnelle = true;
             this.nouvelleCompetence.revelee = true;
 
-            this.$emit("nouvelle-competence", this.nouvelleCompetence);
+            this.$store.dispatch("affichePopupCompetence", this.nouvelleCompetence);
         },
         reveleCompetence: function() {
             this.nouvelleCompetence = initNouvelleCompetence();
             this.nouvelleCompetence.revelee = true;
 
-            this.$emit("nouvelle-competence", this.nouvelleCompetence);
+            this.$store.dispatch("affichePopupCompetence", this.nouvelleCompetence);
         },
         supprimeLigneCompetence: function(indexCompetence) {
-            this.perso.competences = this.perso.competences.filter((_, index) => index !== indexCompetence);
+            this.$store.commit('supprimeLigneCompetence', indexCompetence);
         },
     },
     template: `

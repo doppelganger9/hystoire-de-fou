@@ -29,20 +29,8 @@ export const FicheAppComponent = {
         ]),
     },
     methods: {
-        afficheInfos: function(event) {
-            this.$store.dispatch('afficheInfos', event);
-        },
         passerEnMode: function (mode) {
             this.$store.commit('passerEnMode', mode);
-        },
-        onNouvelleCompetence: function(event) {
-            this.$store.dispatch('affichePopupCompetence', event);
-        },
-        affichePopupJet: function(event) {
-            this.$store.dispatch('affichePopupJet', event);
-        },
-        masqueTout: function() {
-            this.$store.dispatch('masqueTout');
         },
         sauvegardePerso: function() {
             this.$store.commit('sauvegardePerso');

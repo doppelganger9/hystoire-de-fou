@@ -1,14 +1,16 @@
 //@ts-check
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
+
 export const VoileComponent = {
-    props: [ 'hidden' ],
     computed: {
+        ...mapState([ 'hiddenVoile' ]),
         voileClass() {
-            return this.hidden ? 'voile hidden' : 'voile';
-        }
+            return this.hiddenVoile ? 'voile hidden' : 'voile';
+        },
     },
     methods: {
         masqueTout() {
-            this.$emit('masque-tout');
+            this.$store.dispatch('masqueTout');
         }
     },
     template: `

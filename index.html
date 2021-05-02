@@ -17,76 +17,26 @@
         <div id="app" :class="'visible'" class="hidden">
             <!-- affiché avant que l'app soit prête -->
             <h3 v-if="false" class="visible">En cours de chargement...</h3>
-            <hdf-voile
-                :hidden="hiddenVoile"
-                @masque-tout="masqueTout">
-            </hdf-voile>
-            <hdf-popup-infos
-                :hidden="hiddenInfos"
-                :infos="infos"
-                @masque-infos="masqueTout">
-            </hdf-popup-infos>
-            <button 
-                v-if="creationFinie && mode === 'création'" 
-                @click="passerEnMode('jeu')">
-                    Création de personnage terminée
+            <hdf-voile></hdf-voile>
+            <hdf-popup-infos></hdf-popup-infos>
+            <button v-if="creationFinie && mode === 'création'" @click="passerEnMode('jeu')">
+                Création de personnage terminée
             </button>
-            <button 
-                v-if="mode === 'jeu'" 
-                @click="sauvegardePerso">
-                    Sauvegarder personnage
+            <button v-if="mode === 'jeu'" @click="sauvegardePerso">
+                Sauvegarder personnage
             </button>
-            <button 
-                @click="chargePerso">
-                    Charger personnage
+            <button @click="chargePerso">
+                Charger personnage
             </button>
-            <hdf-popup-jet
-                :hidden="hiddenPopupJet"
-                :perso="perso"
-                :mode="mode"
-                :type="etatJet.type"
-                :nom="etatJet.nom"
-                @masque-tout="masqueTout">
-            </hdf-popup-jet>
-            <hdf-popup-creation-competence 
-                :hidden="hiddenPopupCompetence" 
-                :mode="mode"
-                :perso="perso"
-                :nouvelle-competence="nouvelleCompetence"
-                @masque-tout="masqueTout">
-            </hdf-popup-creation-competence>
-            <hdf-bloc-etat-civil
-                :mode="mode"
-                :perso="perso">
-            </hdf-bloc-etat-civil>
-            <hdf-bloc-sante-mentale
-                :mode="mode"
-                :perso="perso">
-            </hdf-bloc-sante-mentale>
-            <hdf-bloc-sante
-                :mode="mode"
-                :perso="perso">
-            </hdf-bloc-sante>
-            <hdf-bloc-caracteristiques 
-                :mode="mode"
-                :perso="perso" 
-                @affiche-infos="afficheInfos"
-                @click-caracteristique="affichePopupJet">
-            </hdf-bloc-caracteristiques>
-            <hdf-bloc-competences
-                :mode="mode"
-                :perso="perso"
-                @nouvelle-competence="onNouvelleCompetence">
-            </hdf-bloc-competences>
-            <hdf-bloc-competences-dementielles
-                :mode="mode"
-                :perso="perso"
-                @nouvelle-competence="onNouvelleCompetence">
-            </hdf-bloc-competences-dementielles>
-            <hdf-bloc-equipement
-                :mode="mode"
-                :perso="perso">
-            </hdf-bloc-equipement>
+            <hdf-popup-jet></hdf-popup-jet>
+            <hdf-popup-creation-competence></hdf-popup-creation-competence>
+            <hdf-bloc-etat-civil></hdf-bloc-etat-civil>
+            <hdf-bloc-sante-mentale></hdf-bloc-sante-mentale>
+            <hdf-bloc-sante></hdf-bloc-sante>
+            <hdf-bloc-caracteristiques></hdf-bloc-caracteristiques>
+            <hdf-bloc-competences></hdf-bloc-competences>
+            <hdf-bloc-competences-dementielles></hdf-bloc-competences-dementielles>
+            <hdf-bloc-equipement></hdf-bloc-equipement>
         </div>
     </body>
 </html>

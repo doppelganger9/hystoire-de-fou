@@ -1,13 +1,12 @@
 //@ts-check
-export const BlocEtatCivilComponent = {
-    props: [ 'mode', 'perso' ],
-    data: function() {
-        return {
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
-        };
-    },
-    methods: {
-        
+export const BlocEtatCivilComponent = {
+    computed: {
+        ...mapState([
+            'mode',
+            'perso',
+        ])
     },
     template: `
 <hdf-bloc-fiche title="Etat Civil">

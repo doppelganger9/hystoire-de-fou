@@ -1,15 +1,16 @@
 //@ts-check
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const PopupInfosComponent = {
-    props: [ 'hidden', 'infos' ],
     methods: {
         masqueInfos: function() {
-            this.$emit("masque-infos");
+            this.$store.dispatch("masqueTout");
         }
     },
     computed: {
+        ...mapState([ 'hiddenInfos', 'infos' ]),
         popupDivClass: function() {
-            return 'popup '+(this.hidden ? 'hidden' : '');
+            return 'popup '+(this.hiddenInfos ? 'hidden' : '');
         }
     },
     template: `

@@ -1,19 +1,22 @@
 // @ts-check
 import { Competence, initNouvelleCompetence } from "./fiche-personnage.mjs";
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const BlocCompetencesDementiellesComponent = {
-    props: [ 'mode', 'perso' ],
     data: function() {
         return {
             nouvelleCompetence: new Competence(),
         };
     },
+    computed: {
+        ...mapState([ 'mode', 'perso' ]),
+    },
     methods: {
         acquiertCompetenceDementielle: function() {
             this.nouvelleCompetence = initNouvelleCompetence();
             this.nouvelleCompetence.dementielle = true;
-
-            this.$emit("nouvelle-competence", this.nouvelleCompetence);
+            
+            this.$store.dispatch('affichePopupCompetence', this.nouvelleCompetence);
         },
     },
     template: `

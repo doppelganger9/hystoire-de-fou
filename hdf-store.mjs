@@ -1,6 +1,7 @@
 //@ts-check
-import { ContextePersonnage, Competence, Douleur } from "./fiche-personnage.mjs";
 import "./object-append-chain.mjs";
+import { ContextePersonnage, Competence, Douleur } from "./fiche-personnage.mjs";
+import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
 
 export const HdfStore = {
   state: {
@@ -13,7 +14,7 @@ export const HdfStore = {
     hiddenPopupCompetence: true,
     nouvelleCompetence: new Competence(),
     hiddenPopupJet: true,
-    etatJet: '',
+    etatJet: {nom:'volonte', type:'caracteristique'},
   },
   getters: {
     creationFinie: function(state) {
@@ -30,6 +31,9 @@ export const HdfStore = {
       return repartitionCaracFinie 
           && persoAUneCompetenceProfessionnelle 
           && etatCivilRempli;
+    },
+    totalDouleurs: function(state) {
+      return state.perso.douleurs.reduce((total, douleur) => (+total)+(+douleur.valeur), 0);
     },
   },
   mutations: {
@@ -79,6 +83,33 @@ export const HdfStore = {
       state.hiddenPopupCompetence = false;
     },
     // ---
+    supprimeLigneCompetence: function(state, indexCompetence) {
+      state.perso.competences = state.perso.competences.filter((_, index) => index !== indexCompetence);
+    },
+    ajouteCompetence: function(state, competence) {
+      state.perso.competences.push(competence);
+    },
+    ajouteCompetenceDementielle: function(state, competence) {
+      state.perso.competencesDementielles.push(competence);
+    },
+    supprimeLigneDouleur: function(state, indexDouleur) {
+      state.perso.douleurs = state.perso.douleurs.filter((_, index) => index !== indexDouleur);
+    },
+    ajouteLigneDouleur: function(state, nouvelleDouleur) {
+      state.perso.douleurs.push(nouvelleDouleur);
+    },
+    genereEquipementSaintFrusquin: function(state) {
+      // on n'est pas censé appeler ça en cours de partie, juste en début de Crise.
+      // donc ça efface tout l'équipement.
+      state.perso.equipements = habillerALaSaintFrusquin();
+    },
+    supprimeLigneEquipement: function(state, indexEquipement) {
+      state.perso.equipements = state.perso.equipements.filter((_, index) => index !== indexEquipement);
+    },
+    ajouteLigneEquipement: function(state, nouvelEquipement) {
+      state.perso.equipements.push(''+nouvelEquipement);
+    },
+    // ---
     sauvegardePerso: function(state) {
         document.location.hash = btoa(JSON.stringify(state.perso));
     },
@@ -121,6 +152,29 @@ export const HdfStore = {
     chargePersonnage: function(context) {
       context.commit('chargePerso');
       context.commit('passerEnMode', 'jeu');
-    }
+    },
+    ajouteCompetence: function(context, competence) {
+      if (competence.dementielle) {
+        context.commit('ajouteCompetenceDementielle', competence);
+      } else {
+        // TODO : bug si on ajoute une comp pro entendement, on ne peut pas supprimer Culture Gé
+        // TODO : ne pas ajouter une comp si elle existe déjà.
+        if (competence.professionnelle && competence.nomCaracteristiqueDirectrice === 'entendement') {
+          // si compétence professionnelle est sous Entendement, alors Culture Générale à 100% en bonus
+          const cultureGeneraleEnBonus = new Competence();
+          cultureGeneraleEnBonus.professionnelle = false;
+          cultureGeneraleEnBonus.revelee = true;
+          cultureGeneraleEnBonus.dementielle = false;
+          cultureGeneraleEnBonus.intitule = "Culture Générale";
+          cultureGeneraleEnBonus.valeurCaracteristiqueDirectrice = context.state.perso.entendement;
+          cultureGeneraleEnBonus.nomCaracteristiqueDirectrice = "entendement"
+          cultureGeneraleEnBonus.pointsDeGeneration = 0;
+          cultureGeneraleEnBonus.base = 3; // 100%
+          context.commit('ajouteCompetence', cultureGeneraleEnBonus);
+        }
+        context.commit('ajouteCompetence', competence);          
+      }
+    },
+
   },
 };

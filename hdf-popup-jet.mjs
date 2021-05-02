@@ -1,5 +1,6 @@
 //@ts-check
 import { Competence } from "./fiche-personnage.mjs";
+import { mapState, mapGetters } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 /**
  * Composant affichant une popup avec un dialog pour effectuer un jet:
@@ -20,7 +21,9 @@ import { Competence } from "./fiche-personnage.mjs";
  * savoir quoi faire.
  */
 export const PopupJetComponent = {
-    props: [ 'mode', 'perso', 'hidden', 'type', 'nom' ],
+    computed: {
+        ...mapState([ 'mode', 'perso', 'hiddenPopupJet', 'etatJet' ]),
+    },
     data: function() {
         return {
 
@@ -28,7 +31,7 @@ export const PopupJetComponent = {
     },
     methods: {
         masqueTout: function() {
-            this.$emit("masque-tout");
+            this.$store.dispatch("masqueTout");
         },
         valide: function() {
             // journaliser
@@ -39,11 +42,11 @@ export const PopupJetComponent = {
         },
     },
     template: `
-<div :class="'popup '+(hidden ? 'hidden' : '')">
+<div :class="'popup '+(hiddenPopupJet ? 'hidden' : '')">
     <button class="abs-top-right-10" @click="masqueTout">X</button>
     <div class="contents">
         <h3>Faire un Jet</h3>
-        {{ type }} / {{ nom }}
+        {{ etatJet.type }} / {{ etatJet.nom }}
     </div>
     <button @click="valide">Valider</button>
     <button @click="masqueTout">Annuler</button>

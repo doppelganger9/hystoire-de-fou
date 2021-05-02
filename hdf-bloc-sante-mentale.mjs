@@ -1,14 +1,9 @@
 //@ts-check
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const BlocSanteMentaleComponent = {
-    props: [ 'mode', 'perso' ],
-    data: function() {
-        return {
-
-        };
-    },
-    methods: {
-        
+    computed: {
+        ...mapState(['mode', 'perso']),
     },
     template: `
 <hdf-bloc-fiche title="Santé Mentale">

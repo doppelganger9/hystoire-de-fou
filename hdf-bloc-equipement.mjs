@@ -1,22 +1,27 @@
 // @ts-check
-import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const BlocEquipementComponent = {
-    props: [ 'mode', 'perso' ],
     data: function() {
         return {
             nouvelEquipement: '',
         };
     },
+    computed: {
+        ...mapState([
+            'mode',
+            'perso',
+        ]),
+    },
     methods: {
         genereEquipementSaintFrusquin: function() {
-            this.perso.equipements = habillerALaSaintFrusquin();
+            this.$store.commit('genereEquipementSaintFrusquin');
         },
         supprimeLigneEquipement: function(indexEquipement) {
-            this.perso.equipements = this.perso.equipements.filter((_, index) => index !== indexEquipement);
+            this.$store.commit('supprimeLigneEquipement', indexEquipement);
         },
         ajouteLigneEquipement: function() {
-            this.perso.equipements.push(''+this.nouvelEquipement);
+            this.$store.commit('ajouteLigneEquipement', this.nouvelEquipement);
             this.nouvelEquipement = '';
         },
     },

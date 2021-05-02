@@ -47,6 +47,7 @@ L'entrée en état de Choc dépendant du Niveau d'Accomplissement et de la VOLON
 ## Design
 
 - Vue.js parce que très simple et facile à injecter dans un html sans à avoir besoin de faire une app d'entreprise/industrielle.
+- VueX pour stocker l'état, au départ je suis parti sur des bindings et events qui repassaient par le root component, mais ça devenait très lourd. Je préfère que chaque composant soit relié en direct au Store. Le code "métier" est dans le Store, et les composants se retrouvent allégés !
 - ESModules car en 2021 c'est dispo quasi partout (sauf Opera ou browsers obscurs...), ça retire une dépendance envers un bundler/builder
 - pas de `package.json` pour le moment.
 

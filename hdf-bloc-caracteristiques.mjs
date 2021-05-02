@@ -1,25 +1,20 @@
 // @ts-check
 import { infosCaracteristiques } from "./fiche-personnage.mjs";
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const BlocCaracteristiquesComponent = {
-    props: [ 'mode', 'perso' ],
-    data: function() {
-        return {
-
-        };
-    },
     computed: {
+        ...mapState([ 'mode', 'perso' ]),
         title() {
             return `Caractéristiques (mode ${this.mode})`;
         },
     },
     methods: {
         afficheInfos: function(typeInfos) {
-            this.infos = infosCaracteristiques[typeInfos];
-            this.$emit("affiche-infos", this.infos);
+            this.$store.dispatch('afficheInfos', infosCaracteristiques[typeInfos]);
         },
         clickedCaracteristique: function(nomCaracteristique) {
-            this.$emit("click-caracteristique", { nom:nomCaracteristique, type:'caracteristique'});
+            this.$store.dispatch('affichePopupJet', { nom:nomCaracteristique, type:'caracteristique'});
         },
     },
     template: `

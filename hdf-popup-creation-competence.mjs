@@ -1,46 +1,24 @@
 //@ts-check
-import { Competence } from "./fiche-personnage.mjs";
+import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const PopupCreationCompetenceComponent = {
-    props: [ 'mode', 'nouvelleCompetence', 'perso', 'hidden' ],
-    data: function() {
-        return {
-
-        };
+    computed: {
+        ...mapState([ 'mode', 'nouvelleCompetence', 'perso', 'hiddenPopupCompetence' ]),
     },
     methods: {
         masqueTout: function() {
-            this.$emit("masque-tout");
+            this.$store.dispatch("masqueTout");
         },
         nouvelleCompetenceNomCaracteristiqueDirectriceChanged: function() {
             this.nouvelleCompetence.valeurCaracteristiqueDirectrice = this.perso[this.nouvelleCompetence.nomCaracteristiqueDirectrice];
         },
         valideAjoutCompetence: function(competence) {
-            if (competence.dementielle) {
-                this.perso.competencesDementielles.push(competence);
-                // TODO déclencher l'effet démentiel ?
-            } else {
-                if (competence.professionnelle && competence.nomCaracteristiqueDirectrice === 'entendement') {
-                    // si compétence professionnelle est sous Entendement, alors Culture Générale à 100% en bonus
-                    const cultureGeneraleEnBonus = new Competence();
-                    cultureGeneraleEnBonus.professionnelle = false;
-                    cultureGeneraleEnBonus.revelee = true;
-                    cultureGeneraleEnBonus.dementielle = false;
-                    cultureGeneraleEnBonus.intitule = "Culture Générale";
-                    cultureGeneraleEnBonus.valeurCaracteristiqueDirectrice = this.perso.entendement;
-                    cultureGeneraleEnBonus.nomCaracteristiqueDirectrice = "entendement"
-                    cultureGeneraleEnBonus.pointsDeGeneration = 0;
-                    cultureGeneraleEnBonus.base = 3; // 100%
-                    this.perso.competences.push(cultureGeneraleEnBonus);
-                }
-                this.perso.competences.push(competence);
-            }
-
-            this.masqueTout();
+            this.$store.dispatch('ajouteCompetence', competence);
+            this.$store.dispatch("masqueTout");
         },
     },
     template: `
-<div :class="'popup '+(hidden ? 'hidden' : '')">
+<div :class="'popup '+(hiddenPopupCompetence ? 'hidden' : '')">
     <button class="abs-top-right-10" @click="masqueTout">X</button>
     <div class="contents">
         <h3>Nouvelle Compétence {{ nouvelleCompetence.dementielle ? "Démentielle" : ""}}{{ nouvelleCompetence.professionnelle ? "Professionnelle" : ""}}</h3>
