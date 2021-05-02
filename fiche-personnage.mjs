@@ -105,6 +105,18 @@ export class Competence {
     pointsDeGeneration = 0;
 }
 
+export function initNouvelleCompetence() {
+    const nouvelleCompetence = new Competence();
+    nouvelleCompetence.professionnelle = false;
+    nouvelleCompetence.revelee = false;
+    nouvelleCompetence.dementielle = false;
+    nouvelleCompetence.intitule = "";
+    nouvelleCompetence.valeurCaracteristiqueDirectrice = 0;
+    nouvelleCompetence.nomCaracteristiqueDirectrice = ""
+    nouvelleCompetence.pointsDeGeneration = 0;
+    return nouvelleCompetence;
+}
+
 function calculerScoreTaille(tailleCm) {
     tailleCm = +tailleCm; //pour être sûr que c'est un nombre.
     if (tailleCm <= 154) {

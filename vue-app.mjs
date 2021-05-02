@@ -1,15 +1,20 @@
 // @ts-check
 import Vue from "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js";
-import { Competence } from "./fiche-personnage.mjs";
+import { Competence, initNouvelleCompetence } from "./fiche-personnage.mjs";
 import { ContextePersonnage } from "./fiche-personnage.mjs";
-import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
 import { BlocFicheComponent } from "./hdf-bloc-fiche.mjs";
 import { BlocSanteComponent } from "./hdf-bloc-sante.mjs";
 import { BlocCaracteristiquesComponent } from "./hdf-bloc-caracteristiques.mjs";
+import { BlocCompetencesComponent } from "./hdf-bloc-competences.mjs";
+import { BlocCompetencesDementiellesComponent } from "./hdf-bloc-competences-dementielles.mjs";
+import { BlocEquipementComponent } from "./hdf-bloc-equipement.mjs";
 
 Vue.component('hdf-bloc-fiche', BlocFicheComponent);
 Vue.component('hdf-bloc-caracteristiques', BlocCaracteristiquesComponent);
 Vue.component('hdf-bloc-sante', BlocSanteComponent);
+Vue.component('hdf-bloc-competences', BlocCompetencesComponent);
+Vue.component('hdf-bloc-competences-dementielles', BlocCompetencesDementiellesComponent);
+Vue.component('hdf-bloc-equipement', BlocEquipementComponent);
 
 export const app = new Vue({
     el: '#app',
@@ -19,7 +24,6 @@ export const app = new Vue({
             infos: '',
             hiddenInfos: true,
             mode: 'création',
-            nouvelEquipement: '',
             hiddenVoile: true,
             hiddenPopupCompetence: true,
             nouvelleCompetence: new Competence(),
@@ -35,9 +39,6 @@ export const app = new Vue({
         }
     },
     methods: {
-        genereEquipementSaintFrusquin: function() {
-            this.perso.equipements = habillerALaSaintFrusquin();
-        },
         afficheInfos: function(event) {
             this.infos = event;
             this.hiddenInfos = false;   
@@ -51,44 +52,9 @@ export const app = new Vue({
         passerEnMode: function (mode) {
             this.mode = mode;
         },
-        supprimeLigneEquipement: function(indexEquipement) {
-            this.perso.equipements = this.perso.equipements.filter((_, index) => index !== indexEquipement);
-        },
-        ajouteLigneEquipement: function() {
-            this.perso.equipements.push(''+this.nouvelEquipement);
-            this.nouvelEquipement = '';
-        },
-        initNouvelleCompetence() {
-            this.nouvelleCompetence = new Competence();
-            this.nouvelleCompetence.professionnelle = false;
-            this.nouvelleCompetence.revelee = false;
-            this.nouvelleCompetence.dementielle = false;
-            this.nouvelleCompetence.intitule = "";
-            this.nouvelleCompetence.valeurCaracteristiqueDirectrice = 0;
-            this.nouvelleCompetence.nomCaracteristiqueDirectrice = ""
-            this.nouvelleCompetence.pointsDeGeneration = 0;
-        },
-        choisitCompetenceProfessionnelle: function() {
-            this.initNouvelleCompetence();
-            this.nouvelleCompetence.professionnelle = true;
-            this.nouvelleCompetence.revelee = true;
-
+        onNouvelleCompetence: function(event) {
+            this.nouvelleCompetence = event;
             this.hiddenPopupCompetence = false;
-        },
-        reveleCompetence: function() {
-            this.initNouvelleCompetence();
-            this.nouvelleCompetence.revelee = true;
-
-            this.hiddenPopupCompetence = false;
-        },
-        acquiertCompetenceDementielle: function() {
-            this.initNouvelleCompetence();
-            this.nouvelleCompetence.dementielle = true;
-
-            this.hiddenPopupCompetence = false;
-        },
-        supprimeLigneCompetence: function(indexCompetence) {
-            this.perso.competences = this.perso.competences.filter((_, index) => index !== indexCompetence);
         },
         nouvelleCompetenceNomCaracteristiqueDirectriceChanged: function() {
             this.nouvelleCompetence.valeurCaracteristiqueDirectrice = this.perso[this.nouvelleCompetence.nomCaracteristiqueDirectrice];

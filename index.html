@@ -158,44 +158,11 @@
             </hdf-bloc-fiche>
 
             <hdf-bloc-sante :mode="mode" :perso="perso"></hdf-bloc-sante>
-
             <hdf-bloc-caracteristiques :mode="mode" :perso="perso" v-on:affiche-infos="afficheInfos"></hdf-bloc-caracteristiques>
+            <hdf-bloc-competences :mode="mode" :perso="perso" @nouvelle-competence="onNouvelleCompetence"></hdf-bloc-competences>
+            <hdf-bloc-competences-dementielles :mode="mode" :perso="perso" @nouvelle-competence="onNouvelleCompetence"></hdf-bloc-competences-dementielles>
+            <hdf-bloc-equipement :mode="mode" :perso="perso"></hdf-bloc-equipement>
 
-            
-            <hdf-bloc-fiche title="Compétences">
-                <label for="perso.pointsDeGeneration">Points de Génération :</label>
-                <input v-model="perso.pointsDeGeneration" type="number" readonly="readonly">
-                <br/>
-                <ul v-if="perso.competences.length">
-                    <li v-for="(competence, indexCompetence) of perso.competences">
-                        {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} {{ competence.professionnelle ? "(Profession)" : "base " + competence.base }}) = {{ competence.valeur }} <button v-if="competence.professionnelle && mode==='création'" v-on:click="supprimeLigneCompetence(indexCompetence)">Supprimer</button>
-                    </li>    
-                </ul>
-                <span v-else>Aucune</span><br/>
-                <button v-if="mode==='jeu'" v-on:click="reveleCompetence">Révéler une Compétence</button>
-                <button v-if="mode==='création' && !perso.competences.some(_ => _.professionnelle)" v-on:click="choisitCompetenceProfessionnelle">Choisir sa Compétence Professionnelle</button>
-            </hdf-bloc-fiche>
-
-            <hdf-bloc-fiche title="Compétences Démentielles" v-if="mode==='jeu'">
-                <ul v-if="perso.competencesDementielles.length">
-                    <li v-for="(competence, indexCompetence) of perso.competencesDementielles" class="handwritten">
-                        {{ competence.intitule }} = {{ competence.valeur }}
-                    </li>
-                </ul>
-                <span v-else>Aucune</span><br/>
-                <button v-on:click="acquiertCompetenceDementielle">Acquérir une Compétence Démentielle (+1pt de Crise)</button>
-            </hdf-bloc-fiche>
-
-            <hdf-bloc-fiche title="Equipement" v-if="mode==='jeu'">
-                <button v-on:click="genereEquipementSaintFrusquin">Saint-Frusquin</button>
-                <ul v-if="perso.equipements.length">
-                    <li v-for="(equipement, indexEquipement) of perso.equipements" class="handwritten">
-                        {{indexEquipement+1}} : {{ equipement }} <button v-on:click="supprimeLigneEquipement(indexEquipement)">Supprimer</button>
-                    </li>
-                </ul>
-                <span v-else>Aucun</span><br/>
-                <input v-model="nouvelEquipement" type="text"><button v-on:click="ajouteLigneEquipement">Ajouter</button>
-            </hdf-bloc-fiche>
         </div>
     </body>
 </html>
