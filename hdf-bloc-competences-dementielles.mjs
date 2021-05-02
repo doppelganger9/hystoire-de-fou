@@ -24,7 +24,7 @@ export const BlocCompetencesDementiellesComponent = {
         </li>
     </ul>
     <span v-else>Aucune</span><br/>
-    <button v-on:click="acquiertCompetenceDementielle">Acquérir une Compétence Démentielle (+1pt de Crise)</button>
+    <button @click="acquiertCompetenceDementielle">Acquérir une Compétence Démentielle (+1pt de Crise)</button>
 </hdf-bloc-fiche>
 `,
 };

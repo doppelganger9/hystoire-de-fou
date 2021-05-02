@@ -21,9 +21,9 @@
             <div :class="hiddenVoile ? 'voile hidden' : 'voile'" @click.prevent.stop="masqueTout"></div>
             <!-- popup d'info -->
             <div :class="'popup '+(hiddenInfos ? 'hidden' : '')">
-                <button class="abs-top-right-10" v-on:click="masqueInfos">X</button>
+                <button class="abs-top-right-10" @click="masqueInfos">X</button>
                 <div class="contents" v-html="infos"></div>
-                <button v-on:click="masqueInfos">Fermer</button>
+                <button @click="masqueInfos">Fermer</button>
             </div>
             <button v-if="creationFinie && mode === 'création'" v-on:click="passerEnMode('jeu')">Création de personnage terminée</button>
             <!-- popup ajout compétence (professionnelle, normal ou démentielle) -->

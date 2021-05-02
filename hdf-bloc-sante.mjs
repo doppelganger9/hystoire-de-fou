@@ -29,7 +29,7 @@ export const BlocSanteComponent = {
 <h3>Douleurs :</h3>
 <ul v-if="perso.douleurs.length">
     <li v-for="(douleur, index) of perso.douleurs" class="handwritten">
-        {{douleur.valeur}} ({{ douleur.provenance }}) <button v-on:click="supprimeLigneDouleur(index)">Supprimer</button>
+        {{douleur.valeur}} ({{ douleur.provenance }}) <button @click="supprimeLigneDouleur(index)">Supprimer</button>
     </li>    
 </ul>
 <span v-else>Aucune</span><br/>
@@ -40,7 +40,7 @@ export const BlocSanteComponent = {
 <label for="nouvelleDouleur.provenance">Provenance :</label>
 <input name="nouvelleDouleur.provenance" v-model="nouvelleDouleur.provenance" type="text" class="handwritten">
 
-<button v-on:click="ajouteLigneDouleur">Ajouter Douleur</button>
+<button @click="ajouteLigneDouleur">Ajouter Douleur</button>
 </hdf-bloc-fiche>
 `,
 };

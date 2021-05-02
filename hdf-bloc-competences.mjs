@@ -34,12 +34,12 @@ export const BlocCompetencesComponent = {
     <ul v-if="perso.competences.length">
         <li v-for="(competence, indexCompetence) of perso.competences">
             {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} {{ competence.professionnelle ? "(Profession)" : "base " + competence.base }}) = {{ competence.valeur }}
-            <button v-if="competence.professionnelle && mode==='création'" v-on:click="supprimeLigneCompetence(indexCompetence)">Supprimer</button>
+            <button v-if="competence.professionnelle && mode==='création'" @click="supprimeLigneCompetence(indexCompetence)">Supprimer</button>
         </li>    
     </ul>
     <span v-else>Aucune</span><br/>
-    <button v-if="mode==='jeu'" v-on:click="reveleCompetence">Révéler une Compétence</button>
-    <button v-if="mode==='création' && !perso.competences.some(_ => _.professionnelle)" v-on:click="choisitCompetenceProfessionnelle">Choisir sa Compétence Professionnelle</button>
+    <button v-if="mode==='jeu'" @click="reveleCompetence">Révéler une Compétence</button>
+    <button v-if="mode==='création' && !perso.competences.some(_ => _.professionnelle)" @click="choisitCompetenceProfessionnelle">Choisir sa Compétence Professionnelle</button>
 </hdf-bloc-fiche>
 `,
 };
