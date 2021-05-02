@@ -31,6 +31,15 @@
                 @click="passerEnMode('jeu')">
                     Création de personnage terminée
             </button>
+            <button 
+                v-if="mode === 'jeu'" 
+                @click="sauvegardePerso">
+                    Sauvegarder personnage
+            </button>
+            <button 
+                @click="chargePerso">
+                    Charger personnage
+            </button>
             <hdf-popup-creation-competence 
                 :hidden="hiddenPopupCompetence" 
                 :mode="mode"
