@@ -10,7 +10,9 @@ import { BlocCompetencesDementiellesComponent } from "./hdf-bloc-competences-dem
 import { BlocEquipementComponent } from "./hdf-bloc-equipement.mjs";
 import { BlocSanteMentaleComponent } from "./hdf-bloc-sante-mentale.mjs";
 import { BlocEtatCivilComponent } from "./hdf-bloc-etat-civil.mjs";
+import { PopupCreationCompetenceComponent } from "./hdf-popup-creation-competence.mjs";
 
+Vue.component('hdf-popup-creation-competence', PopupCreationCompetenceComponent);
 Vue.component('hdf-bloc-etat-civil', BlocEtatCivilComponent);
 Vue.component('hdf-bloc-fiche', BlocFicheComponent);
 Vue.component('hdf-bloc-caracteristiques', BlocCaracteristiquesComponent);
@@ -59,33 +61,6 @@ export const app = new Vue({
         onNouvelleCompetence: function(event) {
             this.nouvelleCompetence = event;
             this.hiddenPopupCompetence = false;
-        },
-        nouvelleCompetenceNomCaracteristiqueDirectriceChanged: function() {
-            this.nouvelleCompetence.valeurCaracteristiqueDirectrice = this.perso[this.nouvelleCompetence.nomCaracteristiqueDirectrice];
-        },
-        valideAjoutCompetence: function(competence) {
-            if (competence.dementielle) {
-                this.perso.competencesDementielles.push(competence);
-                // TODO déclencher l'effet démentiel ?
-            } else {
-                if (competence.professionnelle && competence.nomCaracteristiqueDirectrice === 'entendement') {
-                    // si compétence professionnelle est sous Entendement, alors Culture Générale à 100% en bonus
-                    const cultureGeneraleEnBonus = new Competence();
-                    cultureGeneraleEnBonus.professionnelle = false;
-                    cultureGeneraleEnBonus.revelee = true;
-                    cultureGeneraleEnBonus.dementielle = false;
-                    cultureGeneraleEnBonus.intitule = "Culture Générale";
-                    cultureGeneraleEnBonus.valeurCaracteristiqueDirectrice = this.perso.entendement;
-                    cultureGeneraleEnBonus.nomCaracteristiqueDirectrice = "entendement"
-                    cultureGeneraleEnBonus.pointsDeGeneration = 0;
-                    cultureGeneraleEnBonus.base = 3; // 100%
-                    this.perso.competences.push(cultureGeneraleEnBonus);
-                }
-                this.perso.competences.push(competence);
-            }
-            this.nouvelleCompetence = new Competence();
-
-            this.masqueTout();
         },
         afficheVoile: function() {
             this.hiddenVoile = false;
