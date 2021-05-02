@@ -17,20 +17,20 @@
         <div id="app" :class="'visible'" class="hidden">
             <!-- affiché avant que l'app soit prête -->
             <h3 v-if="false" class="visible">En cours de chargement...</h3>
-            <!-- affichage d'un voile sous les popups -->
-            <div 
-                :class="hiddenVoile ? 'voile hidden' : 'voile'" 
-                @click.prevent.stop="masqueTout">
-            </div>
-            
-            <hdf-popup-infos :hidden="hiddenInfos" :infos="infos" @masque-infos="masqueInfos"></hdf-popup-infos>
-            
+            <hdf-voile
+                :hidden="hiddenVoile"
+                @masque-tout="masqueTout">
+            </hdf-voile>
+            <hdf-popup-infos
+                :hidden="hiddenInfos"
+                :infos="infos"
+                @masque-infos="masqueInfos">
+            </hdf-popup-infos>
             <button 
                 v-if="creationFinie && mode === 'création'" 
                 @click="passerEnMode('jeu')">
                     Création de personnage terminée
             </button>
-            
             <hdf-popup-creation-competence 
                 :hidden="hiddenPopupCompetence" 
                 :mode="mode"
@@ -38,15 +38,37 @@
                 :nouvelle-competence="nouvelleCompetence"
                 @masque-tout="masqueTout">
             </hdf-popup-creation-competence>
-
-            <hdf-bloc-etat-civil :mode="mode" :perso="perso"></hdf-bloc-etat-civil>
-            <hdf-bloc-sante-mentale :mode="mode" :perso="perso"></hdf-bloc-sante-mentale>
-            <hdf-bloc-sante :mode="mode" :perso="perso"></hdf-bloc-sante>
-            <hdf-bloc-caracteristiques :mode="mode" :perso="perso" @affiche-infos="afficheInfos"></hdf-bloc-caracteristiques>
-            <hdf-bloc-competences :mode="mode" :perso="perso" @nouvelle-competence="onNouvelleCompetence"></hdf-bloc-competences>
-            <hdf-bloc-competences-dementielles :mode="mode" :perso="perso" @nouvelle-competence="onNouvelleCompetence"></hdf-bloc-competences-dementielles>
-            <hdf-bloc-equipement :mode="mode" :perso="perso"></hdf-bloc-equipement>
-
+            <hdf-bloc-etat-civil
+                :mode="mode"
+                :perso="perso">
+            </hdf-bloc-etat-civil>
+            <hdf-bloc-sante-mentale
+                :mode="mode"
+                :perso="perso">
+            </hdf-bloc-sante-mentale>
+            <hdf-bloc-sante
+                :mode="mode"
+                :perso="perso">
+            </hdf-bloc-sante>
+            <hdf-bloc-caracteristiques 
+                :mode="mode"
+                :perso="perso" 
+                @affiche-infos="afficheInfos">
+            </hdf-bloc-caracteristiques>
+            <hdf-bloc-competences
+                :mode="mode"
+                :perso="perso"
+                @nouvelle-competence="onNouvelleCompetence">
+            </hdf-bloc-competences>
+            <hdf-bloc-competences-dementielles
+                :mode="mode"
+                :perso="perso"
+                @nouvelle-competence="onNouvelleCompetence">
+            </hdf-bloc-competences-dementielles>
+            <hdf-bloc-equipement
+                :mode="mode"
+                :perso="perso">
+            </hdf-bloc-equipement>
         </div>
     </body>
 </html>
