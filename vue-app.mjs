@@ -1,6 +1,6 @@
 // @ts-check
 import Vue from "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js";
-import { Competence, initNouvelleCompetence } from "./fiche-personnage.mjs";
+import { Competence } from "./fiche-personnage.mjs";
 import { ContextePersonnage } from "./fiche-personnage.mjs";
 import { BlocFicheComponent } from "./hdf-bloc-fiche.mjs";
 import { BlocSanteComponent } from "./hdf-bloc-sante.mjs";
@@ -8,10 +8,12 @@ import { BlocCaracteristiquesComponent } from "./hdf-bloc-caracteristiques.mjs";
 import { BlocCompetencesComponent } from "./hdf-bloc-competences.mjs";
 import { BlocCompetencesDementiellesComponent } from "./hdf-bloc-competences-dementielles.mjs";
 import { BlocEquipementComponent } from "./hdf-bloc-equipement.mjs";
+import { BlocSanteMentaleComponent } from "./hdf-bloc-sante-mentale.mjs";
 
 Vue.component('hdf-bloc-fiche', BlocFicheComponent);
 Vue.component('hdf-bloc-caracteristiques', BlocCaracteristiquesComponent);
 Vue.component('hdf-bloc-sante', BlocSanteComponent);
+Vue.component('hdf-bloc-sante-mentale', BlocSanteMentaleComponent);
 Vue.component('hdf-bloc-competences', BlocCompetencesComponent);
 Vue.component('hdf-bloc-competences-dementielles', BlocCompetencesDementiellesComponent);
 Vue.component('hdf-bloc-equipement', BlocEquipementComponent);
