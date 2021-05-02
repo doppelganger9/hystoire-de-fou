@@ -1,8 +1,9 @@
-import Vue from "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js"
+// @ts-check
+import Vue from "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js";
 import { Competence } from "./fiche-personnage.mjs";
-import { Douleur } from "./fiche-personnage.mjs";
-import { ContextePersonnage, infosCaracteristiques } from "./fiche-personnage.mjs"
+import { ContextePersonnage } from "./fiche-personnage.mjs";
 import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
+import { BlocSanteComponent } from "./hdf-bloc-sante.mjs";
 
 Vue.component('hdf-bloc-fiche', {
     props: ['title'],
@@ -14,23 +15,24 @@ Vue.component('hdf-bloc-fiche', {
     `,
 });
 
+Vue.component('hdf-bloc-sante', BlocSanteComponent);
+
+
 export const app = new Vue({
     el: '#app',
-    data: {
-        perso: new ContextePersonnage(),
-        infos: '',
-        hiddenInfos: true,
-        mode: 'création',
-        nouvelEquipement: '',
-        nouvelleDouleur: new Douleur(),
-        hiddenVoile: true,
-        hiddenPopupCompetence: true,
-        nouvelleCompetence: new Competence(),
+    data: function() {
+        return {
+            perso: new ContextePersonnage(),
+            infos: '',
+            hiddenInfos: true,
+            mode: 'création',
+            nouvelEquipement: '',
+            hiddenVoile: true,
+            hiddenPopupCompetence: true,
+            nouvelleCompetence: new Competence(),
+        };
     },
     computed: {
-        totalDouleurs: function() {
-            return this.perso.douleurs.reduce((total, douleur) => (+total)+(+douleur.valeur), 0);
-        },
         creationFinie: function() {
             const repartitionCaracFinie = this.perso.pointsCaracteristiqueRestant === 0;
             const persoAUneCompetenceProfessionnelle = this.perso.competences.some(_ => _.professionnelle);
@@ -62,13 +64,6 @@ export const app = new Vue({
         ajouteLigneEquipement: function() {
             this.perso.equipements.push(''+this.nouvelEquipement);
             this.nouvelEquipement = '';
-        },
-        supprimeLigneDouleur: function(indexDouleur) {
-            this.perso.douleurs = this.perso.douleurs.filter((_, index) => index !== indexDouleur);
-        },
-        ajouteLigneDouleur: function() {
-            this.perso.douleurs.push(this.nouvelleDouleur);
-            this.nouvelleDouleur = new Douleur();
         },
         initNouvelleCompetence() {
             this.nouvelleCompetence = new Competence();
