@@ -3,7 +3,6 @@
 Fiche de personnage automatisée, pour créer un personnage et le jouer.
 
 ## Objectifs
-
 ### Faire des simulations
 
 Pour comprendre les probabilités sur le système de santé mentale.
@@ -44,19 +43,26 @@ L'entrée en état de Choc dépendant du Niveau d'Accomplissement et de la VOLON
 
 à tout moment on peut choisir de saisir un résultat ou bien cliquer pour simuler un lancer de dé.
 
+### Technique
+
+Expérimenter sur une pile JS moderne avec ESModules, VueJS + VueX.
+
+Pendant mes heures de temps libre sur un weekend.
+
 ## Design
 
-- Vue.js parce que très simple et facile à injecter dans un html sans à avoir besoin de faire une app d'entreprise/industrielle.
-- VueX pour stocker l'état, au départ je suis parti sur des bindings et events qui repassaient par le root component, mais ça devenait très lourd. Je préfère que chaque composant soit relié en direct au Store. Le code "métier" est dans le Store, et les composants se retrouvent allégés !
-- ESModules car en 2021 c'est dispo quasi partout (sauf Opera ou browsers obscurs...), ça retire une dépendance envers un bundler/builder
-- pas de `package.json` pour le moment.
+- [Vue.js](https://vuejs.org/) parce que très simple et facile à injecter dans un html sans à avoir besoin de faire une app d'entreprise/industrielle.
+- [VueX](https://vuex.vuejs.org/) pour stocker l'état, au départ je suis parti sur des bindings et events qui repassaient par le root component, mais ça devenait très lourd. Je préfère que chaque composant soit relié en direct au Store. Le code "métier" est dans le Store, et les composants se retrouvent allégés !
+- [ESModules](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules) car en 2021 c'est dispo quasi partout (sauf Opera ou browsers obscurs...), ça retire une dépendance envers un bundler/builder
+- pas besoin de `package.json` pour le moment !
 
 ## Pour lancer et tester
 
-Les modules ne se chargent que si servit pas en `file://`, donc :
+Les ESModules ne se chargent que s'ils sont servis en `http(s)://` (pas en `file://`), donc :
 
 - `npx http-server .`
 - ouvrir http://127.0.0.1:8080/
 
 Pour repartir d'un personnage existant :
+
 - ouvrir [url sauvegardée](http://127.0.0.1:8080/#eyJub20iOiJUcmlzdGFuIiwiZGVzY3JpcHRpb24iOiJCcnVuLCB5ZXV4IG1hcnJvbnMsIHJlZ2FyZCB2aWYiLCJwcm9mZXNzaW9uIjoiSGlzdG9yaWVuIiwiYWdlIjoiMjMiLCJ0YWlsbGVDbSI6IjE4MCIsIm1vdERlRGVtZW5jZSI6IkVjb3V2aWxsb24hIiwicG9pZHMiOiI3NSIsInZvbG9udGUiOiIxMCIsImludGVsbGVjdCI6IjEzIiwic2Vuc2l0aWYiOiIxMCIsImNoYXJpc21lIjoiMTMiLCJjb25zdGl0dXRpb24iOiIxMyIsInBlcmNlcHRpb24iOiIxMiIsImFnaWxpdGUiOiI5IiwiY29tcGV0ZW5jZXMiOlt7ImludGl0dWxlIjoiQ3VsdHVyZSBH6W7pcmFsZSIsImJhc2UiOjMsInJldmVsZWUiOnRydWUsImRlbWVudGllbGxlIjpmYWxzZSwicHJvZmVzc2lvbm5lbGxlIjpmYWxzZSwidmFsZXVyQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6MTEsIm5vbUNhcmFjdGVyaXN0aXF1ZURpcmVjdHJpY2UiOiJlbnRlbmRlbWVudCIsInBvaW50c0RlR2VuZXJhdGlvbiI6MH0seyJpbnRpdHVsZSI6Ikhpc3J0b2lyZSIsImJhc2UiOjAsInJldmVsZWUiOnRydWUsImRlbWVudGllbGxlIjpmYWxzZSwicHJvZmVzc2lvbm5lbGxlIjp0cnVlLCJ2YWxldXJDYXJhY3RlcmlzdGlxdWVEaXJlY3RyaWNlIjoxMSwibm9tQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6ImVudGVuZGVtZW50IiwicG9pbnRzRGVHZW5lcmF0aW9uIjowfSx7ImludGl0dWxlIjoiRXNxdWl2ZSIsImJhc2UiOiIxIiwicmV2ZWxlZSI6dHJ1ZSwiZGVtZW50aWVsbGUiOmZhbHNlLCJwcm9mZXNzaW9ubmVsbGUiOmZhbHNlLCJ2YWxldXJDYXJhY3RlcmlzdGlxdWVEaXJlY3RyaWNlIjoiOSIsIm5vbUNhcmFjdGVyaXN0aXF1ZURpcmVjdHJpY2UiOiJhZ2lsaXRlIiwicG9pbnRzRGVHZW5lcmF0aW9uIjoiMSJ9XSwiY29tcGV0ZW5jZXNEZW1lbnRpZWxsZXMiOlt7ImludGl0dWxlIjoiUGlzdGFnZSBkZXMgaHXudHJlcyIsImJhc2UiOjAsInJldmVsZWUiOmZhbHNlLCJkZW1lbnRpZWxsZSI6dHJ1ZSwicHJvZmVzc2lvbm5lbGxlIjpmYWxzZSwidmFsZXVyQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6IjEyIiwibm9tQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6InBlcmNlcHRpb24iLCJwb2ludHNEZUdlbmVyYXRpb24iOjB9XSwiZG91bGV1cnMiOltdLCJwb2ludHNEZUNyaXNlIjowLCJjaG9jc1BhcmFubyI6MCwiY2hvY3NTY2hpem8iOjAsImNob2NzUHJvZm9uZHMiOjAsImV0YXREZUNob2MiOmZhbHNlLCJ0b3RhbEFjY29tcGxpc3NlbWVudCI6MCwiZXF1aXBlbWVudHMiOlsicGFy6W8gZW4gY3VpciBkZSBjb3VsZXVyIGtha2kiLCJ2ZXN0ZSBlbiBueWxvbiBkZSBjb3VsZXVyIGJlaWdlIiwiT3V2cmUgaHXudHJlcyJdfQ==)
