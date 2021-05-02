@@ -11,7 +11,9 @@ import { BlocEquipementComponent } from "./hdf-bloc-equipement.mjs";
 import { BlocSanteMentaleComponent } from "./hdf-bloc-sante-mentale.mjs";
 import { BlocEtatCivilComponent } from "./hdf-bloc-etat-civil.mjs";
 import { PopupCreationCompetenceComponent } from "./hdf-popup-creation-competence.mjs";
+import { PopupInfosComponent } from "./hdf-popup-infos.mjs";
 
+Vue.component('hdf-popup-infos', PopupInfosComponent);
 Vue.component('hdf-popup-creation-competence', PopupCreationCompetenceComponent);
 Vue.component('hdf-bloc-etat-civil', BlocEtatCivilComponent);
 Vue.component('hdf-bloc-fiche', BlocFicheComponent);
