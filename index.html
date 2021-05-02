@@ -40,6 +40,14 @@
                 @click="chargePerso">
                     Charger personnage
             </button>
+            <hdf-popup-jet
+                :hidden="hiddenPopupJet"
+                :perso="perso"
+                :mode="mode"
+                :type="etatJet.type"
+                :nom="etatJet.nom"
+                @masque-tout="masqueTout">
+            </hdf-popup-jet>
             <hdf-popup-creation-competence 
                 :hidden="hiddenPopupCompetence" 
                 :mode="mode"
@@ -62,7 +70,8 @@
             <hdf-bloc-caracteristiques 
                 :mode="mode"
                 :perso="perso" 
-                @affiche-infos="afficheInfos">
+                @affiche-infos="afficheInfos"
+                @click-caracteristique="affichePopupJet">
             </hdf-bloc-caracteristiques>
             <hdf-bloc-competences
                 :mode="mode"

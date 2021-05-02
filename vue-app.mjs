@@ -10,11 +10,13 @@ import { BlocSanteMentaleComponent } from "./hdf-bloc-sante-mentale.mjs";
 import { BlocEtatCivilComponent } from "./hdf-bloc-etat-civil.mjs";
 import { PopupCreationCompetenceComponent } from "./hdf-popup-creation-competence.mjs";
 import { PopupInfosComponent } from "./hdf-popup-infos.mjs";
+import { PopupJetComponent } from "./hdf-popup-jet.mjs";
 import { VoileComponent } from "./hdf-voile.mjs";
 import { FicheAppComponent } from "./hdf-fiche-app.mjs";
 
 
 Vue.component('hdf-voile', VoileComponent);
+Vue.component('hdf-popup-jet', PopupJetComponent);
 Vue.component('hdf-popup-infos', PopupInfosComponent);
 Vue.component('hdf-popup-creation-competence', PopupCreationCompetenceComponent);
 Vue.component('hdf-bloc-etat-civil', BlocEtatCivilComponent);
