@@ -53,7 +53,7 @@ export const BlocCompetencesComponent = {
                 )
                  = {{ competence.valeur }}
             </div>
-            <button v-if="competence.professionnelle && mode==='création'" 
+            <button v-if="mode==='création'" 
                     @click="supprimeLigneCompetence(indexCompetence)">
                 Supprimer
             </button>
