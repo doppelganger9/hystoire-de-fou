@@ -23,10 +23,23 @@ import { tirerUnDe20 } from "./trousse-des.mjs";
 export const PopupJetComponent = {
     computed: {
         ...mapState([ 'mode', 'perso', 'hiddenPopupJet', 'etatJet' ]),
-
+        valorisationATester: function() {
+            if (this.etatJet.type.toLowerCase() === 'caractéristique') {
+                return +this.perso[this.etatJet.nom];
+            } else if (this.etatJet.type.toLowerCase() === 'compétence') {
+                const comp = this.perso.competences.reduce((found, c) => !found && c.intitule === this.etatJet.nom ? c : found, null);
+                return +comp.valeur;
+            } else if (this.etatJet.type.toLowerCase() === 'compétence démentielle') {
+                const comp = this.perso.competencesDementielles.reduce((found, c) => !found && c.intitule === this.etatJet.nom ? c : found, null);
+                return +comp.valeur;
+            } else {
+                console.error("jet pour "+this.etatJet.type+" pas encore implémenté");
+                return undefined;
+            }
+        },
         seuilReussite: function() {
             this.ajustement = +this.ajustement;
-            return +this.perso[this.etatJet.nom] + this.ajustement;
+            return +this.valorisationATester + this.ajustement;
         },
         consequence: function() {
             this.premierJet= +this.premierJet;
@@ -145,7 +158,7 @@ export const PopupJetComponent = {
     <button class="abs-top-right-10" @click="masqueTout">X</button>
     <div class="contents">
         <h3>Faire un Jet de {{ etatJet.type }}</h3>
-        {{ etatJet.nom }} : {{ perso[etatJet.nom] }}
+        {{ etatJet.nom }} : {{ valorisationATester }}
         <br/>
         <label for="typeAjustement:ajustement">avec Ajustement</label><input id="typeAjustement:ajustement" name="typeAjustement" value="ajustement" type="radio" v-model="typeAjustement">
         <br/>

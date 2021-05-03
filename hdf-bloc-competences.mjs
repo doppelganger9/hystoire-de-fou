@@ -28,6 +28,14 @@ export const BlocCompetencesComponent = {
         supprimeLigneCompetence: function(indexCompetence) {
             this.$store.commit('supprimeLigneCompetence', indexCompetence);
         },
+        clickCompetence: function(competence) {
+            if (this.mode === 'jeu') {
+                this.$store.dispatch("affichePopupJet", { 
+                    nom: competence.intitule, 
+                    type: 'compétence'
+                });
+            }
+        },
     },
     template: `
 <hdf-bloc-fiche title="Compétences">
@@ -36,8 +44,19 @@ export const BlocCompetencesComponent = {
     <br/>
     <ul v-if="perso.competences.length">
         <li v-for="(competence, indexCompetence) of perso.competences">
-            {{competence.intitule}} ({{ competence.nomCaracteristiqueDirectrice }} {{ competence.professionnelle ? "(Profession)" : "base " + competence.base }}) = {{ competence.valeur }}
-            <button v-if="competence.professionnelle && mode==='création'" @click="supprimeLigneCompetence(indexCompetence)">Supprimer</button>
+            <div @click="clickCompetence(competence)">
+                {{ competence.croixExperience ? '[XP!] ' : ''}}
+                {{competence.intitule}}
+                (
+                    {{ competence.nomCaracteristiqueDirectrice }}
+                    {{ competence.professionnelle ? "(Profession)" : "base " + competence.base + " +GEN " + competence.pointsDeGeneration }}
+                )
+                 = {{ competence.valeur }}
+            </div>
+            <button v-if="competence.professionnelle && mode==='création'" 
+                    @click="supprimeLigneCompetence(indexCompetence)">
+                Supprimer
+            </button>
         </li>    
     </ul>
     <span v-else>Aucune</span><br/>
