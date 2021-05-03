@@ -133,7 +133,7 @@ export const PopupJetComponent = {
             // modifier this.perso éventuellement
             if (this.etatJet.type === 'compétence' 
                     && this.seuilReussite <= 10 
-                    && this.conséquence.startsWith("succès")) {
+                    && this.consequence.indexOf("succès")==0) {
                 this.$store.commit("marqueCroixExperience", this.etatJet.nom);
             } 
 

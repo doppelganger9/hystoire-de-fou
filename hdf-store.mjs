@@ -14,7 +14,7 @@ export const HdfStore = {
     hiddenPopupCompetence: true,
     nouvelleCompetence: new Competence(),
     hiddenPopupJet: true,
-    etatJet: {nom:'volonte', type:'caracteristique'},
+    etatJet: {nom:'volonte', type:'caractéristique'},
     journal: [],
   },
   getters: {
@@ -98,7 +98,12 @@ export const HdfStore = {
       state.perso.competencesDementielles.push(competence);
     },
     marqueCroixExperience: function(state, nomCompetence) {
-      state.perso.competences[nomCompetence].croixExperience = true;
+      const comp = state.perso.competences.reduce((found, c) => !found && c.intitule === nomCompetence ? c : found, null);
+      comp.croixExperience = true;
+    },
+    supprimeCroixExperience: function(state, nomCompetence) {
+      const comp = state.perso.competences.reduce((found, c) => !found && c.intitule === nomCompetence ? c : found, null);
+      comp.croixExperience = false;
     },
     supprimeLigneDouleur: function(state, indexDouleur) {
       state.perso.douleurs = state.perso.douleurs.filter((_, index) => index !== indexDouleur);
@@ -125,7 +130,7 @@ export const HdfStore = {
         const test = (document.location.hash) ?
             document.location.hash.substring(1)
             :
-            `eyJub20iOiJUcmlzdGFuIiwiZGVzY3JpcHRpb24iOiJCcnVuLCB5ZXV4IG1hcnJvbnMsIHJlZ2FyZCB2aWYiLCJwcm9mZXNzaW9uIjoiSGlzdG9yaWVuIiwiYWdlIjoiMjMiLCJ0YWlsbGVDbSI6IjE4MCIsIm1vdERlRGVtZW5jZSI6IkVjb3V2aWxsb24hIiwicG9pZHMiOiI3NSIsInZvbG9udGUiOiIxMCIsImludGVsbGVjdCI6IjEzIiwic2Vuc2l0aWYiOiIxMCIsImNoYXJpc21lIjoiMTMiLCJjb25zdGl0dXRpb24iOiIxMyIsInBlcmNlcHRpb24iOiIxMiIsImFnaWxpdGUiOiI5IiwiY29tcGV0ZW5jZXMiOlt7ImludGl0dWxlIjoiQ3VsdHVyZSBH6W7pcmFsZSIsImJhc2UiOjMsInJldmVsZWUiOnRydWUsImRlbWVudGllbGxlIjpmYWxzZSwicHJvZmVzc2lvbm5lbGxlIjpmYWxzZSwidmFsZXVyQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6MTEsIm5vbUNhcmFjdGVyaXN0aXF1ZURpcmVjdHJpY2UiOiJlbnRlbmRlbWVudCIsInBvaW50c0RlR2VuZXJhdGlvbiI6MH0seyJpbnRpdHVsZSI6Ikhpc3J0b2lyZSIsImJhc2UiOjAsInJldmVsZWUiOnRydWUsImRlbWVudGllbGxlIjpmYWxzZSwicHJvZmVzc2lvbm5lbGxlIjp0cnVlLCJ2YWxldXJDYXJhY3RlcmlzdGlxdWVEaXJlY3RyaWNlIjoxMSwibm9tQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6ImVudGVuZGVtZW50IiwicG9pbnRzRGVHZW5lcmF0aW9uIjowfV0sImNvbXBldGVuY2VzRGVtZW50aWVsbGVzIjpbXSwiZG91bGV1cnMiOltdLCJwb2ludHNEZUNyaXNlIjowLCJjaG9jc1BhcmFubyI6MCwiY2hvY3NTY2hpem8iOjAsImNob2NzUHJvZm9uZHMiOjAsImV0YXREZUNob2MiOmZhbHNlLCJ0b3RhbEFjY29tcGxpc3NlbWVudCI6MCwiZXF1aXBlbWVudHMiOltdfQ==`;
+            `eyJub20iOiJUcmlzdGFuIiwiZGVzY3JpcHRpb24iOiJCcnVuLCB5ZXV4IG1hcnJvbnMsIHJlZ2FyZCB2aWYiLCJwcm9mZXNzaW9uIjoiSGlzdG9yaWVuIiwiYWdlIjoiMjMiLCJ0YWlsbGVDbSI6IjE4MCIsIm1vdERlRGVtZW5jZSI6IkVjb3V2aWxsb24hIiwicG9pZHMiOiI3NSIsInZvbG9udGUiOiIxMCIsImludGVsbGVjdCI6IjEzIiwic2Vuc2l0aWYiOiIxMCIsImNoYXJpc21lIjoiMTMiLCJjb25zdGl0dXRpb24iOiIxMyIsInBlcmNlcHRpb24iOiIxMiIsImFnaWxpdGUiOiI5IiwiY29tcGV0ZW5jZXMiOlt7ImludGl0dWxlIjoiQ3VsdHVyZSBH6W7pcmFsZSIsImJhc2UiOjMsInJldmVsZWUiOnRydWUsImRlbWVudGllbGxlIjpmYWxzZSwicHJvZmVzc2lvbm5lbGxlIjpmYWxzZSwidmFsZXVyQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6MTEsIm5vbUNhcmFjdGVyaXN0aXF1ZURpcmVjdHJpY2UiOiJlbnRlbmRlbWVudCIsInBvaW50c0RlR2VuZXJhdGlvbiI6MCwiY3JvaXhFeHBlcmllbmNlIjpmYWxzZX0seyJpbnRpdHVsZSI6Ikhpc3RvaXJlIiwiYmFzZSI6MCwicmV2ZWxlZSI6dHJ1ZSwiZGVtZW50aWVsbGUiOmZhbHNlLCJwcm9mZXNzaW9ubmVsbGUiOnRydWUsInZhbGV1ckNhcmFjdGVyaXN0aXF1ZURpcmVjdHJpY2UiOjExLCJub21DYXJhY3RlcmlzdGlxdWVEaXJlY3RyaWNlIjoiZW50ZW5kZW1lbnQiLCJwb2ludHNEZUdlbmVyYXRpb24iOjAsImNyb2l4RXhwZXJpZW5jZSI6ZmFsc2V9LHsiaW50aXR1bGUiOiJFc3F1aXZlIiwiYmFzZSI6IjEiLCJyZXZlbGVlIjp0cnVlLCJkZW1lbnRpZWxsZSI6ZmFsc2UsInByb2Zlc3Npb25uZWxsZSI6ZmFsc2UsInZhbGV1ckNhcmFjdGVyaXN0aXF1ZURpcmVjdHJpY2UiOiI5Iiwibm9tQ2FyYWN0ZXJpc3RpcXVlRGlyZWN0cmljZSI6ImFnaWxpdGUiLCJwb2ludHNEZUdlbmVyYXRpb24iOiIxIiwiY3JvaXhFeHBlcmllbmNlIjpmYWxzZX1dLCJjb21wZXRlbmNlc0RlbWVudGllbGxlcyI6W3siaW50aXR1bGUiOiJQaXN0YWdlIGRlcyBode50cmVzIiwiYmFzZSI6MCwicmV2ZWxlZSI6ZmFsc2UsImRlbWVudGllbGxlIjp0cnVlLCJwcm9mZXNzaW9ubmVsbGUiOmZhbHNlLCJ2YWxldXJDYXJhY3RlcmlzdGlxdWVEaXJlY3RyaWNlIjoiMTIiLCJub21DYXJhY3RlcmlzdGlxdWVEaXJlY3RyaWNlIjoicGVyY2VwdGlvbiIsInBvaW50c0RlR2VuZXJhdGlvbiI6MH1dLCJkb3VsZXVycyI6W10sInBvaW50c0RlQ3Jpc2UiOjAsImNob2NzUGFyYW5vIjowLCJjaG9jc1NjaGl6byI6MCwiY2hvY3NQcm9mb25kcyI6MCwiZXRhdERlQ2hvYyI6ZmFsc2UsInRvdGFsQWNjb21wbGlzc2VtZW50IjowLCJlcXVpcGVtZW50cyI6WyJwYXLpbyBlbiBjdWlyIGRlIGNvdWxldXIga2FraSIsInZlc3RlIGVuIG55bG9uIGRlIGNvdWxldXIgYmVpZ2UiLCJPdXZyZSBode50cmVzIl19`;
         const persoACopier = Object.appendChain(JSON.parse(atob(test)), new ContextePersonnage());
         // on retransforme les objets "simple" issus du JSON en modifiant leur chaîne de prototypage avec les type d'objets attendus
         persoACopier.competences.map(item => Object.appendChain(item, new Competence()));

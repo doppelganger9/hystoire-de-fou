@@ -14,7 +14,7 @@ export const BlocCaracteristiquesComponent = {
             this.$store.dispatch('afficheInfos', infosCaracteristiques[typeInfos]);
         },
         clickedCaracteristique: function(nomCaracteristique) {
-            this.$store.dispatch('affichePopupJet', { nom:nomCaracteristique, type:'caracteristique'});
+            this.$store.dispatch('affichePopupJet', { nom:nomCaracteristique, type:'caractéristique'});
         },
     },
     template: `
