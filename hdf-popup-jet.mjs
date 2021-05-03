@@ -131,6 +131,11 @@ export const PopupJetComponent = {
             const ligneJournal = `Jet de ${this.etatJet.type} sur ${this.etatJet.nom} avec ${this.typeAjustement}=${this.ajustement} : (${this.premierJet}) ${this.demandeConfirmationCritique ? '('+this.deuxiemeJet+')' : ''} ${this.consequence}.`;
             this.$store.commit("ajouteLigneJournal", ligneJournal);
             // modifier this.perso éventuellement
+            if (this.etatJet.type === 'compétence' 
+                    && this.seuilReussite <= 10 
+                    && this.conséquence.startsWith("succès")) {
+                this.$store.commit("marqueCroixExperience", this.etatJet.nom);
+            } 
 
             this.masqueTout();
         },

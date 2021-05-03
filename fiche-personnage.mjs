@@ -76,6 +76,7 @@ export class Competence {
     revelee = false;
     dementielle = false;
     professionnelle = false;
+    croixExperience = false;
     get valeur() {
         if (this.dementielle) {
             // 100% + 1

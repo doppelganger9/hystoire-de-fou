@@ -97,6 +97,9 @@ export const HdfStore = {
     ajouteCompetenceDementielle: function(state, competence) {
       state.perso.competencesDementielles.push(competence);
     },
+    marqueCroixExperience: function(state, nomCompetence) {
+      state.perso.competences[nomCompetence].croixExperience = true;
+    },
     supprimeLigneDouleur: function(state, indexDouleur) {
       state.perso.douleurs = state.perso.douleurs.filter((_, index) => index !== indexDouleur);
     },
