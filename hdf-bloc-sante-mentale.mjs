@@ -1,15 +1,32 @@
 //@ts-check
 import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
+import { infosMotDeDemence } from "./fiche-personnage.mjs";
 
 export const BlocSanteMentaleComponent = {
     computed: {
         ...mapState(['mode', 'perso']),
     },
+    methods: {
+        afficheInfos: function() {
+            this.$store.dispatch('afficheInfos', infosMotDeDemence());
+        },
+        clickedMotDeDemence: function() {
+            if (this.mode === 'jeu') {
+                this.$store.dispatch('affichePopupEffetsDementiels');
+            }
+        },
+    },
     template: `
 <hdf-bloc-fiche title="Santé Mentale">
     <div>
         <label for="perso.motDeDemence">Mot de Démence :</label>
-        <input name="perso.motDeDemence" v-model="perso.motDeDemence" type="text" placeholder="Mot de démence du personnage" :readonly="mode==='jeu'">
+        <button v-if="mode=='création'" @click="afficheInfos">Infos</button>
+        <input name="perso.motDeDemence" 
+            v-model="perso.motDeDemence" 
+            type="text" 
+            placeholder="Mot de démence du personnage" 
+            :readonly="mode==='jeu'" 
+            @click="clickedMotDeDemence">
         <br/>
     </div>
     <div v-if="mode==='jeu'">

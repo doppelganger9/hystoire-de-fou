@@ -253,6 +253,9 @@ AGILITE est rarement utilisée telle quelle en cours de jeu, mais sert à déter
 };
 
 const motsInsolites = [
+    "Poulet Vanille", // exemple lu quelque part
+    "Constantinople", // tiré d'un film de Woody Hallen, mot déclenchant un effet post-hypnose
+    "Palsambleu",
     "Branquignol",
     "Foutriquet", // individu maigrichon
     "Embrouillamini",
@@ -281,3 +284,32 @@ const motsInsolites = [
     "Cacochyme", // constitution faible, santé déficiente
     // n'importe quel mot de http://golfes-dombre.nuxit.net/mots-rares/a.html
 ];
+
+export function infosMotDeDemence() {
+    return `
+    <h3>Mot de Démence</h3>
+    <p>Choisissez librement votre mot de démence.</p>
+    <p>En termes de rôle, ce mot vous servira à déclencher vos effets démentiels.</p>
+    <p>Vous aurez à le proférer souvent.</p>
+    <p>Peu importe la signification intrinsèque du mot, c'est uniquement votre symbole, votre marque personnelle.</p>
+    <p>Les effets sont les mêmes pour tous.</p>
+    <p>Vous pouvez choisir un mot banal ou savant, voire un nom propre.</p>
+    <p>Une courte locution est également possible, mais pas une phrase.</p>
+    <p>Quelques exemples de mots de démence couramment employés dans la réalité :</p>
+    <ul>
+    <li>Au secours !</li>
+    <li>Maman !</li>
+    <li>Help !</li>
+    <li>Ciel !</li>
+    <li>O my god !</li>
+    <li>Police !</li>
+    <li>Sapristi !</li>
+    <li>Syntax Error !</li>
+    <li>Ma biche !</li>
+    <li>Zut !</li>
+    </ul>
+    <p>Efforcez-vous toutefois de trouver quelque chose de plus personnel.
+    <p>Voici quelques exemples tirés d'une curation de certains mots peu usités de notre langue française:</p>
+    <ul>${motsInsolites.map(mot => "<li>" + mot + "</li>").join('')}</ul>
+`;
+}

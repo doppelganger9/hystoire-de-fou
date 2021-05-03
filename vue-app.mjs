@@ -12,6 +12,7 @@ import { BlocEtatCivilComponent } from "./hdf-bloc-etat-civil.mjs";
 import { PopupCreationCompetenceComponent } from "./hdf-popup-creation-competence.mjs";
 import { PopupInfosComponent } from "./hdf-popup-infos.mjs";
 import { PopupJetComponent } from "./hdf-popup-jet.mjs";
+import { PopupEffetsDementielsComponent } from "./hdf-popup-effets-dementiels.mjs";
 import { VoileComponent } from "./hdf-voile.mjs";
 import { FicheAppComponent } from "./hdf-fiche-app.mjs";
 import { BlocJournalComponent } from "./hdf-bloc-journal.mjs";
@@ -30,6 +31,7 @@ Vue.component('hdf-bloc-competences', BlocCompetencesComponent);
 Vue.component('hdf-bloc-competences-dementielles', BlocCompetencesDementiellesComponent);
 Vue.component('hdf-bloc-equipement', BlocEquipementComponent);
 Vue.component('hdf-bloc-journal', BlocJournalComponent);
+Vue.component('hdf-popup-effets-dementiels', PopupEffetsDementielsComponent);
 
 // Application Vue
 export const app = new Vue(FicheAppComponent);

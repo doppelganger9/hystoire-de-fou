@@ -16,6 +16,7 @@ export const HdfStore = {
     hiddenPopupJet: true,
     etatJet: {nom:'volonte', type:'caractéristique'},
     journal: [],
+    hiddenPopupEffetsDementiels: true,
   },
   getters: {
     creationFinie: function(state) {
@@ -40,6 +41,16 @@ export const HdfStore = {
   mutations: {
     increment (state) {
       state.count++
+    },
+    // ---
+    preparePopupEffetsDementiels: function(state, event) {
+      // nécessaire ??
+    },
+    affichePopupEffetsDementiels: function(state) {
+      state.hiddenPopupEffetsDementiels = false;
+    },
+    masquePopupEffetsDementiels: function(state) {
+      state.hiddenPopupEffetsDementiels = true;
     },
     // ---
     prepareInfos: function(state, event) {
@@ -144,6 +155,7 @@ export const HdfStore = {
     masqueTout: function(context) {
       context.commit('masqueInfos');
       context.commit('masquePopupCompetence');
+      context.commit('masquePopupEffetsDementiels');
       context.commit('masqueVoile');
       context.commit('masquePopupJet');
     },
@@ -160,6 +172,11 @@ export const HdfStore = {
     affichePopupCompetence: function(context, event) {
       context.commit('preparePopupCompetence', event);
       context.commit('affichePopupCompetence');
+      context.commit('afficheVoile');
+    },
+    affichePopupEffetsDementiels: function(context, event) {
+      context.commit('preparePopupEffetsDementiels', event);
+      context.commit('affichePopupEffetsDementiels');
       context.commit('afficheVoile');
     },
     chargePersonnage: function(context) {
