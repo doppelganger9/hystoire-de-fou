@@ -2,6 +2,7 @@
 import "./object-append-chain.mjs";
 import { ContextePersonnage, Competence, Douleur } from "./fiche-personnage.mjs";
 import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
+import { appelDementiel } from "./effets-dementiels.mjs";
 
 export const HdfStore = {
   state: {
@@ -149,6 +150,10 @@ export const HdfStore = {
         persoACopier.douleurs.map(item => Object.appendChain(item, new Douleur()));
 
         state.perso = persoACopier;
+    },
+    // ---
+    appelDementiel: function(state) {
+      appelDementiel(state.perso, ligne => state.journal.push(ligne));
     }
   },
   actions: {
