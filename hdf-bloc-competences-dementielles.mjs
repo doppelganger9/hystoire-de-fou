@@ -18,11 +18,22 @@ export const BlocCompetencesDementiellesComponent = {
             
             this.$store.dispatch('affichePopupCompetence', this.nouvelleCompetence);
         },
+        clickCompetenceDementielle: function(competenceDementielle) {
+            if (this.mode === 'jeu') {
+                this.$store.dispatch("affichePopupJet", { 
+                    nom: competenceDementielle.intitule, 
+                    type: 'compétence démentielle'
+                });
+            }
+        },
     },
     template: `
 <hdf-bloc-fiche title="Compétences Démentielles" v-if="mode==='jeu'">
     <ul v-if="perso.competencesDementielles.length">
-        <li v-for="(competence, indexCompetence) of perso.competencesDementielles" class="handwritten">
+        <li v-for="(competence, indexCompetence) of perso.competencesDementielles" 
+            class="handwritten" 
+            @click="clickCompetenceDementielle(competence)">
+            
             {{ competence.intitule }} = {{ competence.valeur }}
         </li>
     </ul>
