@@ -14,6 +14,7 @@ import { PopupInfosComponent } from "./hdf-popup-infos.mjs";
 import { PopupJetComponent } from "./hdf-popup-jet.mjs";
 import { VoileComponent } from "./hdf-voile.mjs";
 import { FicheAppComponent } from "./hdf-fiche-app.mjs";
+import { BlocJournalComponent } from "./hdf-bloc-journal.mjs";
 
 // découpage en sous composants
 Vue.component('hdf-voile', VoileComponent);
@@ -28,6 +29,7 @@ Vue.component('hdf-bloc-sante-mentale', BlocSanteMentaleComponent);
 Vue.component('hdf-bloc-competences', BlocCompetencesComponent);
 Vue.component('hdf-bloc-competences-dementielles', BlocCompetencesDementiellesComponent);
 Vue.component('hdf-bloc-equipement', BlocEquipementComponent);
+Vue.component('hdf-bloc-journal', BlocJournalComponent);
 
 // Application Vue
 export const app = new Vue(FicheAppComponent);

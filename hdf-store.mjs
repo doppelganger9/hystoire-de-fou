@@ -15,6 +15,7 @@ export const HdfStore = {
     nouvelleCompetence: new Competence(),
     hiddenPopupJet: true,
     etatJet: {nom:'volonte', type:'caracteristique'},
+    journal: [],
   },
   getters: {
     creationFinie: function(state) {
@@ -81,6 +82,10 @@ export const HdfStore = {
     },
     affichePopupCompetence: function(state) {
       state.hiddenPopupCompetence = false;
+    },
+    // ---
+    ajouteLigneJournal: function(state, ligne) {
+      state.journal.push(ligne);
     },
     // ---
     supprimeLigneCompetence: function(state, indexCompetence) {
