@@ -3,18 +3,16 @@ import { tirerUnDe20 } from "./trousse-des.mjs";
 import { Competence } from "./fiche-personnage.mjs";
 import { ajouterPointDeCrise, faireUnJetDeCrise } from "./sante-mentale.mjs";
 
-const log = false;
-
 // ---------------------------------------------------------
 // Effets Démentiels
 // ---------------------------------------------------------
 
-export function appelDementiel(contextePersonnage) {
-    contextePersonnage = ajouterPointDeCrise(contextePersonnage, undefined);
+export function appelDementiel(contextePersonnage, logFn) {
+    contextePersonnage = ajouterPointDeCrise(contextePersonnage, undefined, logFn);
     return contextePersonnage;
 }
 
-export function acquerirCompetenceDementielle(contextePersonnage, nomCompetence, caracteristiqueDirectrice) {
+export function acquerirCompetenceDementielle(contextePersonnage, nomCompetence, caracteristiqueDirectrice, logFn) {
     const competenceDementielle = new Competence();
     competenceDementielle.intitule = nomCompetence,
     competenceDementielle.dementielle = true;
@@ -22,13 +20,13 @@ export function acquerirCompetenceDementielle(contextePersonnage, nomCompetence,
     competenceDementielle.nomCaracteristiqueDirectrice = caracteristiqueDirectrice;
 
     contextePersonnage.competencesDementielles.push(competenceDementielle);
-    log && console.debug(`personnage a acquis ${competenceDementielle.intitule} à ${competenceDementielle.valeur}`);
-    return ajouterPointDeCrise(contextePersonnage, undefined);
+    logFn && logFn(`personnage a acquis ${competenceDementielle.intitule} à ${competenceDementielle.valeur}`);
+    return ajouterPointDeCrise(contextePersonnage, undefined, logFn);
 }
 
 // exemple ajustement -2, intensite 2
-export function incredire(contextePersonnage, caracteristiqueDirectrice, ajustement, intensiteRequise) {
-    const d20 = tirerUnDe20();
+export function incredire(contextePersonnage, caracteristiqueDirectrice, ajustement, intensiteRequise, logFn) {
+    const d20 = tirerUnDe20(logFn);
     const seuilReussite = contextePersonnage[caracteristiqueDirectrice] + ajustement;
     let critique = false;
     let intensite = 0;
@@ -48,11 +46,11 @@ export function incredire(contextePersonnage, caracteristiqueDirectrice, ajustem
         }
         intensite = critique ? 2 : 1;
         if (intensite >= intensiteRequise) {
-            log && console.debug(`incrédulité réussie !`);
+            logFn && logFn(`incrédulité réussie !`);
             return contextePersonnage;
         } else {
-            log && console.debug(`incrédulité pas assez intense !`);
-            return faireUnJetDeCrise(contextePersonnage, caracteristiqueDirectrice);
+            logFn && logFn(`incrédulité pas assez intense !`);
+            return faireUnJetDeCrise(contextePersonnage, caracteristiqueDirectrice, logFn);
         }
     } else {
         if (d20 >= 17) {
@@ -62,7 +60,7 @@ export function incredire(contextePersonnage, caracteristiqueDirectrice, ajustem
             // échec normal
             critique = false;
         }
-        log && console.debug(`incrédulité échouée !`);
-        return ajouterPointDeCrise(contextePersonnage, caracteristiqueDirectrice);
+        logFn && logFn(`incrédulité échouée !`);
+        return ajouterPointDeCrise(contextePersonnage, caracteristiqueDirectrice, logFn);
     }
 }

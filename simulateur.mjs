@@ -31,38 +31,39 @@ function simuler() {
         return contextePersonnage;
     }
     const iterations = 1000000;
+    const logFn = undefined; // possible: console.log ou console.debug
     let ptCrise = 0;
     for (let i=0; i<iterations; i++) {
         let perso = personnageMoyen();
-        perso = appelDementiel(perso); // 1pc = 5% d'avoir 1 choc
-        perso = appelDementiel(perso); // 2pc = 15% d'avoir 1 choc (5 + 10)
-        perso = appelDementiel(perso); // 3pc = 30% d'avoir 1 choc (5 + 10 + 15)
-        perso = appelDementiel(perso); // 4pc = 50% d'avoir 1 choc (5 + 10 + 15 + 20)
-        perso = appelDementiel(perso); // 5pc = 75% d'avoir 1 choc (5 + 10 + 15 + 20 + 25)
-        perso = appelDementiel(perso); // 6pc = en moyenne 1.05 choc (5 + 10 + 15 + 20 + 25 + 30)
-        //perso = faireUnJetDeCrise(perso); // 1.35
-        //perso = faireUnJetDeCrise(perso); // 1.65
-        //perso = faireUnJetDeCrise(perso); // 1.95 = meme proba que 6pc (30%)
-        perso = appelDementiel(perso); // 7pc = en moyenne 1.4 choc
-        perso = appelDementiel(perso); // 8pc = en moyenne 1.8 choc //-3:.53 /-2:.47/-1:.41 => premier état de choc VOL 8
-        //perso = faireUnJetDeCrise(perso);
-        //perso = faireUnJetDeCrise(perso);
-        //perso = faireUnJetDeCrise(perso);
-        //perso = faireUnJetDeCrise(perso);
-        //perso = faireUnJetDeCrise(perso);
-        //perso = faireUnJetDeCrise(perso);
-        perso = appelDementiel(perso); // 9pc = en moyenne 2.25 choc  //-2:.71/-1:.62/+0:.55 choc profond (donc 1 état de choc) /+1:.46/+2:.389/+3:.32 => premier état choc VOL 9-11
-        perso = appelDementiel(perso); // 10pc = en moyenne 2.75 choc //+0:.77/+1:.66/+2:.56/+3:.46 => premier état choc VOL 12
-        //perso = appelDementiel(perso); // 11pc = en moyenne 3.30 choc // 1 choc profond (donc 2 états de choc)/+3:.65/+4:.53/+5:.43 => premier état choc VOL 13-14
-        //perso = appelDementiel(perso); // 12pc = en moyenne 3.90 choc // 1.39 /+4:.73/+5:.58/+6:.45 => premier état choc VOL 15
-        //perso = appelDementiel(perso); // 13pc = en moyenne 4.55 choc // 1.78 / +5:.78 / +6:.61 / +7:.45
-        //perso = appelDementiel(perso); // 14pc = en moyenne 5.25 choc // 2.22 / +7:.61
-        //perso = appelDementiel(perso); // 15pc = en moyenne 6 choc // 2.725
-        //perso = appelDementiel(perso); // 16pc = en moyenne 6.80 choc // 3.28
-        //perso = appelDementiel(perso); // 17pc = en moyenne 7.65 choc // 3.88
-        //perso = appelDementiel(perso); // 18pc = en moyenne 8.55 choc
-        //perso = appelDementiel(perso); // 19pc = en moyenne 9.5 choc
-        //perso = appelDementiel(perso); // 20pc = en moyenne 10.5 choc
+        perso = appelDementiel(perso, logFn); // 1pc = 5% d'avoir 1 choc
+        perso = appelDementiel(perso, logFn); // 2pc = 15% d'avoir 1 choc (5 + 10)
+        perso = appelDementiel(perso, logFn); // 3pc = 30% d'avoir 1 choc (5 + 10 + 15)
+        perso = appelDementiel(perso, logFn); // 4pc = 50% d'avoir 1 choc (5 + 10 + 15 + 20)
+        perso = appelDementiel(perso, logFn); // 5pc = 75% d'avoir 1 choc (5 + 10 + 15 + 20 + 25)
+        perso = appelDementiel(perso, logFn); // 6pc = en moyenne 1.05 choc (5 + 10 + 15 + 20 + 25 + 30)
+        //perso = faireUnJetDeCrise(perso, logFn); // 1.35
+        //perso = faireUnJetDeCrise(perso, logFn); // 1.65
+        //perso = faireUnJetDeCrise(perso, logFn); // 1.95 = meme proba que 6pc (30%)
+        perso = appelDementiel(perso, logFn); // 7pc = en moyenne 1.4 choc
+        perso = appelDementiel(perso, logFn); // 8pc = en moyenne 1.8 choc //-3:.53 /-2:.47/-1:.41 => premier état de choc VOL 8
+        //perso = faireUnJetDeCrise(perso, logFn);
+        //perso = faireUnJetDeCrise(perso, logFn);
+        //perso = faireUnJetDeCrise(perso, logFn);
+        //perso = faireUnJetDeCrise(perso, logFn);
+        //perso = faireUnJetDeCrise(perso, logFn);
+        //perso = faireUnJetDeCrise(perso, logFn);
+        perso = appelDementiel(perso, logFn); // 9pc = en moyenne 2.25 choc  //-2:.71/-1:.62/+0:.55 choc profond (donc 1 état de choc) /+1:.46/+2:.389/+3:.32 => premier état choc VOL 9-11
+        perso = appelDementiel(perso, logFn); // 10pc = en moyenne 2.75 choc //+0:.77/+1:.66/+2:.56/+3:.46 => premier état choc VOL 12
+        //perso = appelDementiel(perso, logFn); // 11pc = en moyenne 3.30 choc // 1 choc profond (donc 2 états de choc)/+3:.65/+4:.53/+5:.43 => premier état choc VOL 13-14
+        //perso = appelDementiel(perso, logFn); // 12pc = en moyenne 3.90 choc // 1.39 /+4:.73/+5:.58/+6:.45 => premier état choc VOL 15
+        //perso = appelDementiel(perso, logFn); // 13pc = en moyenne 4.55 choc // 1.78 / +5:.78 / +6:.61 / +7:.45
+        //perso = appelDementiel(perso, logFn); // 14pc = en moyenne 5.25 choc // 2.22 / +7:.61
+        //perso = appelDementiel(perso, logFn); // 15pc = en moyenne 6 choc // 2.725
+        //perso = appelDementiel(perso, logFn); // 16pc = en moyenne 6.80 choc // 3.28
+        //perso = appelDementiel(perso, logFn); // 17pc = en moyenne 7.65 choc // 3.88
+        //perso = appelDementiel(perso, logFn); // 18pc = en moyenne 8.55 choc
+        //perso = appelDementiel(perso, logFn); // 19pc = en moyenne 9.5 choc
+        //perso = appelDementiel(perso, logFn); // 20pc = en moyenne 10.5 choc
 
         resultatsPointsChocs.push(perso.chocsParano + perso.chocsSchizo);
         resultatsPointsChocsProfonds.push(perso.chocsProfonds);
@@ -83,13 +84,13 @@ function simuler() {
         moyennePointsChocsProfonds,
         moyenneEtatDeChocs,
     };
-    // perso = acquerirCompetenceDementielle(perso, "Combat Hallebarde", "agilite");
-    // perso = acquerirCompetenceDementielle(perso, "Esquive", "agilite");
-    // perso = acquerirCompetenceDementielle(perso, "Pistage de dinosaure", "agilite");
-    // perso = incredire(perso, "sensitif", -1, 1);
-    // perso = incredire(perso, "sensitif", -2, 1);
-    // perso = incredire(perso, "intellect", -2, 2);
-    // perso = incredire(perso, "intellect", -1, 2);
+    // perso = acquerirCompetenceDementielle(perso, "Combat Hallebarde", "agilite", logFn);
+    // perso = acquerirCompetenceDementielle(perso, "Esquive", "agilite", logFn);
+    // perso = acquerirCompetenceDementielle(perso, "Pistage de dinosaure", "agilite", logFn);
+    // perso = incredire(perso, "sensitif", -1, 1, logFn);
+    // perso = incredire(perso, "sensitif", -2, 1, logFn);
+    // perso = incredire(perso, "intellect", -2, 2, logFn);
+    // perso = incredire(perso, "intellect", -1, 2, logFn);
 
     // TODO : jet de compétence, avec en option : energie démentielle avant de tenter l'action et recommencer action en cas d'échec.
     // TODO : duel avec perso actif; energie démentielle avant de tenter l'action et recommencer action en cas d'échec ?

@@ -1,5 +1,4 @@
 // @ts-check
-const log = false;
 // ---------------------------------------------------------
 // Trousse à dés
 // ---------------------------------------------------------
@@ -16,14 +15,14 @@ function testTirerUnDe() {
     return resultatParValeur;
 }
 
-export function tirerUnDe20() {
+export function tirerUnDe20(logFn) {
     const res = tirerUnDe(20);
-    log && console.debug(`tire un d20 = ${res}`);
+    logFn && logFn(`tire un d20 = ${res}`);
     return res;
 }
 
-export function tirerUnDe6() {
+export function tirerUnDe6(logFn) {
     const res = tirerUnDe(6);
-    log && console.debug(`tire un d6 = ${res}`);
+    logFn && logFn(`tire un d6 = ${res}`);
     return res;
 }
