@@ -107,7 +107,7 @@ export const PopupJetComponent = {
             this.typeAjustement = 'ajustement';
             this.nbJet1 = 0;
             this.nbJet2 = 0;
-            this.demandeConfirmationCritique = true;
+            this.demandeConfirmationCritique = false;
 
             this.$store.dispatch("masqueTout");
         },
