@@ -86,6 +86,13 @@ export const modulePersonnage = {
         state.perso = persoACopier;
     },
     // ---
+    modifieChampsTextePerso: function(state, {champs, valeur}) {
+      state.perso[champs] = valeur;
+    },
+    modifieChampsNombrePerso: function(state, {champs, valeur}) {
+      state.perso[champs] = +valeur;
+    },
+    // ---
     incrementePointsDeCrise: function(state) {
       state.perso.pointsDeCrise = state.perso.pointsDeCrise + 1;
     },

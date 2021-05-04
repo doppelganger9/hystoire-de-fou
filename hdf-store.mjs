@@ -6,6 +6,9 @@ import { moduleJournal } from "./hdf-store-module-journal.mjs";
 import { moduleView } from "./hdf-store-module-view.mjs";
 
 export const HdfStore = {
+  // décommenter en DEV, pour détecter les mutations sauvages
+  // strict: true,
+
   state: {
     ...moduleJournal.state,
     ...moduleView.state,

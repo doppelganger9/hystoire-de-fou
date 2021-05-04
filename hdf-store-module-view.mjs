@@ -62,13 +62,16 @@ export const moduleView = {
     },
     // ---
     preparePopupCompetence: function(state, event) {
-      state.nouvelleCompetence = event; // vérifier que ça passe sans {...event} ?
+      state.nouvelleCompetence = event;
     },
     masquePopupCompetence: function(state) {
       state.hiddenPopupCompetence = true;
     },
     affichePopupCompetence: function(state) {
       state.hiddenPopupCompetence = false;
+    },
+    modifieChampsNouvelleCompetence: function(state, {champs, valeur}) {
+      state.nouvelleCompetence[champs] = valeur;
     },
   },
   actions: {

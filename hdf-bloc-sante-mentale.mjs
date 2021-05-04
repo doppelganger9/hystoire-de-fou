@@ -5,6 +5,30 @@ import { infosMotDeDemence } from "./fiche-personnage.mjs";
 export const BlocSanteMentaleComponent = {
     computed: {
         ...mapState(['mode', 'perso']),
+        motDeDemence: {
+            get () { return this.$store.state.perso.motDeDemence },
+            set (valeur) { this.$store.commit('modifieChampsTextePerso', {champs: 'motDeDemence', valeur}) },
+        },
+        pointsDeCrise: {
+            get () { return this.$store.state.perso.pointsDeCrise },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'pointsDeCrise', valeur}) },
+        },
+        chocsParano: {
+            get () { return this.$store.state.perso.chocsParano },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'chocsParano', valeur}) },
+        },
+        chocsSchizo: {
+            get () { return this.$store.state.perso.chocsSchizo },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'chocsSchizo', valeur}) },
+        },
+        chocsProfonds: {
+            get () { return this.$store.state.perso.chocsProfonds },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'chocsProfonds', valeur}) },
+        },
+        totalAccomplissement: {
+            get () { return this.$store.state.perso.totalAccomplissement },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'totalAccomplissement', valeur}) },
+        },
     },
     methods: {
         afficheInfos: function() {
@@ -22,7 +46,7 @@ export const BlocSanteMentaleComponent = {
         <label for="perso.motDeDemence">Mot de Démence :</label>
         <button v-if="mode=='création'" @click="afficheInfos">Infos</button>
         <input name="perso.motDeDemence" 
-            v-model="perso.motDeDemence" 
+            v-model="motDeDemence" 
             type="text" 
             placeholder="Mot de démence du personnage" 
             :readonly="mode==='jeu'" 
@@ -36,7 +60,7 @@ export const BlocSanteMentaleComponent = {
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.totalAccomplissement">Total Accomplissement :</label>
-        <input name="perso.totalAccomplissement" v-model="perso.totalAccomplissement" type="number" min="0" class="handwritten">
+        <input name="perso.totalAccomplissement" v-model="totalAccomplissement" type="number" min="0" class="handwritten">
         <br/>
     </div>
     <div v-if="mode==='jeu'">
@@ -46,22 +70,22 @@ export const BlocSanteMentaleComponent = {
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.pointsDeCrise">Points de Crise :</label>
-        <input name="perso.pointsDeCrise" v-model="perso.pointsDeCrise" type="number" min="0">
+        <input name="perso.pointsDeCrise" v-model="pointsDeCrise" type="number" min="0">
         <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.chocsParano">Chocs Parano :</label>
-        <input name="perso.chocsParano" v-model="perso.chocsParano" type="number" min="0">
+        <input name="perso.chocsParano" v-model="chocsParano" type="number" min="0">
         <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.chocsSchizo">Chocs Schizo :</label>
-        <input name="perso.chocsSchizo" v-model="perso.chocsSchizo" type="number" min="0">
+        <input name="perso.chocsSchizo" v-model="chocsSchizo" type="number" min="0">
         <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.chocsProfonds">Chocs Profonds :</label>
-        <input name="perso.chocsProfonds" v-model="perso.chocsProfonds" type="number" min="0">
+        <input name="perso.chocsProfonds" v-model="chocsProfonds" type="number" min="0">
         <br/>
     </div>
 </hdf-bloc-fiche>

@@ -4,13 +4,29 @@ import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.brow
 export const PopupCreationCompetenceComponent = {
     computed: {
         ...mapState([ 'mode', 'nouvelleCompetence', 'perso', 'hiddenPopupCompetence' ]),
+        intitule: {
+            get() { return this.$store.state.nouvelleCompetence.intitule },
+            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'intitule', valeur}) },
+        },
+        nomCaracteristiqueDirectrice: {
+            get() { return this.$store.state.nouvelleCompetence.nomCaracteristiqueDirectrice },
+            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'nomCaracteristiqueDirectrice', valeur}) },
+        },
+        base: {
+            get() { return this.$store.state.nouvelleCompetence.base },
+            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'base', valeur}) },
+        },
+        pointsDeGeneration: {
+            get() { return this.$store.state.nouvelleCompetence.pointsDeGeneration },
+            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'pointsDeGeneration', valeur}) },
+        },
     },
     methods: {
         masqueTout: function() {
             this.$store.dispatch("masqueTout");
         },
         nouvelleCompetenceNomCaracteristiqueDirectriceChanged: function() {
-            this.nouvelleCompetence.valeurCaracteristiqueDirectrice = this.perso[this.nouvelleCompetence.nomCaracteristiqueDirectrice];
+            this.$store.commit('modifieChampsNouvelleCompetence', {champs:'valeurCaracteristiqueDirectrice', valeur:+this.perso[this.nouvelleCompetence.nomCaracteristiqueDirectrice]});
         },
         valideAjoutCompetence: function(competence) {
             this.$store.dispatch('ajouteCompetence', competence);
@@ -24,12 +40,12 @@ export const PopupCreationCompetenceComponent = {
         <h3>Nouvelle Compétence {{ nouvelleCompetence.dementielle ? "Démentielle" : ""}}{{ nouvelleCompetence.professionnelle ? "Professionnelle" : ""}}</h3>
         <div>
             <label for="nouvelleCompetence.intitule">Intitulé :</label>
-            <input name="nouvelleCompetence.intitule" v-model="nouvelleCompetence.intitule" type="text" class="handwritten">
+            <input name="nouvelleCompetence.intitule" v-model="intitule" type="text" class="handwritten">
             <br/>
         </div>
         <div>
             <label for="nouvelleCompetence.nomCaracteristiqueDirectrice">Caractéristique directrice :</label>
-            <select v-model="nouvelleCompetence.nomCaracteristiqueDirectrice"
+            <select v-model="nomCaracteristiqueDirectrice"
                     name="nouvelleCompetence.nomCaracteristiqueDirectrice"
                     @change="nouvelleCompetenceNomCaracteristiqueDirectriceChanged">
                 <option disabled value="">Please select one</option>
@@ -49,12 +65,12 @@ export const PopupCreationCompetenceComponent = {
 
         <div v-if="!nouvelleCompetence.dementielle&&!nouvelleCompetence.professionnelle">
             <label for="nouvelleCompetence.base">Base :</label>
-            <input name="nouvelleCompetence.base" v-model="nouvelleCompetence.base" type="number" class="handwritten" min="0" max="1">
+            <input name="nouvelleCompetence.base" v-model="base" type="number" class="handwritten" min="0" max="1">
             <br/>
         </div>
         <div v-if="!nouvelleCompetence.dementielle && !nouvelleCompetence.professionnelle && perso.pointsDeGeneration>0">
             <label for="nouvelleCompetence.pointsDeGeneration">Points de Génération :</label>
-            <input name="nouvelleCompetence.pointsDeGeneration" v-model="nouvelleCompetence.pointsDeGeneration" type="number" min="0" max="4" class="handwritten">
+            <input name="nouvelleCompetence.pointsDeGeneration" v-model="pointsDeGeneration" type="number" min="0" max="4" class="handwritten">
             <br/>
         </div>
         <div>

@@ -8,6 +8,34 @@ export const BlocCaracteristiquesComponent = {
         title() {
             return `Caractéristiques (mode ${this.mode})`;
         },
+        volonte: {
+            get () { return this.$store.state.perso.volonte },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'volonte', valeur}) },
+        },
+        intellect: {
+            get () { return this.$store.state.perso.intellect },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'intellect', valeur}) },
+        },
+        sensitif: {
+            get () { return this.$store.state.perso.sensitif },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'sensitif', valeur}) },
+        },
+        charisme: {
+            get () { return this.$store.state.perso.charisme },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'charisme', valeur}) },
+        },
+        constitution: {
+            get () { return this.$store.state.perso.constitution },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'constitution', valeur}) },
+        },
+        perception: {
+            get () { return this.$store.state.perso.perception },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'perception', valeur}) },
+        },
+        agilite: {
+            get () { return this.$store.state.perso.agilite },
+            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'agilite', valeur}) },
+        },
     },
     methods: {
         afficheInfos: function(typeInfos) {
@@ -24,19 +52,19 @@ export const BlocCaracteristiquesComponent = {
     <div>
         <label for="perso.volonte" @click="clickedCaracteristique('volonte')">VOLONTE :</label>
         <button @click="afficheInfos('volonté')">Infos</button>
-        <input name="perso.volonte" v-model="perso.volonte" type="number" :readonly="mode==='jeu'" min="6" max="15">
+        <input name="perso.volonte" v-model="volonte" type="number" :readonly="mode==='jeu'" min="6" max="15">
         <br/>
     </div>
     <div>
         <label for="perso.intellect" @click="clickedCaracteristique('intellect')">INTELLECT :</label>
         <button @click="afficheInfos('intellect')">Infos</button>
-        <input name="perso.intellect" v-model="perso.intellect" type="number" :readonly="mode==='jeu'" min="6" max="15">
+        <input name="perso.intellect" v-model="intellect" type="number" :readonly="mode==='jeu'" min="6" max="15">
         <br/>
     </div>
     <div>
         <label for="perso.sensitif" @click="clickedCaracteristique('sensitif')">SENSITIF :</label>
         <button @click="afficheInfos('sensitif')">Infos</button>
-        <input name="perso.sensitif" v-model="perso.sensitif" type="number" :readonly="mode==='jeu'" min="6" max="15">
+        <input name="perso.sensitif" v-model="sensitif" type="number" :readonly="mode==='jeu'" min="6" max="15">
         <br/>
     </div>
     <div>
@@ -48,25 +76,25 @@ export const BlocCaracteristiquesComponent = {
     <div>
         <label for="perso.charisme" @click="clickedCaracteristique('charisme')">CHARISME :</label>
         <button @click="afficheInfos('charisme')">Infos</button>
-        <input name="perso.charisme" v-model="perso.charisme" type="number" :readonly="mode==='jeu'" min="6" max="15">
+        <input name="perso.charisme" v-model="charisme" type="number" :readonly="mode==='jeu'" min="6" max="15">
         <br/>
     </div>
     <div>
         <label for="perso.constitution" @click="clickedCaracteristique('constitution')">CONSTITUTION :</label>
         <button @click="afficheInfos('constitution')">Infos</button>
-        <input name="perso.constitution" v-model="perso.constitution" type="number" :readonly="mode==='jeu'" min="6" max="15">
+        <input name="perso.constitution" v-model="constitution" type="number" :readonly="mode==='jeu'" min="6" max="15">
         <br/>
     </div>
     <div>
         <label for="perso.perception" @click="clickedCaracteristique('perception')">PERCEPTION :</label>
         <button @click="afficheInfos('perception')">Infos</button>
-        <input name="perso.perception" v-model="perso.perception" type="number" :readonly="mode==='jeu'" min="6" max="15">
+        <input name="perso.perception" v-model="perception" type="number" :readonly="mode==='jeu'" min="6" max="15">
         <br/>
     </div>
     <div>
         <label for="perso.agilite" @click="clickedCaracteristique('agilite')">AGILITE :</label>
         <button @click="afficheInfos('agilité')">Infos</button>
-        <input name="perso.agilite" v-model="perso.agilite" type="number" :readonly="mode==='jeu'" min="6" max="15">
+        <input name="perso.agilite" v-model="agilite" type="number" :readonly="mode==='jeu'" min="6" max="15">
         <br/>
     </div>
 </hdf-bloc-fiche>
