@@ -6,10 +6,11 @@ export const BlocJournalComponent = {
         ...mapState([ 'journal' ]),
     },
     template: `
-<hdf-bloc-fiche titre="Journal">
-    <ul class="journal">
-        <li v-for="item of journal">{{ item }}</li>
+<hdf-bloc-fiche title="Journal">
+    <ul v-if="journal.length" class="journal">
+        <li v-for="ligne of journal">{{ ligne }}</li>
     </ul>
+    <p v-else>Vide</p>
 </hdf-bloc-fiche>
 `,
 };
