@@ -1,7 +1,7 @@
 //@ts-check
 import { ContextePersonnage, Competence, Douleur } from "./fiche-personnage.mjs";
 import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
-import { appelDementiel } from "./effets-dementiels.mjs";
+import { tirerUnDe20 } from "./trousse-des.mjs";
 
 /**
  * Découper en sous module le store pour ne pas qu'il devienne trop gros/trop fourre-tout.
@@ -85,11 +85,25 @@ export const modulePersonnage = {
 
         state.perso = persoACopier;
     },
+    // ---
+    incrementePointsDeCrise: function(state) {
+      state.perso.pointsDeCrise = state.perso.pointsDeCrise + 1;
+    },
+    incrementeChoc: function(state, typeChoc) {
+      if (typeChoc === 'parano') {
+        state.perso.chocsParano = state.perso.chocsParano + 1;
+      } else if (typeChoc === 'schizo') {
+        state.perso.chocsSchizo = state.perso.chocsSchizo + 1;
+      }
+    },
+    incrementeChocProfonds: function(state) {
+      state.perso.chocsProfonds = state.perso.chocsProfonds + 1;
+    },
+    passeEnEtatDeChoc: function(state) {
+      state.perso.etatDeChoc = true;
+    },
   },
   actions: {
-    appelDementiel: function({state, commit}) {
-      appelDementiel(state.perso, ligne => commit('ajouteLigneJournal', ligne));
-    },
     // ---
     chargePersonnage: function(context) {
       context.commit('chargePerso');
@@ -115,6 +129,84 @@ export const modulePersonnage = {
           context.commit('ajouteCompetence', cultureGeneraleEnBonus);
         }
         context.commit('ajouteCompetence', competence);          
+      }
+    },
+    // --- EFFETS DEMENTIELS ---
+    appelDementiel: async function(context) {
+      await context.dispatch('ajouterPointDeCrise', undefined);
+    },
+    // --- SANTE MENTALE ---
+    ajouterPointDeCrise: async function(context, caracteristiqueDirectrice) {
+      context.commit('incrementePointsDeCrise');
+      context.commit('ajouteLigneJournal', `+1 point de crise`);
+      await context.dispatch('faireUnJetDeCrise', caracteristiqueDirectrice);
+    },
+    faireUnJetDeCrise: async function(context, caracteristiqueDirectrice) {
+      const d20 = tirerUnDe20();
+      if (d20 <= context.state.perso.pointsDeCrise) {
+          // POSITIF
+          context.commit('ajouteLigneJournal', `jet de crise: positif`);
+          await context.dispatch('ajouterPointDeChoc', caracteristiqueDirectrice);
+      } else {
+          // NEGATIF
+          // aucune conséquence.
+          context.commit('ajouteLigneJournal', `jet de crise: négatif`);
+      }
+    },
+    ajouterPointDeChoc: async function(context, caracteristiqueDirectrice) {
+      // tendance si pas de caracteristiqueDirectrice
+      if (!caracteristiqueDirectrice) {
+          caracteristiqueDirectrice = await context.dispatch('faireUnJetDeTendance'); //TODO vérifier si on peut retourner une valeur sinon appeler un code externe
+      }
+      // gain de choc parano ou schizo
+      if (caracteristiqueDirectrice === 'intellect') {
+        context.commit('ajouteLigneJournal', `+1 point de choc parano`);
+        context.commit('incrementeChoc', 'parano');
+      } else {
+        context.commit('ajouteLigneJournal', `+1 point de choc schizo`);
+        context.commit('incrementeChoc', 'schizo');
+      }
+      // jet de choc
+      await context.dispatch('faireUnJetDeChoc', caracteristiqueDirectrice);
+    },
+    /**
+     * @returns 'intellect' ou 'sensitif' (Promise)
+     */
+    faireUnJetDeTendance: async function(context) {
+      const tendanceParano = context.state.perso.intellect - (context.state.perso.sensitif - 10);
+      if (tirerUnDe20() <= tendanceParano) {
+          // oui, tendance Parano / intellect
+          context.commit('ajouteLigneJournal', `tendance parano`);
+          return 'intellect';
+      } else {
+          // tendance Schizo / sensitif
+          context.commit('ajouteLigneJournal', `tendance schizo`);
+          return 'sensitif';
+      }
+    },
+    faireUnJetDeChoc: async function(context, caracteristiqueDirectrice) {
+      // tendance si pas de caracteristiqueDirectrice
+      if (!caracteristiqueDirectrice) {
+          caracteristiqueDirectrice = await context.dispatch('faireUnJetDeTendance');
+      }
+      const d20 = tirerUnDe20();
+      const chocsEnMalus = (caracteristiqueDirectrice === 'intellect')
+          ? context.state.perso.chocsParano
+          : context.state.perso.chocsSchizo;
+
+      if (d20 <= (context.state.perso.volonte - chocsEnMalus + context.state.perso.niveauAccomplissement)) {
+          // tout va bien
+          context.commit('ajouteLigneJournal', `jet de choc : résisté`);
+      } else {
+          // état de choc !
+          if (context.state.perso.etatDeChoc) {
+              context.commit('ajouteLigneJournal', `jet de choc : raté; mais état de choc pré-existant = +1 choc profond !`);
+              context.commit('incrementeChocProfonds');
+          } else {
+              context.commit('ajouteLigneJournal', `jet de choc : raté; entre en état de choc !`);
+              context.commit('passeEnEtatDeChoc');
+              // TODO : délire de persecutition/hallucination
+          }
       }
     },
   },
