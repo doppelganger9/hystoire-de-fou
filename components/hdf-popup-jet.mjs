@@ -1,6 +1,6 @@
 //@ts-check
 import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
-import { tirerUnDe20 } from "./trousse-des.mjs";
+import { tirerUnDe20 } from "../metier/trousse-des.mjs";
 
 /**
  * Composant affichant une popup avec un dialog pour effectuer un jet:

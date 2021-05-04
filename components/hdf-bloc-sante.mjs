@@ -1,5 +1,5 @@
 // @ts-check
-import { Douleur } from "./fiche-personnage.mjs";
+import { Douleur } from "../metier/fiche-personnage.mjs";
 import { mapState, mapGetters } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
 export const BlocSanteComponent = {

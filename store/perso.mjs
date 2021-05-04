@@ -1,7 +1,7 @@
 //@ts-check
-import { ContextePersonnage, Competence, Douleur } from "./fiche-personnage.mjs";
-import { habillerALaSaintFrusquin } from "./saint-frusquin.mjs";
-import { tirerUnDe20 } from "./trousse-des.mjs";
+import { ContextePersonnage, Competence, Douleur } from "../metier/fiche-personnage.mjs";
+import { habillerALaSaintFrusquin } from "../metier/saint-frusquin.mjs";
+import { tirerUnDe20 } from "../metier/trousse-des.mjs";
 
 /**
  * Découper en sous module le store pour ne pas qu'il devienne trop gros/trop fourre-tout.

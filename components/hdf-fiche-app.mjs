@@ -1,5 +1,5 @@
 //@ts-check
-import { HdfStore } from "./hdf-store.mjs";
+import { HdfStore } from "../store/root.mjs";
 import Vue from "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js";
 import Vuex from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 const { Store, mapState, mapGetters } = Vuex;

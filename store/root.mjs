@@ -1,9 +1,9 @@
 //@ts-check
-import "./object-append-chain.mjs";
+import "../utils/object-append-chain.mjs";
 
-import { modulePersonnage } from "./hdf-store-module-perso.mjs";
-import { moduleJournal } from "./hdf-store-module-journal.mjs";
-import { moduleView } from "./hdf-store-module-view.mjs";
+import { modulePersonnage } from "./perso.mjs";
+import { moduleJournal } from "./journal.mjs";
+import { moduleView } from "./view.mjs";
 
 export const HdfStore = {
   // décommenter en DEV, pour détecter les mutations sauvages

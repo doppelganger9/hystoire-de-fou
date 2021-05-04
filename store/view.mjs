@@ -1,5 +1,5 @@
 //@ts-check
-import { Competence } from "./fiche-personnage.mjs";
+import { Competence } from "../metier/fiche-personnage.mjs";
 
 /**
  * Module Store pour gérer l'état de la vue de l'app : quelle popup est affichée, etc.
