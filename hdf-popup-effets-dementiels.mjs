@@ -32,7 +32,7 @@ export const PopupEffetsDementielsComponent = {
             this.masqueTout();
         },
         appelDementiel: function() {
-            this.$store.commit('appelDementiel');
+            this.$store.dispatch('appelDementiel');
         },
         incredire: function() {
             // TODO
