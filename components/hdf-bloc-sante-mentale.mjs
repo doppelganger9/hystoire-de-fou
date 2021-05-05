@@ -44,8 +44,10 @@ export const BlocSanteMentaleComponent = {
 <hdf-bloc-fiche title="Santé Mentale">
     <div>
         <label for="perso.motDeDemence">Mot de Démence :</label>
-        <button v-if="mode=='création'" @click="afficheInfos">Infos</button>
-        <input name="perso.motDeDemence" 
+        <button class="infos" v-if="mode=='création'" @click="afficheInfos">ℹ️</button>
+        <input name="perso.motDeDemence"
+            class="w150px handwritten"
+            :class="{jet: mode==='jeu'}"
             v-model="motDeDemence" 
             type="text" 
             placeholder="Mot de démence du personnage" 

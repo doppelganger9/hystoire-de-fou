@@ -28,7 +28,7 @@ export const BlocEquipementComponent = {
     template: `
 <hdf-bloc-fiche title="Equipement" v-if="mode==='jeu'">
     <button @click="genereEquipementSaintFrusquin">Saint-Frusquin</button>
-    <ul v-if="perso.equipements.length">
+    <ul class="competences" v-if="perso.equipements.length">
         <li v-for="(equipement, indexEquipement) of perso.equipements" class="handwritten">
             {{indexEquipement+1}} : {{ equipement }} <button @click="supprimeLigneEquipement(indexEquipement)">Supprimer</button>
         </li>

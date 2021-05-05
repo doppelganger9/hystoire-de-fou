@@ -18,27 +18,48 @@
             <!-- affiché avant que l'app soit prête -->
             <h3 v-if="false" class="visible">En cours de chargement...</h3>
             <hdf-voile></hdf-voile>
-            <hdf-popup-infos></hdf-popup-infos>
-            <button v-if="creationFinie && mode === 'création'" @click="passerEnMode('jeu')">
-                Création de personnage terminée
-            </button>
-            <button v-if="mode === 'jeu'" @click="sauvegardePerso">
-                Sauvegarder personnage
-            </button>
-            <button @click="chargePerso">
-                Charger personnage
-            </button>
-            <hdf-popup-jet></hdf-popup-jet>
-            <hdf-popup-creation-competence></hdf-popup-creation-competence>
-            <hdf-popup-effets-dementiels></hdf-popup-effets-dementiels>
-            <hdf-bloc-etat-civil></hdf-bloc-etat-civil>
-            <hdf-bloc-sante-mentale></hdf-bloc-sante-mentale>
-            <hdf-bloc-sante></hdf-bloc-sante>
-            <hdf-bloc-caracteristiques></hdf-bloc-caracteristiques>
-            <hdf-bloc-competences></hdf-bloc-competences>
-            <hdf-bloc-competences-dementielles></hdf-bloc-competences-dementielles>
-            <hdf-bloc-equipement></hdf-bloc-equipement>
-            <hdf-bloc-journal></hdf-bloc-journal>
+            <hdf-menu-lancement></hdf-menu-lancement>
+            <div v-if="mode !=='menu'">
+                <hdf-popup-infos></hdf-popup-infos>
+                <p class="tutoriel" v-if="mode === 'création'">Vous allez maintenant créer votre personnage.
+                    La seule contrainte est que les personnages d'un groupe de jeu partagent tous un point commun de départ.
+                    Votre meneur/meneuse devrait déjà vous l'avoir indiqué, sinon posez la question.
+                    A part cela, gardez à l'esprit que les personnages joueurs d'Hystoire de Fou sont des gens ordinaires, contemporains, vivant une vie normale.
+                    Ils ne sont pas fous. Pas encore 😇 ! Ce ne sont pas non plus des aventuriers.
+                </p>
+                <p class="tutoriel" v-if="mode === 'création'">
+                    Suivez les indications dans les blocs d'aide comme celui-ci, 
+                    et aussi en cliquant sur les boutons d'informations ℹ️. <br/>
+                    Vous devrez d'abord saisir les informations d'état civil de votre personnage,<br/>
+                    Puis répartir ses caractéristiques,<br/>
+                    et enfin lui choisir une compétence professionnelle.<br/>
+                    Cela devrait être rapide, comptez maximum 10 minutes.<br/>
+                    <br/>
+                    Une fois terminé le bouton ci-dessous deviendra clicable pour terminer la création et la valider.
+                </p>
+                <button v-if="mode==='création'" :disabled="creationFinie ? 'disabled':''" @click="passerEnMode('jeu')">
+                    Création de personnage terminée
+                </button>
+                <hdf-popup-jet></hdf-popup-jet>
+                <hdf-popup-creation-competence></hdf-popup-creation-competence>
+                <hdf-popup-effets-dementiels></hdf-popup-effets-dementiels>
+                <hdf-bloc-etat-civil></hdf-bloc-etat-civil>
+                <hdf-bloc-sante-mentale></hdf-bloc-sante-mentale>
+                <hdf-bloc-sante></hdf-bloc-sante>
+                <hdf-bloc-caracteristiques></hdf-bloc-caracteristiques>
+                <hdf-bloc-competences></hdf-bloc-competences>
+                <hdf-bloc-competences-dementielles></hdf-bloc-competences-dementielles>
+                <hdf-bloc-equipement></hdf-bloc-equipement>
+                <hdf-bloc-journal v-if="mode==='jeu'"></hdf-bloc-journal>
+                <p class="tutoriel" v-if="mode === 'création'">
+                    Si vous avez tout rempli comme demandé, le bouton ci-dessous devrait être clicable pour terminer la création et la valider.<br/>
+                    Sinon remontez et vérifiez que vous avez bien tout saisi.
+                </p>
+                <button v-if="mode==='création'" :disabled="creationFinie ? 'disabled':''" @click="passerEnMode('jeu')">
+                    Création de personnage terminée
+                </button>
+
+            </div>
         </div>
     </body>
 </html>

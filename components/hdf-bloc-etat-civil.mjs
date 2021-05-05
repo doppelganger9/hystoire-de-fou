@@ -34,40 +34,55 @@ export const BlocEtatCivilComponent = {
     },
     template: `
 <hdf-bloc-fiche title="Etat Civil">
+    <p class="tutoriel" v-if="mode === 'création'">Pour créer un personnage, remplissez son état civil.</p>
+
     <div>
-        <label for="perso.nom">Nom :</label>
-        <input name="perso.nom" v-model="nom" type="text" placeholder="Nom du personnage" :readonly="mode==='jeu'" class="handwritten">
-        <br/>
-    </div>
-    <div>
-        <label for="perso.profession">Profession :</label>
-        <input name="perso.profession" v-model="profession" type="text" placeholder="Profession du personnage" :readonly="mode==='jeu'" class="handwritten">
-        <br/>
-    </div>
-    <div>
-        <label for="perso.age">Âge :</label>
-        <input name="perso.age" v-model="age" type="number" min="8" max="100" placeholder="Âge du personnage" :readonly="mode==='jeu'" class="handwritten">ans
-        <br/>
-    </div>
-    <div>
-        <label for="perso.poids">Poids (kg) :</label>
-        <input name="perso.poids" v-model="poids" type="number" min="40" max="150" placeholder="Poids du personnage" :readonly="mode==='jeu'" class="handwritten">kg
-        <br/>
-    </div>
-    <div>
-        <label for="perso.tailleCm">Taille (cm) :</label>
-        <input name="perso.tailleCm" v-model="tailleCm" type="number" min="120" max="210" placeholder="Taille du personnage" :readonly="mode==='jeu'" class="handwritten">cm ({{ perso.tailleScore }})
-        <br/>
-    </div>
-    <div>
-        <label for="perso.bonusAuxDommages">+dom :</label>
-        <input name="perso.bonusAuxDommages" readonly="readonly" :value="perso.bonusAuxDommages">
-        <br/>
-    </div>
-    <div>
-        <label for="perso.description">Description :</label>
-        <textarea name="perso.description" v-model="description" placeholder="Description du personnage" :readonly="mode==='jeu'" class="handwritten"></textarea>
-        <br/>
+        <div>
+            <label for="perso.nom">Nom :</label>
+            <input class="w150px handwritten" name="perso.nom" v-model="nom" type="text" placeholder="Nom du personnage" :readonly="mode==='jeu'">
+            <br/>
+        </div>
+        <p class="tutoriel" v-if="mode === 'création'">
+            La profession de votre personnage devra être cohérente avec sa compétence professionelle (plus bas).
+        </p>
+        <div>
+            <label for="perso.profession">Profession :</label>
+            <input class="w150px handwritten" name="perso.profession" v-model="profession" type="text" placeholder="Profession du personnage" :readonly="mode==='jeu'">
+            <br/>
+        </div>
+        <div>
+            <label for="perso.age">Âge :</label>
+            <input class="w50px handwritten" name="perso.age" v-model="age" type="number" min="8" max="100" placeholder="Âge du personnage" :readonly="mode==='jeu'">ans
+            <br/>
+        </div>
+        <div>
+            <label for="perso.poids">Poids :</label>
+            <input class="w50px handwritten" name="perso.poids" v-model="poids" type="number" min="40" max="150" placeholder="Poids du personnage" :readonly="mode==='jeu'">kg
+            <br/>
+        </div>
+        <div>
+            <label for="perso.tailleCm">Taille :</label>
+            <input class="w50px handwritten" name="perso.tailleCm" v-model="tailleCm" type="number" min="120" max="210" placeholder="Taille du personnage" :readonly="mode==='jeu'">cm (score: {{ perso.tailleScore }})
+            <br/>
+        </div>
+        <p class="tutoriel" v-if="mode === 'création'">
+            Comme vous le voyez, La taille est transformée en score de caractéristique. <br/>
+            En effet, en combinant TAILLE et CONSTITUTION (voir plus bas), on détermine le bonus aux domages utilisé lors des combats avec des armes de mêlée ou au corps à corps "+dom".<br/>
+            Celui-ci va de -2 à +2 et affectera un jet de D6 lors de la détermination des dommages/douleurs.
+        </p>
+        <div>
+            <label for="perso.bonusAuxDommages">+dom :</label>
+            <input class="w50px" name="perso.bonusAuxDommages" readonly="readonly" :value="perso.bonusAuxDommages">
+            <br/>
+        </div>
+        <p class="tutoriel" v-if="mode === 'création'">
+            décrivez succintement votre personnage: allure, regard, chevelure, peau, style vestimentaire, etc. Assez pour qu'on se fasse une idée de son apparence générale.
+        </p>
+        <div>
+            <label for="perso.description">Description :</label>
+            <textarea class="handwritten" name="perso.description" v-model="description" placeholder="Description du personnage" :readonly="mode==='jeu'"></textarea>
+            <br/>
+        </div>
     </div>
 </hdf-bloc-fiche>
 `,

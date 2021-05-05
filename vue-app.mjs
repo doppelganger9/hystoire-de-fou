@@ -16,8 +16,10 @@ import { PopupEffetsDementielsComponent } from "../components/hdf-popup-effets-d
 import { VoileComponent } from "../components/hdf-voile.mjs";
 import { FicheAppComponent } from "../components/hdf-fiche-app.mjs";
 import { BlocJournalComponent } from "../components/hdf-bloc-journal.mjs";
+import { MenuLancementComponent } from "./components/hdf-menu-lancement.mjs";
 
 // découpage en sous composants
+Vue.component('hdf-menu-lancement', MenuLancementComponent);
 Vue.component('hdf-voile', VoileComponent);
 Vue.component('hdf-popup-jet', PopupJetComponent);
 Vue.component('hdf-popup-infos', PopupInfosComponent);

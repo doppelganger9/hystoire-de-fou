@@ -8,7 +8,7 @@ export const moduleView = {
   state: {
     infos: '',
     hiddenInfos: true,
-    mode: 'création',
+    mode: 'menu',
     hiddenVoile: true,
     hiddenPopupCompetence: true,
     nouvelleCompetence: new Competence(),

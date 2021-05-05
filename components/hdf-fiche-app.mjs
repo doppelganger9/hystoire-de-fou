@@ -32,11 +32,5 @@ export const FicheAppComponent = {
         passerEnMode: function (mode) {
             this.$store.commit('passerEnMode', mode);
         },
-        sauvegardePerso: function() {
-            this.$store.commit('sauvegardePerso');
-        },
-        chargePerso: function() {
-            this.$store.dispatch('chargePersonnage');
-        }
     }
 };

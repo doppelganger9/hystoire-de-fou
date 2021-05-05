@@ -11,12 +11,77 @@ body {
     font-size: 16px;
     font-family: 'Garamond', serif;
 }
+.w50px {
+    width: 50px;
+}
+.w100px {
+    width: 100px;
+}
+.w150px {
+    width: 150px;
+}
+.w200px {
+    width: 200px;
+}
+.w300px {
+    width: 300px;
+}
+.w350px {
+    width: 350px;
+}
+.w400px {
+    width: 400px;
+}
+.w500px {
+    width: 500px;
+}
+ul.competences {
+    list-style-type: none;
+    display: block;
+    padding: 5px;
+    margin: 5px;
+}
+.jet {
+    cursor: hand;
+}
+.jet:hover {
+    color: coral;
+}
 input {
     padding: 0 5px;
-    margin: 0;
+    margin: 5px 0 0;
+    border: none;
+    border-bottom: 1px solid gray;
+    font-size: 16px;
+    text-align: center;
+}
+input:read-only {
+    border: none;
+}
+p.tutoriel {
+    background-color: azure;
+    padding: 5px;
+    margin: 5px 0;
+    border: 2px solid aqua;
+}
+div.carac {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: stretch;
+    justify-content: flex-end;
+    align-items: center;
+}
+button.infos {
+    background: none;
+    margin: 5px;
+    padding: 0;
+    border: none;
+}
+textarea {
+    width: 100%;
 }
 label {
-    width: 30%;
     display: inline-block;
 }
 h1 {
@@ -27,6 +92,7 @@ h2 {
 }
 .handwritten {
     font-family: 'Caveat', cursive;
+    font-size: 17px;
 }
 
 .abs-top-right-10 {
