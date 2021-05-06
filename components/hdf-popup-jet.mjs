@@ -1,6 +1,13 @@
 //@ts-check
 import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
-import { tirerUnDe20 } from "../metier/trousse-des.mjs";
+
+const SUCCES = 'succès !';
+const SUCCES_CRITIQUE_POSSIBLE = 'succès ... critique ou pas ?';
+const SUCCES_CRITIQUE = 'succès critique !';
+const ECHEC = 'échec !';
+const ECHEC_CRITIQUE_POSSIBLE = 'échec ... critique ou pas ?';
+const ECHEC_CRITIQUE = 'échec critique !';
+const TRICHE = 'triche !';
 
 /**
  * Composant affichant une popup avec un dialog pour effectuer un jet:
@@ -53,49 +60,49 @@ export const PopupJetComponent = {
                     if (this.nbJet2 === 0) {
                         if (this.premierJet <= 4) {
                             this.demandeConfirmationCritique = true;
-                            return 'succès ... critique ou pas ?';
+                            return SUCCES_CRITIQUE_POSSIBLE;
                         } else {
                             this.critique = false;
-                            return 'succès !';
+                            return SUCCES;
                         }
                     } else if (this.nbJet2 === 1) {
                         if (this.premierJet <= 4 && this.deuxiemeJet <= this.seuilReussite) {
                             this.demandeConfirmationCritique = true;
                             this.critique = true;
-                            return 'succès critique !';
+                            return SUCCES_CRITIQUE;
                         } else {
                             this.demandeConfirmationCritique = true;
                             this.critique = false;
-                            return 'succès !';
+                            return SUCCES;
                         }
                     } else {
-                        return "triche !";
+                        return TRICHE;
                     }
                 } else {
                     if (this.nbJet2 === 0) {
                         if (this.premierJet >= 17) {
                             this.demandeConfirmationCritique = true;
-                            return 'échec ... critique ou pas ?';
+                            return ECHEC_CRITIQUE_POSSIBLE;
                         } else {
                             this.critique = false;
-                            return 'échec !';
+                            return ECHEC;
                         }
                     } else if (this.nbJet2 === 1) {
                         if (this.premierJet >= 17 && this.deuxiemeJet > this.seuilReussite) {
                             this.demandeConfirmationCritique = true;
                             this.critique = true;
-                            return 'échec critique !';
+                            return ECHEC_CRITIQUE;
                         } else {
                             this.demandeConfirmationCritique = true;
                             this.critique = false;
-                            return 'échec !';
+                            return ECHEC;
                         }
                     } else {
-                        return "triche !";
+                        return TRICHE;
                     }
                 }    
             } else {
-                return "triche ?!";
+                return TRICHE;
             }            
         },
     },
@@ -143,12 +150,13 @@ export const PopupJetComponent = {
             // journaliser
             const ligneJournal = `Jet de ${this.etatJet.type} sur ${this.etatJet.nom} avec ${this.typeAjustement}=${this.ajustement} : (${this.premierJet}) ${this.demandeConfirmationCritique ? '('+this.deuxiemeJet+')' : ''} ${this.consequence}.`;
             this.$store.commit("ajouteLigneJournal", ligneJournal);
+            const csq = this.consequence;
             // modifier this.perso éventuellement
             if (this.etatJet.type === 'compétence' 
                     && this.seuilReussite <= 10 
-                    && this.consequence.indexOf("succès")==0) {
+                    && (csq === SUCCES || csq === SUCCES_CRITIQUE)) {
                 this.$store.commit("marqueCroixExperience", this.etatJet.nom);
-            } 
+            }
 
             this.masqueTout();
         },
