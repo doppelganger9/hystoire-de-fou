@@ -143,27 +143,27 @@ export const modulePersonnage = {
       await context.dispatch('ajouterPointDeCrise', undefined);
     },
     // --- SANTE MENTALE ---
-    ajouterPointDeCrise: async function(context, caracteristiqueDirectrice) {
+    ajouteUnPointDeCrise: async function(context, caracteristiqueDirectrice) {
       context.commit('incrementePointsDeCrise');
       context.commit('ajouteLigneJournal', `+1 point de crise`);
-      await context.dispatch('faireUnJetDeCrise', caracteristiqueDirectrice);
+      await context.dispatch('faitUnJetDeCrise', caracteristiqueDirectrice);
     },
-    faireUnJetDeCrise: async function(context, caracteristiqueDirectrice) {
+    faitUnJetDeCrise: async function(context, caracteristiqueDirectrice) {
       const d20 = tirerUnDe20();
       if (d20 <= context.state.perso.pointsDeCrise) {
           // POSITIF
           context.commit('ajouteLigneJournal', `jet de crise: positif`);
-          await context.dispatch('ajouterPointDeChoc', caracteristiqueDirectrice);
+          await context.dispatch('ajouteUnPointDeChoc', caracteristiqueDirectrice);
       } else {
           // NEGATIF
           // aucune conséquence.
           context.commit('ajouteLigneJournal', `jet de crise: négatif`);
       }
     },
-    ajouterPointDeChoc: async function(context, caracteristiqueDirectrice) {
+    ajouteUnPointDeChoc: async function(context, caracteristiqueDirectrice) {
       // tendance si pas de caracteristiqueDirectrice
       if (!caracteristiqueDirectrice) {
-          caracteristiqueDirectrice = await context.dispatch('faireUnJetDeTendance'); //TODO vérifier si on peut retourner une valeur sinon appeler un code externe
+          caracteristiqueDirectrice = await context.dispatch('faitUnJetDeTendance'); //TODO vérifier si on peut retourner une valeur sinon appeler un code externe
       }
       // gain de choc parano ou schizo
       if (caracteristiqueDirectrice === 'intellect') {
@@ -174,12 +174,12 @@ export const modulePersonnage = {
         context.commit('incrementeChoc', 'schizo');
       }
       // jet de choc
-      await context.dispatch('faireUnJetDeChoc', caracteristiqueDirectrice);
+      await context.dispatch('faitUnJetDeChoc', caracteristiqueDirectrice);
     },
     /**
      * @returns 'intellect' ou 'sensitif' (Promise)
      */
-    faireUnJetDeTendance: async function(context) {
+    faitUnJetDeTendance: async function(context) {
       const tendanceParano = context.state.perso.intellect - (context.state.perso.sensitif - 10);
       if (tirerUnDe20() <= tendanceParano) {
           // oui, tendance Parano / intellect
@@ -191,10 +191,10 @@ export const modulePersonnage = {
           return 'sensitif';
       }
     },
-    faireUnJetDeChoc: async function(context, caracteristiqueDirectrice) {
+    faitUnJetDeChoc: async function(context, caracteristiqueDirectrice) {
       // tendance si pas de caracteristiqueDirectrice
       if (!caracteristiqueDirectrice) {
-          caracteristiqueDirectrice = await context.dispatch('faireUnJetDeTendance');
+          caracteristiqueDirectrice = await context.dispatch('faitUnJetDeTendance');
       }
       const d20 = tirerUnDe20();
       const chocsEnMalus = (caracteristiqueDirectrice === 'intellect')
