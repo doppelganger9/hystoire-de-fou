@@ -2,6 +2,15 @@
 import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 import { infosMotDeDemence } from "../metier/fiche-personnage.mjs";
 
+/**
+ * TODO:
+ * Savoir si on est en état de choc et pour combien de temps et quel type (hystérie/dépression)
+ * Pouvoir décrémenter le nb de tours/minutes de l'état de choc
+ * Quand le minuteur tombe à 0, déclencher l'"Hallucination" ou se mettre "en Alerte contre un(plusieurs = X) Futur Piège".
+ * 
+ * Donc il faudra stocker en plus le nb de pièges en attente, et le nb de tour restant en état de choc.
+ */
+
 export const BlocSanteMentaleComponent = {
     computed: {
         ...mapState(['mode', 'perso']),
