@@ -1,15 +1,37 @@
+* {
+    box-sizing: border-box;
+}
 html {
     margin: 10px;
     padding: 0;
     background-color: lightgrey;
 }
 body {
-    margin: 0 auto;
+    margin: 10px 20px;
     padding: 10px;
     background-color: white;
-    width: 400px;
     font-size: 16px;
     font-family: 'Garamond', serif;
+}
+.fiche {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.menu {
+    background-color: beige;
+    margin: 5px;
+    padding: 10px;
+}
+.bloc {
+    border: 1px solid lightblue;
+    padding: 10px;
+    margin: 5px;
+}
+.bloc h2 {
+    margin: 0 0 10px 0;
 }
 .w50px {
     width: 50px;
@@ -35,6 +57,18 @@ body {
 .w500px {
     width: 500px;
 }
+.bloc.caracteristiques {
+    width: 230px;
+}
+.bloc.etatcivil {
+    width: 260px;
+}
+.bloc.competences {
+    width: 400px;
+}
+.bloc.sante {
+    width: 200px;
+}
 ul.competences {
     list-style-type: none;
     display: block;
@@ -45,7 +79,14 @@ ul.competences {
     cursor: hand;
 }
 .jet:hover {
-    color: coral;
+    color: white;
+    background-color: rgba(255, 127, 80);
+    border-radius: 5px;
+}
+.jet:active {
+    color: white;
+    background-color: rgba(255, 127, 80, 0.281);
+    border-radius: 5px;
 }
 input {
     padding: 0 5px;
@@ -72,11 +113,20 @@ div.carac {
     justify-content: flex-end;
     align-items: center;
 }
-button.infos {
+button.emoji {
     background: none;
-    margin: 5px;
-    padding: 0;
+    margin: 1px;
+    padding: 0 5px;
     border: none;
+    border-radius: 5px;
+    width: 26px;
+    height: 26px;
+}
+button.emoji:hover {
+    background-color: rgba(255, 127, 80);
+}
+button.emoji:active {
+    background-color: rgba(255, 127, 80, 0.281);;
 }
 textarea {
     width: 100%;

@@ -6,10 +6,11 @@ export const BlocSanteComponent = {
     data: function() {
         return {
             nouvelleDouleur: new Douleur(),
+            afficheLigneAjoutDouleur: false,
         };
     },
     computed: {
-        ...mapState(['mode', 'perso']),
+        ...mapState(['perso']),
         ...mapGetters(['totalDouleurs']),
     },
     methods: {
@@ -18,27 +19,33 @@ export const BlocSanteComponent = {
         },
         ajouteLigneDouleur: function() {
             this.$store.commit('ajouteLigneDouleur', this.nouvelleDouleur);
+            this.afficheLigneAjoutDouleur = false;
+        },
+        afficheNouvelleDouleur: function() {
             this.nouvelleDouleur = new Douleur();
+            this.afficheLigneAjoutDouleur = true;
         },
     },
     template: `
-<hdf-bloc-fiche title="Santé" v-if="mode==='jeu'">
-<h3 v-if="perso.douleurs.length">Total des malus : {{ totalDouleurs }}</h3>
-<h3>Douleurs :</h3>
-<ul v-if="perso.douleurs.length">
-    <li v-for="(douleur, index) of perso.douleurs" class="handwritten">
-        {{douleur.valeur}} ({{ douleur.provenance }}) <button @click="supprimeLigneDouleur(index)">Supprimer</button>
-    </li>    
-</ul>
-<span v-else>Aucune</span><br/>
+<hdf-bloc-fiche title="Santé" class="sante">
+    <h3 v-if="perso.douleurs.length">Total des malus : {{ totalDouleurs }}</h3>
+    <h3>Douleurs :</h3>
+    <ul v-if="perso.douleurs.length">
+        <li v-for="(douleur, index) of perso.douleurs" class="handwritten">
+            {{douleur.valeur}} ({{ douleur.provenance }}) <button @click="supprimeLigneDouleur(index)" class="emoji">🗑</button>
+        </li>
+    </ul>
+    <span v-else>Aucune</span><br/>
+    <button v-if="!afficheLigneAjoutDouleur" @click="afficheNouvelleDouleur">Nouvelle Douleur</button>
+    <div v-if="afficheLigneAjoutDouleur">
+        <label for="nouvelleDouleur.valeur">Valeur :</label>
+        <input name="nouvelleDouleur.valeur" v-model="nouvelleDouleur.valeur" type="number" min="1" max="4" class="handwritten">
 
-<label for="nouvelleDouleur.valeur">Valeur :</label>
-<input name="nouvelleDouleur.valeur" v-model="nouvelleDouleur.valeur" type="number" min="1" max="4" class="handwritten">
+        <label for="nouvelleDouleur.provenance">Provenance :</label>
+        <input name="nouvelleDouleur.provenance" v-model="nouvelleDouleur.provenance" type="text" class="handwritten">
 
-<label for="nouvelleDouleur.provenance">Provenance :</label>
-<input name="nouvelleDouleur.provenance" v-model="nouvelleDouleur.provenance" type="text" class="handwritten">
-
-<button @click="ajouteLigneDouleur">Ajouter Douleur</button>
+        <button @click="ajouteLigneDouleur">Ajouter Douleur</button>
+    </div>
 </hdf-bloc-fiche>
 `,
 };

@@ -33,7 +33,7 @@ export const BlocEtatCivilComponent = {
         },
     },
     template: `
-<hdf-bloc-fiche title="Etat Civil">
+<hdf-bloc-fiche title="Etat Civil" class="etatcivil">
     <p class="tutoriel" v-if="mode === 'création'">Pour créer un personnage, remplissez son état civil.</p>
 
     <div>

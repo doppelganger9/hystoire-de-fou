@@ -8,9 +8,7 @@ export const BlocCompetencesDementiellesComponent = {
             nouvelleCompetence: new Competence(),
         };
     },
-    computed: {
-        ...mapState([ 'mode', 'perso' ]),
-    },
+    computed: mapState([ 'perso' ]),
     methods: {
         acquiertCompetenceDementielle: function() {
             this.nouvelleCompetence = initNouvelleCompetence();
@@ -19,16 +17,14 @@ export const BlocCompetencesDementiellesComponent = {
             this.$store.dispatch('affichePopupCompetence', this.nouvelleCompetence);
         },
         clickCompetenceDementielle: function(competenceDementielle) {
-            if (this.mode === 'jeu') {
-                this.$store.dispatch("affichePopupJet", { 
-                    nom: competenceDementielle.intitule, 
-                    type: 'compétence démentielle'
-                });
-            }
+            this.$store.dispatch("affichePopupJet", { 
+                nom: competenceDementielle.intitule, 
+                type: 'compétence démentielle'
+            });
         },
     },
     template: `
-<hdf-bloc-fiche title="Compétences Démentielles" v-if="mode==='jeu'">
+<hdf-bloc-fiche title="Compétences Démentielles" class="competences">
     <ul class="competences" v-if="perso.competencesDementielles.length">
         <li v-for="(competence, indexCompetence) of perso.competencesDementielles" 
             class="handwritten jet" 

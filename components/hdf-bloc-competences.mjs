@@ -38,7 +38,7 @@ export const BlocCompetencesComponent = {
         },
     },
     template: `
-<hdf-bloc-fiche title="Compétences">
+<hdf-bloc-fiche title="Compétences" class="competences">
     <p class="tutoriel" v-if="mode === 'création'">Pour créer un personnage, il vous faut à présent choisir une compétence professionnelle.<br/>
     Mais pour le moment, seule la compétence professionnelle importe.<br/>
     Un dernier mot, si la compétence professionnelle est basée sur Entendement, alors vous obtiendrez gratuitement la compétence "Culture Générale" à 100% d'Entendement.<br/>
@@ -56,8 +56,9 @@ export const BlocCompetencesComponent = {
                  = {{ competence.valeur }}
             </div>
             <button v-if="mode==='création'" 
+                    class="emoji"
                     @click="supprimeLigneCompetence(indexCompetence)">
-                Supprimer
+                🗑
             </button>
         </li>    
     </ul>

@@ -7,12 +7,7 @@ export const BlocEquipementComponent = {
             nouvelEquipement: '',
         };
     },
-    computed: {
-        ...mapState([
-            'mode',
-            'perso',
-        ]),
-    },
+    computed: mapState([ 'perso' ]),
     methods: {
         genereEquipementSaintFrusquin: function() {
             this.$store.commit('genereEquipementSaintFrusquin');
@@ -26,11 +21,12 @@ export const BlocEquipementComponent = {
         },
     },
     template: `
-<hdf-bloc-fiche title="Equipement" v-if="mode==='jeu'">
+<hdf-bloc-fiche title="Equipement" class="competences">
     <button @click="genereEquipementSaintFrusquin">Saint-Frusquin</button>
     <ul class="competences" v-if="perso.equipements.length">
         <li v-for="(equipement, indexEquipement) of perso.equipements" class="handwritten">
-            {{indexEquipement+1}} : {{ equipement }} <button @click="supprimeLigneEquipement(indexEquipement)">Supprimer</button>
+            {{indexEquipement+1}} : {{ equipement }}
+            <button class="emoji" @click="supprimeLigneEquipement(indexEquipement)">🗑</button>
         </li>
     </ul>
     <span v-else>Aucun</span><br/>

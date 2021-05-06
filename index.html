@@ -16,10 +16,10 @@
         <h2>Fiche de Personnage intéractive</h2>
         <div id="app" :class="'visible'" class="hidden">
             <!-- affiché avant que l'app soit prête -->
-            <h3 v-if="false" class="visible">En cours de chargement...</h3>
+            <h3 v-if="false" class="visible menu">En cours de chargement...</h3>
             <hdf-voile></hdf-voile>
             <hdf-menu-lancement></hdf-menu-lancement>
-            <div v-if="mode !=='menu'">
+            <div v-if="mode !=='menu'" class="fiche">
                 <hdf-popup-infos></hdf-popup-infos>
                 <p class="tutoriel" v-if="mode === 'création'">Vous allez maintenant créer votre personnage.
                     La seule contrainte est que les personnages d'un groupe de jeu partagent tous un point commun de départ.
@@ -40,16 +40,23 @@
                 <button v-if="mode==='création'" :disabled="creationFinie ? 'disabled':''" @click="passerEnMode('jeu')">
                     Création de personnage terminée
                 </button>
-                <hdf-popup-jet></hdf-popup-jet>
+                <hdf-popup-jet v-if="mode==='jeu'"></hdf-popup-jet>
                 <hdf-popup-creation-competence></hdf-popup-creation-competence>
-                <hdf-popup-effets-dementiels></hdf-popup-effets-dementiels>
-                <hdf-bloc-etat-civil></hdf-bloc-etat-civil>
-                <hdf-bloc-sante-mentale></hdf-bloc-sante-mentale>
-                <hdf-bloc-sante></hdf-bloc-sante>
-                <hdf-bloc-caracteristiques></hdf-bloc-caracteristiques>
-                <hdf-bloc-competences></hdf-bloc-competences>
-                <hdf-bloc-competences-dementielles></hdf-bloc-competences-dementielles>
-                <hdf-bloc-equipement></hdf-bloc-equipement>
+                <hdf-popup-effets-dementiels v-if="mode==='jeu'"></hdf-popup-effets-dementiels>
+
+                <hdf-bloc-etat-civil v-if="mode==='création'"></hdf-bloc-etat-civil>
+                <hdf-bloc-sante-mentale v-if="mode==='création'"></hdf-bloc-sante-mentale>
+                <hdf-bloc-caracteristiques v-if="mode==='création'"></hdf-bloc-caracteristiques>
+                <hdf-bloc-competences v-if="mode==='création'"></hdf-bloc-competences>
+                
+                <hdf-bloc-caracteristiques v-if="mode==='jeu'"></hdf-bloc-caracteristiques>
+                <hdf-bloc-etat-civil v-if="mode==='jeu'"></hdf-bloc-etat-civil>
+                <hdf-bloc-sante-mentale v-if="mode==='jeu'"></hdf-bloc-sante-mentale>
+                <hdf-bloc-sante v-if="mode==='jeu'"></hdf-bloc-sante>
+                <hdf-bloc-competences v-if="mode==='jeu'"></hdf-bloc-competences>
+
+                <hdf-bloc-competences-dementielles v-if="mode==='jeu'"></hdf-bloc-competences-dementielles>
+                <hdf-bloc-equipement v-if="mode==='jeu'"></hdf-bloc-equipement>
                 <hdf-bloc-journal v-if="mode==='jeu'"></hdf-bloc-journal>
                 <p class="tutoriel" v-if="mode === 'création'">
                     Si vous avez tout rempli comme demandé, le bouton ci-dessous devrait être clicable pour terminer la création et la valider.<br/>
