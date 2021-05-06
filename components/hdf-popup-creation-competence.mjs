@@ -31,6 +31,9 @@ export const PopupCreationCompetenceComponent = {
         valideAjoutCompetence: function(competence) {
             this.$store.dispatch('ajouteCompetence', competence);
             this.$store.dispatch("masqueTout");
+            if (competence.dementielle) {
+                this.$store.dispatch('apresAjoutCompetenceDementielle');
+            }
         },
     },
     template: `
