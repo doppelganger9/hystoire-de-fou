@@ -21,7 +21,7 @@ export const BlocEquipementComponent = {
         },
     },
     template: `
-<hdf-bloc-fiche title="Equipement" class="competences">
+<hdf-bloc-fiche title="Equipement" class="equipements">
     <button @click="genereEquipementSaintFrusquin">Saint-Frusquin</button>
     <ul class="competences" v-if="perso.equipements.length">
         <li v-for="(equipement, indexEquipement) of perso.equipements" class="handwritten">

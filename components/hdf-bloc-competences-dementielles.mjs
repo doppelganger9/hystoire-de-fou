@@ -24,7 +24,7 @@ export const BlocCompetencesDementiellesComponent = {
         },
     },
     template: `
-<hdf-bloc-fiche title="Compétences Démentielles" class="competences">
+<hdf-bloc-fiche title="Compétences Démentielles" class="competencesdementielles">
     <ul class="competences" v-if="perso.competencesDementielles.length">
         <li v-for="(competence, indexCompetence) of perso.competencesDementielles" 
             class="handwritten jet" 

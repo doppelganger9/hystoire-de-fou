@@ -36,18 +36,18 @@
                     Cela devrait être rapide, comptez maximum 10 minutes.<br/>
                     <br/>
                     Une fois terminé le bouton ci-dessous deviendra clicable pour terminer la création et la valider.
+                    <button v-if="mode==='création'" :disabled="creationFinie ? 'disabled':''" @click="passerEnMode('jeu')">
+                        Création de personnage terminée
+                    </button>
                 </p>
-                <button v-if="mode==='création'" :disabled="creationFinie ? 'disabled':''" @click="passerEnMode('jeu')">
-                    Création de personnage terminée
-                </button>
                 <hdf-popup-jet v-if="mode==='jeu'"></hdf-popup-jet>
                 <hdf-popup-creation-competence></hdf-popup-creation-competence>
                 <hdf-popup-effets-dementiels v-if="mode==='jeu'"></hdf-popup-effets-dementiels>
 
                 <hdf-bloc-etat-civil v-if="mode==='création'"></hdf-bloc-etat-civil>
-                <hdf-bloc-sante-mentale v-if="mode==='création'"></hdf-bloc-sante-mentale>
                 <hdf-bloc-caracteristiques v-if="mode==='création'"></hdf-bloc-caracteristiques>
                 <hdf-bloc-competences v-if="mode==='création'"></hdf-bloc-competences>
+                <hdf-bloc-sante-mentale v-if="mode==='création'"></hdf-bloc-sante-mentale>
                 
                 <hdf-bloc-caracteristiques v-if="mode==='jeu'"></hdf-bloc-caracteristiques>
                 <hdf-bloc-etat-civil v-if="mode==='jeu'"></hdf-bloc-etat-civil>
@@ -61,10 +61,10 @@
                 <p class="tutoriel" v-if="mode === 'création'">
                     Si vous avez tout rempli comme demandé, le bouton ci-dessous devrait être clicable pour terminer la création et la valider.<br/>
                     Sinon remontez et vérifiez que vous avez bien tout saisi.
+                    <button v-if="mode==='création'" :disabled="creationFinie ? 'disabled':''" @click="passerEnMode('jeu')">
+                        Création de personnage terminée
+                    </button>
                 </p>
-                <button v-if="mode==='création'" :disabled="creationFinie ? 'disabled':''" @click="passerEnMode('jeu')">
-                    Création de personnage terminée
-                </button>
 
             </div>
         </div>

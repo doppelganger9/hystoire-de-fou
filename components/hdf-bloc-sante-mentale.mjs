@@ -41,7 +41,7 @@ export const BlocSanteMentaleComponent = {
         },
     },
     template: `
-<hdf-bloc-fiche title="Santé Mentale">
+<hdf-bloc-fiche title="Santé Mentale" class="santementale">
     <div>
         <label for="perso.motDeDemence">Mot de Démence :</label>
         <button class="emoji" v-if="mode=='création'" @click="afficheInfos">ℹ️</button>

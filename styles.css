@@ -60,14 +60,48 @@ body {
 .bloc.caracteristiques {
     width: 230px;
 }
+.caracteristiques h2 {
+    background-color: yellow;
+}
 .bloc.etatcivil {
     width: 260px;
+}
+.etatcivil h2 {
+    background-color: blue;
+    color: white;
 }
 .bloc.competences {
     width: 400px;
 }
+.competences h2 {
+    background-color: violet;
+}
+.bloc.competencesdementielles {
+    width: 400px;
+}
+.competencesdementielles h2 {
+    background-color: rgb(155, 0, 245);
+    color: white;
+}
+.bloc.equipements {
+    width: 400px;
+}
+.equipements h2 {
+    background-color: rgba(129, 33, 33, 0.76);
+    color:white;
+}
 .bloc.sante {
     width: 200px;
+}
+.sante h2 {
+    background-color: rgb(30, 148, 30);
+    color: white;
+}
+.bloc.santementale {
+    width: 400px;
+}
+.santementale h2 {
+    background-color: pink;
 }
 ul.competences {
     list-style-type: none;
@@ -136,9 +170,6 @@ label {
 }
 h1 {
     font-family: 'Garamond';
-}
-h2 {
-    font-family: 'Brush Script MT', cursive;
 }
 .handwritten {
     font-family: 'Caveat', cursive;
