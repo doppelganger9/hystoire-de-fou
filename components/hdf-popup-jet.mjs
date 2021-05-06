@@ -1,5 +1,6 @@
 //@ts-check
 import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
+import { tirerUnDe6, tirerUnDe20 } from "../metier/trousse-des.mjs";
 
 const SUCCES = 'succès !';
 const SUCCES_CRITIQUE_POSSIBLE = 'succès ... critique ou pas ?';
@@ -46,7 +47,35 @@ export const PopupJetComponent = {
         },
         seuilReussite: function() {
             this.ajustement = +this.ajustement;
-            return +this.valorisationATester + this.ajustement;
+            if (this.energieDementielle) {
+                this.energieDementielle = +this.energieDementielle;
+                // Seuil Energie Démentielle : au maximum on peut atteindre un seuil de réussite de 16
+                return Math.min(Math.max(16, this.valorisationATester + this.ajustement), +this.valorisationATester + this.ajustement + this.energieDementielle);
+            } else {
+                return +this.valorisationATester + this.ajustement;
+            }
+        },
+        recommencerActionPossible: function() {
+            // est-ce que le personnage a au moins 1 pt de crise ?
+            if (this.perso.pointsDeCrise === 0) return false;
+            // est-ce que l'action s'est terminée sur un échec ou échec critique ?
+            const csq = this.consequence;
+            if (csq !== ECHEC && csq !== ECHEC_CRITIQUE) return false;
+            // est-ce que l'on n'a pas déjà recommencé l'action ?
+            if (this.actionDejaRecommencee) return false;
+
+            // TODO : pas possible sur jet de Chance (CHARISME)
+            // TODO : pas possible sur jet de CONSTITUTION
+            // TODO : pas possible sur jet d'Incrédulité
+            // TODO : pas possible sur jet d'Antalgie Démentielle
+            // TODO : pas possible sur jet d'Empathie Démentielle
+            // TODO : pas possible sur jet de crise ou de chocs
+            // TODO : pas possible sur jet de perception inconsciente
+            // TODO : pas possible sur jet de Culture Générale et autre compétence Entendement
+            // TODO : en fait uniquement si jet découlant d'une action véritable et voulue
+
+            // sinon
+            return true;
         },
         consequence: function() {
             this.premierJet= +this.premierJet;
@@ -116,6 +145,8 @@ export const PopupJetComponent = {
             nbJet1: 0, // pour compter le nb de d20 simulés (cheater !)
             nbJet2: 0, // pour compter le nb de d20 simulés (cheater !)
             demandeConfirmationCritique: false,
+            actionDejaRecommencee: false, // pour tracer l'utilisation de recommencer action
+            energieDementielle: undefined, // undefined, ou 1 à 6
         };
     },
     methods: {
@@ -128,6 +159,8 @@ export const PopupJetComponent = {
             this.nbJet1 = 0;
             this.nbJet2 = 0;
             this.demandeConfirmationCritique = false;
+            this.energieDementielle = undefined;
+            this.actionDejaRecommencee = false;
 
             this.$store.dispatch("masqueTout");
         },
@@ -158,8 +191,33 @@ export const PopupJetComponent = {
                 this.$store.commit("marqueCroixExperience", this.etatJet.nom);
             }
 
+            // il faut payer les conséquence si on avait utilisé 1 ou 2 effets démentiels sur un jet échoué.
+            if (csq === ECHEC || csq === ECHEC_CRITIQUE) {
+                if (this.energieDementielle && !this.actionDejaRecommencee) {
+                    // si on a utilisé uniquement 1 effet démentiel et pas les 2
+                    this.$store.dispatch('apresEchecJetAvecEnergieDementielle');
+                } else if (!this.energieDementielle && this.actionDejaRecommencee) {
+                    // si on a utilisé uniquement 1 effet démentiel et pas les 2
+                    this.$store.dispatch('apresEchecJetAvecRecommencerAction');
+                } else if (this.energieDementielle && this.actionDejaRecommencee) {
+                    // DOUBLE conséquence Effets Démentiels
+                    this.$store.dispatch('apresEchecJetAvecEnergieDementiellePuisRecommencerAction');
+                }
+            } 
+
             this.masqueTout();
         },
+        ajouteEnergieDementiellePlus3: function() {
+            this.energieDementielle = +3;
+        },
+        ajouteEnergieDementiellePlus1D6: function() {
+            this.energieDementielle = +tirerUnDe6();
+        },
+        recommenceAction: function() {
+            this.actionDejaRecommencee = true;
+            this.nbJet1 = 0;
+            this.nbJet2 = 0;
+        }
     },
     template: `
 <div :class="'popup '+(hiddenPopupJet ? 'hidden' : '')">
@@ -220,6 +278,22 @@ export const PopupJetComponent = {
             <option value="9">+9</option>
             <option value="10">+10</option>
         </select>
+
+        <div v-if="perso.pointsDeCrise > 0 && (valorisationATester + ajustement < 16)" class="energiedementielle">
+            <label v-if="energieDementielle === undefined && nbJet1 === 0 && !actionDejaRecommencee" for="bouton-nrj">
+                Utiliser <em>Energie Démentielle</em> : "{{perso.motDeDemence}}"
+            </label>
+            <button v-if="energieDementielle === undefined && nbJet1 === 0 && !actionDejaRecommencee" name="bouton-nrj"
+                    @click="ajouteEnergieDementiellePlus3">
+                    Pour un Bonus de +3
+            </button>
+            <button v-if="energieDementielle === undefined && nbJet1 === 0 && !actionDejaRecommencee" name="bouton-nrj"
+                    @click="ajouteEnergieDementiellePlus1D6">
+                    Pour un Bonus de +1D6
+            </button>
+            <span v-if="energieDementielle !== undefined">Energie Démentielle : +{{ energieDementielle }}</span>
+        </div>
+
         <h4>Seuil de réussite : {{ seuilReussite }}</h4>
         
         <label for="premierJet">Premier jet:</label>
@@ -235,6 +309,17 @@ export const PopupJetComponent = {
         </div>
         <br/>
         <h4>{{ consequence }}</h4>
+
+        <div v-if="recommencerActionPossible">
+            <label for="retry-btn">Utiliser <em>Recommencer Action</em> : "{{perso.motDeDemence}}"</label>
+            <button name="retry-btn" @click="recommenceAction">
+                recommencer l'action !
+            </button>
+            <p>(NOTE: On ne peut pas "recommencer action" une deuxième fois.
+            On ne peut pas utiliser Energie Démentielle s'il n'a pas déjà été utilisé avant Recommencer Action)</p>
+        </div>
+        <p v-if="actionDejaRecommencee">Recommencer Action utilisé.</p>
+
     </div>
     <button @click="valide">Valider</button>
     <button @click="masqueTout">Annuler</button>

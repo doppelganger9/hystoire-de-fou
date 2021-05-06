@@ -138,9 +138,34 @@ export const modulePersonnage = {
         context.commit('ajouteCompetence', competence);          
       }
     },
-    // --- EFFETS DEMENTIELS ---
+    // --- CONSEQUENCES DES EFFETS DEMENTIELS SUR LA SANTE MENTALE ---
     appelDementiel: async function(context) {
-      await context.dispatch('ajouterPointDeCrise', undefined);
+      await context.dispatch('ajouteUnPointDeCrise', undefined);
+    },
+    apresAjoutCompetenceDementielle: async function(context) {
+      await context.dispatch('ajouteUnPointDeCrise', undefined);
+    },
+    apresEchecJetAvecEnergieDementielle: async function(context) {
+      await context.dispatch('ajouteUnPointDeCrise', undefined);
+    },
+    apresEchecJetAvecRecommencerAction: async function(context) {
+      await context.dispatch('ajouteUnPointDeCrise', undefined);
+    },
+    apresEchecJetAvecEnergieDementiellePuisRecommencerAction: async function(context) {
+      await context.dispatch('ajouteUnPointDeCrise', undefined);
+      await context.dispatch('faitUnJetDeCrise', undefined);
+    },
+    prendsLesVapes: async function(context) {
+      await context.dispatch('ajouteUnPointDeCrise', undefined);
+
+      // TODO supprimer toutes les douleurs
+      // TODO supprimer toutes les croix d'XP sur les competences
+      // TODO supprimer toutes les compétences démentielles
+      // TODO supprimer tous les points de crise
+      // TODO supprimer tous les points de choc parano
+      // TODO supprimer tous les points de choc schizo
+      // TODO si choc profonds, remettre des chocs ancrés entre parano et schizo
+      // TODO supprimer équipement
     },
     // --- SANTE MENTALE ---
     ajouteUnPointDeCrise: async function(context, caracteristiqueDirectrice) {
