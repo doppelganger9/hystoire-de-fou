@@ -2,6 +2,12 @@
 import { Douleur } from "../metier/fiche-personnage.mjs";
 import { mapState, mapGetters } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
 
+/**
+ * TODO:
+ * rajouter un bouton et un état indiquant si on a déjà utilisé Antalgie Démentielle sur une Douleur,
+ * et si non, un bouton permet de faire le jet (Recommencer et Energie Démentilles pas possibles, 
+ * mais Niveau d'Accomplissement en bonus).
+ */
 export const BlocSanteComponent = {
     data: function() {
         return {
