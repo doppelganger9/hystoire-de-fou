@@ -27,11 +27,11 @@ body {
 }
 .bloc {
     border: 1px solid lightblue;
-    padding: 10px;
+    padding: 10px 10px 30px 10px;
     margin: 5px;
 }
 .bloc h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 20px 0;
 }
 .w50px {
     width: 50px;
@@ -58,7 +58,7 @@ body {
     width: 500px;
 }
 .bloc.caracteristiques {
-    width: 230px;
+    width: 250px;
 }
 .caracteristiques h2 {
     background-color: yellow;
@@ -91,23 +91,75 @@ body {
     color:white;
 }
 .bloc.sante {
-    width: 200px;
+    width: 300px;
 }
 .sante h2 {
     background-color: rgb(30, 148, 30);
     color: white;
 }
+.sante .ajoutdouleur {
+    background-color: lightblue;
+    padding: 5px;
+    margin: 5px;
+}
 .bloc.santementale {
-    width: 400px;
+    width: 300px;
 }
 .santementale h2 {
     background-color: pink;
 }
+div.santementale input[type='number'] {
+    width: 50px;
+    font-size: 18px;
+}
+div.santementale div.score {
+    display: inline-block;
+    font-size: 18px;
+    width: 50px;
+    text-align: center;
+}
+div.santementale div.texte {
+    display: inline-block;
+    font-size: 18px;
+    width: 100px;
+    text-align: center;
+}
+
 ul.competences {
     list-style-type: none;
     display: block;
     padding: 5px;
     margin: 5px;
+}
+.popup-jet .valide {
+    width: 100px;
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+}
+.popup-jet .annule {
+    width: 100px;
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+}
+.popup-infos .ferme {
+    width: 100px;
+    margin: 0 calc(50% - 50px) 30px;
+}
+.popup-infos h3 {
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 30px 50px 30px;
+    text-align: center;
+    background-color: lightseagreen;
+    text-transform: uppercase;    
+}
+.popup-infos .exemple {
+    font-family: 'Caveat';
+    padding-left: 10px;
+    font-size: 16px;
 }
 .jet {
     cursor: hand;
@@ -129,6 +181,7 @@ input {
     border-bottom: 1px solid gray;
     font-size: 16px;
     text-align: center;
+    background-color: transparent;
 }
 input:read-only {
     border: none;
@@ -146,6 +199,12 @@ div.carac {
     align-content: stretch;
     justify-content: flex-end;
     align-items: center;
+    width: 220px;
+}
+div.carac div.score {
+    width: 50px;
+    text-align: center;
+    font-size: 18px;
 }
 button.emoji {
     background: none;

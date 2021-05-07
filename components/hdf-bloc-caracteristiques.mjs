@@ -39,7 +39,7 @@ export const BlocCaracteristiquesComponent = {
     },
     methods: {
         afficheInfos: function(typeInfos) {
-            this.$store.dispatch('afficheInfos', infosCaracteristiques[typeInfos]);
+            this.$store.dispatch('afficheInfos', { titre: typeInfos, contenuHtml: infosCaracteristiques[typeInfos] });
         },
         clickedCaracteristique: function(nomCaracteristique) {
             if (this.mode === 'jeu') {
@@ -55,54 +55,53 @@ export const BlocCaracteristiquesComponent = {
     Les caractéristiques vont de 6 à 15 inclus.</p>
     <p class="tutoriel" v-if="mode === 'création'">Points restant à répartir : {{ perso.pointsCaracteristiqueRestant }}</p>
 
-    <div class="w200px">
-        <div class="w200px carac">
+    <div class="">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.volonte" @click="clickedCaracteristique('volonte')">VOLONTE :</label>
             <button class="emoji" @click="afficheInfos('volonté')">ℹ️</button>
-            <input class="w50px" name="perso.volonte" v-model="volonte" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <input class="w50px" name="perso.volonte" v-model="volonte" type="number" v-if="mode==='création'" min="6" max="15">
+            <div class="score" v-if="mode==='jeu'">{{ volonte }}</div>
         </div>
-        <div class="w200px carac">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.intellect" @click="clickedCaracteristique('intellect')">INTELLECT :</label>
             <button class="emoji" @click="afficheInfos('intellect')">ℹ️</button>
-            <input class="w50px" name="perso.intellect" v-model="intellect" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <input class="w50px" name="perso.intellect" v-model="intellect" type="number" v-if="mode==='création'" min="6" max="15">
+            <div class="score" v-if="mode==='jeu'">{{ intellect }}</div>
         </div>
-        <div class="w200px carac">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.sensitif" @click="clickedCaracteristique('sensitif')">SENSITIF :</label>
             <button class="emoji" @click="afficheInfos('sensitif')">ℹ️</button>
-            <input class="w50px" name="perso.sensitif" v-model="sensitif" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <input class="w50px" name="perso.sensitif" v-model="sensitif" type="number" v-if="mode==='création'" min="6" max="15">
+            <div class="score" v-if="mode==='jeu'">{{ sensitif }}</div>
         </div>
-        <div class="w200px carac">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.entendement" @click="clickedCaracteristique('entendement')">Entendement :</label>
             <button class="emoji" @click="afficheInfos('entendement')">ℹ️</button>
-            <input class="w50px" name="perso.entendement" readonly="readonly" :value="perso.entendement">
-            <br/>
+            <div class="score">{{ perso.entendement }}</div>
         </div>
-        <div class="w200px carac">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.charisme" @click="clickedCaracteristique('charisme')">CHARISME :</label>
             <button class="emoji" @click="afficheInfos('charisme')">ℹ️</button>
-            <input class="w50px" name="perso.charisme" v-model="charisme" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <input class="w50px" name="perso.charisme" v-model="charisme" type="number" v-if="mode==='création'" min="6" max="15">
+            <div class="score" v-if="mode==='jeu'">{{ charisme }}</div>
         </div>
-        <div class="w200px carac">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.constitution" @click="clickedCaracteristique('constitution')">CONSTITUTION :</label>
             <button class="emoji" @click="afficheInfos('constitution')">ℹ️</button>
-            <input class="w50px" name="perso.constitution" v-model="constitution" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <input class="w50px" name="perso.constitution" v-model="constitution" type="number" v-if="mode==='création'" min="6" max="15">
+            <div class="score" v-if="mode==='jeu'">{{ constitution }}</div>
         </div>
-        <div class="w200px carac">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.perception" @click="clickedCaracteristique('perception')">PERCEPTION :</label>
             <button class="emoji" @click="afficheInfos('perception')">ℹ️</button>
-            <input class="w50px" name="perso.perception" v-model="perception" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <input class="w50px" name="perso.perception" v-model="perception" type="number" v-if="mode==='création'" min="6" max="15">
+            <div class="score" v-if="mode==='jeu'">{{ perception }}</div>
         </div>
-        <div class="w200px carac">
+        <div class="carac">
             <label :class="{jet: mode==='jeu'}" for="perso.agilite" @click="clickedCaracteristique('agilite')">AGILITE :</label>
             <button class="emoji" @click="afficheInfos('agilité')">ℹ️</button>
-            <input class="w50px" name="perso.agilite" v-model="agilite" type="number" :readonly="mode==='jeu'" min="6" max="15">
-            <br/>
+            <input class="w50px" name="perso.agilite" v-model="agilite" type="number" v-if="mode==='création'" min="6" max="15">
+            <div class="score" v-if="mode==='jeu'">{{ agilite }}</div>
         </div>
     </div>
 </hdf-bloc-fiche>

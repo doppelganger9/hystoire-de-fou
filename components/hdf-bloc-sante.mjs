@@ -31,6 +31,9 @@ export const BlocSanteComponent = {
             this.nouvelleDouleur = new Douleur();
             this.afficheLigneAjoutDouleur = true;
         },
+        fermeLigneDouleur() {
+            this.afficheLigneAjoutDouleur = false;
+        },
     },
     template: `
 <hdf-bloc-fiche title="Santé" class="sante">
@@ -41,16 +44,18 @@ export const BlocSanteComponent = {
             {{douleur.valeur}} ({{ douleur.provenance }}) <button @click="supprimeLigneDouleur(index)" class="emoji">🗑</button>
         </li>
     </ul>
-    <span v-else>Aucune</span><br/>
+    <span v-else>En parfaite santé, tout va bien !</span>
+    <br/>
+    <br/>
     <button v-if="!afficheLigneAjoutDouleur" @click="afficheNouvelleDouleur">Nouvelle Douleur</button>
-    <div v-if="afficheLigneAjoutDouleur">
+    <div v-if="afficheLigneAjoutDouleur" class="ajoutdouleur">
         <label for="nouvelleDouleur.valeur">Valeur :</label>
         <input name="nouvelleDouleur.valeur" v-model="nouvelleDouleur.valeur" type="number" min="1" max="4" class="handwritten">
-
+        <br/>
         <label for="nouvelleDouleur.provenance">Provenance :</label>
         <input name="nouvelleDouleur.provenance" v-model="nouvelleDouleur.provenance" type="text" class="handwritten">
-
-        <button @click="ajouteLigneDouleur">Ajouter Douleur</button>
+        <br/>
+        <button @click="ajouteLigneDouleur">Ajouter Douleur</button><button @click="fermeLigneDouleur">Annuler</button>
     </div>
 </hdf-bloc-fiche>
 `,

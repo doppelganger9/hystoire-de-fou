@@ -41,7 +41,7 @@ export const BlocSanteMentaleComponent = {
     },
     methods: {
         afficheInfos: function() {
-            this.$store.dispatch('afficheInfos', infosMotDeDemence());
+            this.$store.dispatch('afficheInfos', { titre: 'Mot de Démence', contenuHtml: infosMotDeDemence() });
         },
         clickedMotDeDemence: function() {
             if (this.mode === 'jeu') {
@@ -66,8 +66,7 @@ export const BlocSanteMentaleComponent = {
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.tendance">Tendance :</label>
-        <input name="perso.tendance" readonly="readonly" :value="perso.tendance">
-        <br/>
+        <div class="texte">{{ perso.tendance }}</div>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.totalAccomplissement">Total Accomplissement :</label>
@@ -76,8 +75,7 @@ export const BlocSanteMentaleComponent = {
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.niveauAccomplissement">Niveau Accomplissement :</label>
-        <input name="perso.niveauAccomplissement" readonly="readonly" :value="perso.niveauAccomplissement" type="number">
-        <br/>
+        <div class="score">{{ perso.niveauAccomplissement }}</div>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.pointsDeCrise">Points de Crise :</label>

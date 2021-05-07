@@ -220,7 +220,7 @@ export const PopupJetComponent = {
         }
     },
     template: `
-<div :class="'popup '+(hiddenPopupJet ? 'hidden' : '')">
+<div :class="'popup popup-jet '+(hiddenPopupJet ? 'hidden' : '')">
     <button class="abs-top-right-10" @click="masqueTout">X</button>
     <div class="contents">
         <h3>Faire un Jet de {{ etatJet.type }}</h3>
@@ -321,8 +321,8 @@ export const PopupJetComponent = {
         <p v-if="actionDejaRecommencee">Recommencer Action utilisé.</p>
 
     </div>
-    <button @click="valide">Valider</button>
-    <button @click="masqueTout">Annuler</button>
+    <button class="valide" @click="valide">Valider</button>
+    <button class="annule" @click="masqueTout">Annuler</button>
 </div>
 `,
 };

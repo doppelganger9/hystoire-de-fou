@@ -287,7 +287,6 @@ const motsInsolites = [
 
 export function infosMotDeDemence() {
     return `
-    <h3>Mot de Démence</h3>
     <p>Choisissez librement votre mot de démence.</p>
     <p>En termes de rôle, ce mot vous servira à déclencher vos effets démentiels.</p>
     <p>Vous aurez à le proférer souvent.</p>
