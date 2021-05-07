@@ -138,7 +138,6 @@ export const modulePersonnage = {
       state.perso.dureeEtatDeChoc = 0;
     },
     ajouteUnFuturPiegesDuDelireDePersecution: function(state, piege) {
-      // TODO
       state.perso.futursPiegesDuDelireDePersecution.push(piege);
     },
     supprimeLesFutursPiegesDuDelireDePersecution: function(state) {
@@ -279,7 +278,7 @@ export const modulePersonnage = {
     ajouteUnPointDeChoc: async function(context, caracteristiqueDirectrice) {
       // tendance si pas de caracteristiqueDirectrice
       if (!caracteristiqueDirectrice) {
-          caracteristiqueDirectrice = await context.dispatch('faitUnJetDeTendance'); //TODO vérifier si on peut retourner une valeur sinon appeler un code externe
+          caracteristiqueDirectrice = await context.dispatch('faitUnJetDeTendance');
       }
       // gain de choc parano ou schizo
       if (caracteristiqueDirectrice === 'intellect') {
