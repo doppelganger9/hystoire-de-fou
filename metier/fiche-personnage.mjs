@@ -41,7 +41,7 @@ export class ContextePersonnage {
     chocsParano = 0;
     chocsSchizo = 0;
     chocsProfonds = 0;
-    etatDeChoc = false;
+    etatDeChoc = false; // TODO : un objet avec type = parano/schizo (hystérie/dépression) et duree dedans..
     dureeEtatDeChoc = 0;
     futursPiegesDuDelireDePersecution = [];
     totalAccomplissement = 0;
