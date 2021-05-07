@@ -40,6 +40,8 @@ L'entrée en état de Choc dépendant du Niveau d'Accomplissement et de la VOLON
 - clic sur une carac : popup de jet, saisir ajustement, saisir le résultat (si on tire notre dé en réel) ou tirer un d20 sur cet écran. Valider pour fermer et journaliser cette action.
 - avoir un journal des différentes actions/jets/effets.
 - clic sur mot de démence : affiche popup avec les Effets Démentiels possibles (Antalgie que si on a des Douleurs, p.ex.). différentes popup de résolution/jets s'enchainent, et le journal s'alimente.
+- Gestion des combats : cliquer sur Esquive vs Ajustements de l'adversaire. Attribuer aux objets des Classes de Dommages + Avoir les tables Dommage des Personnages + la table des Douleurs, ou bien Table de Dommage des Créatures.
+
 
 à tout moment on peut choisir de saisir un résultat ou bien cliquer pour simuler un lancer de dé.
 
