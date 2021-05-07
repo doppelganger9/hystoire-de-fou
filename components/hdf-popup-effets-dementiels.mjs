@@ -24,42 +24,37 @@ export const PopupEffetsDementielsComponent = {
             this.$store.dispatch("masqueTout");
         },
         valide: function() {
-            // journaliser
-            //const ligneJournal = `Jet de ${this.etatJet.type} sur ${this.etatJet.nom} avec ${this.typeAjustement}=${this.ajustement} : (${this.premierJet}) ${this.demandeConfirmationCritique ? '('+this.deuxiemeJet+')' : ''} ${this.consequence}.`;
-            //this.$store.commit("ajouteLigneJournal", ligneJournal);
-            // modifier this.perso éventuellement
-
             this.masqueTout();
         },
         appelDementiel: function() {
             this.$store.dispatch('appelDementiel');
         },
         incredire: function() {
-            // TODO
+            // TODO : suivre une popup de jet ?
         },
         antalgieDementielle: function() {
-            // TODO
+            // TODO : ajouter un bouton à côté des douleurs
         },
         empathieDementielle: function() {
-            // TODO
+            // TODO : faire un jet de charisme...
         },
         acquiertCompetenceDementielle: function() {
-            // TODO
+            // TODO : dire de voir directement sur la fiche
         },
         prendsLesVapes: function() {
-            // TODO
+            this.$store.dispatch('prendsLesVapes');
         },
         recommencerAction: function() {
-            // TODO
+            // TODO : dire de voir dans la popup Jet
         },
         energieDementielle: function() {
-            // TODO
+            // TODO : dire de voir dans la popup Jet
         },
         mourir: function() {
-            // TODO
+            this.$store.dispatch('apresLaMort');
         },
         accomplir: function() {
-            // TODO
+            this.$store.dispatch('accomplissement');
         },
     },
     template: `
