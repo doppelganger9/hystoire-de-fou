@@ -80,8 +80,8 @@ export const BlocEtatCivilComponent = {
         </p>
         <div>
             <label for="perso.description">Description :</label>
-            <textarea class="handwritten" name="perso.description" v-model="description" placeholder="Description du personnage" :readonly="mode==='jeu'"></textarea>
-            <br/>
+            <textarea class="handwritten" name="perso.description" v-model="description" placeholder="Description du personnage" v-if="mode==='création'"></textarea>
+            <div class="handwritten" v-if="mode ==='jeu'">{{ description }}</div>            
         </div>
     </div>
 </hdf-bloc-fiche>
