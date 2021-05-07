@@ -110,16 +110,20 @@ function calculerBonusAuxDommages(constitution, tailleScore) {
     }
 }
 
+export const TENDANCE_PARANO = "Parano";
+export const TENDANCE_SCHIZO = "Schizo";
+export const TENDANCE_EGALE = "Parano/Schizo";
+
 function calculerLaTendance(intellect, sensitif) {
     intellect = +intellect;
     sensitif = +sensitif;
 
     if (intellect > sensitif) {
-        return "Parano";
+        return TENDANCE_PARANO;
     } else if (sensitif > intellect) {
-        return "Schizo";
+        return TENDANCE_SCHIZO;
     }
-    return "Parano/Schizo";
+    return TENDANCE_EGALE;
 }
 
 function calculerNiveauAccomplissement(totalAccomplissement) {

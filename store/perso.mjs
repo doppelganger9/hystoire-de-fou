@@ -4,6 +4,7 @@ import { Competence } from "../metier/competences.mjs";
 import { Douleur } from "../metier/douleurs.mjs";
 import { habillerALaSaintFrusquin } from "../metier/saint-frusquin.mjs";
 import { tirerUnDe20 } from "../metier/trousse-des.mjs";
+import { TENDANCE_PARANO } from "../metier/fiche-personnage.mjs";
 
 /**
  * Découper en sous module le store pour ne pas qu'il devienne trop gros/trop fourre-tout.
@@ -243,8 +244,7 @@ export const modulePersonnage = {
       context.commit('modifieChampsNombrePerso', {champs: 'chocsSchizos', valeur: 0});
       if (context.state.perso.chocsProfonds > 0) {
         // simple algo : on met tous les chocs profonds dans la tendance plus faible
-        if (context.state.perso.tendance == "Parano") {
-          context.commit('modifieChampsNombrePerso', {champs:'chocsSchizos', valeur: +context.state.perso.chocsProfonds});
+        if (context.state.perso.tendance == TENDANCE_PARANO) {
         } else {
           context.commit('modifieChampsNombrePerso', {champs:'chocsParanos', valeur: +context.state.perso.chocsProfonds});
         }
