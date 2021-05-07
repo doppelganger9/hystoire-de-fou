@@ -1,6 +1,6 @@
 // @ts-check
 import { tirerUnDe20 } from "./trousse-des.mjs";
-import { Competence } from "./fiche-personnage.mjs";
+import { Competence } from "./competences.mjs";
 import { ajouterPointDeCrise, faireUnJetDeCrise } from "./sante-mentale.mjs";
 
 // ---------------------------------------------------------

@@ -1,5 +1,7 @@
 //@ts-check
-import { ContextePersonnage, Competence, Douleur } from "../metier/fiche-personnage.mjs";
+import { ContextePersonnage } from "../metier/fiche-personnage.mjs";
+import { Competence } from "../metier/competences.mjs";
+import { Douleur } from "../metier/douleurs.mjs";
 import { habillerALaSaintFrusquin } from "../metier/saint-frusquin.mjs";
 import { tirerUnDe20 } from "../metier/trousse-des.mjs";
 
@@ -52,6 +54,10 @@ export const modulePersonnage = {
     supprimeCroixExperience: function(state, nomCompetence) {
       const comp = state.perso.competences.reduce((found, c) => !found && c.intitule === nomCompetence ? c : found, null);
       comp.croixExperience = false;
+    },
+    incrementeExperienceCompetence: function(state, competence) {
+      const comp = state.perso.competences.reduce((found, c) => !found && c.intitule === competence.intitule ? c : found, null);
+      comp.xp = comp.xp + 1;
     },
     supprimeLigneDouleur: function(state, indexDouleur) {
       state.perso.douleurs = state.perso.douleurs.filter((_, index) => index !== indexDouleur);
@@ -156,6 +162,16 @@ export const modulePersonnage = {
     apresEchecJetAvecEnergieDementiellePuisRecommencerAction: async function(context) {
       await context.dispatch('ajouteUnPointDeCrise', undefined);
       await context.dispatch('faitUnJetDeCrise', undefined);
+    },
+    testeProgressionCompetenceAvecCroixExperience: async function(context) {
+      context.state.perso.competences.forEach(competence => {
+        if (competence.croixExperience) {
+          const d20 = tirerUnDe20();
+          if (d20 <= competence.valeur) {
+            context.commit('incrementeExperienceCompetence', competence);
+          }
+        }
+      });
     },
     prendsLesVapes: async function(context) {
       await context.dispatch('ajouteUnPointDeCrise', undefined);

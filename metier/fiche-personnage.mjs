@@ -65,59 +65,6 @@ export class ContextePersonnage {
     }
 }
 
-export class Douleur {
-    provenance = "";
-    valeur = 1;
-}
-
-export class Competence {
-    intitule = "?";
-    base = 0; // 0 = 0%, 1 = 50%
-    revelee = false;
-    dementielle = false;
-    professionnelle = false;
-    croixExperience = false;
-    get valeur() {
-        if (this.dementielle) {
-            // 100% + 1
-            return (+this.valeurCaracteristiqueDirectrice) + 1;
-        } else if (this.professionnelle) {
-            // 100%, pas de révélation
-            return (+this.valeurCaracteristiqueDirectrice);
-        } else {
-            // si pas encore révélée.. investir des points de génération ou pas.
-            // palliers 0: 0% / 1: 50% / 2: 75% / 3: 100%
-            const pallier = (+this.base) + (+this.pointsDeGeneration);
-            if (pallier == 0) {
-                return 0;
-            } else if (pallier == 1) {
-                return Math.floor((+this.valeurCaracteristiqueDirectrice) * .5);
-            } else if (pallier == 2) {
-                return Math.floor((+this.valeurCaracteristiqueDirectrice) * .75);
-            } else if (pallier == 3) {
-                return (+this.valeurCaracteristiqueDirectrice);
-            } else {
-                console.error("pallier inconnu !", pallier);
-            }
-        }
-    }
-    valeurCaracteristiqueDirectrice = 0;
-    nomCaracteristiqueDirectrice = undefined;
-    pointsDeGeneration = 0;
-}
-
-export function initNouvelleCompetence() {
-    const nouvelleCompetence = new Competence();
-    nouvelleCompetence.professionnelle = false;
-    nouvelleCompetence.revelee = false;
-    nouvelleCompetence.dementielle = false;
-    nouvelleCompetence.intitule = "";
-    nouvelleCompetence.valeurCaracteristiqueDirectrice = 0;
-    nouvelleCompetence.nomCaracteristiqueDirectrice = ""
-    nouvelleCompetence.pointsDeGeneration = 0;
-    return nouvelleCompetence;
-}
-
 function calculerScoreTaille(tailleCm) {
     tailleCm = +tailleCm; //pour être sûr que c'est un nombre.
     if (tailleCm <= 154) {

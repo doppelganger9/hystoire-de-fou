@@ -1,4 +1,4 @@
-import { Competence } from "./fiche-personnage.mjs";
+import { Competence } from "./competences.mjs";
 import { HdfStore } from "../store/root.mjs";
 
 // ---------------------------------------------------------
