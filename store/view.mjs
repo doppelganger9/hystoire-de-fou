@@ -5,17 +5,19 @@ import { Competence } from "../metier/fiche-personnage.mjs";
  * Module Store pour gérer l'état de la vue de l'app : quelle popup est affichée, etc.
  */
 export const moduleView = {
-  state: {
-    infos: '',
-    hiddenInfos: true,
-    mode: 'menu',
-    hiddenVoile: true,
-    hiddenPopupCompetence: true,
-    nouvelleCompetence: new Competence(),
-    hiddenPopupJet: true,
-    etatJet: {nom:'volonte', type:'caractéristique'},
-    journal: [],
-    hiddenPopupEffetsDementiels: true,
+  state: function() { 
+    return {
+      infos: '',
+      hiddenInfos: true,
+      mode: 'menu',
+      hiddenVoile: true,
+      hiddenPopupCompetence: true,
+      nouvelleCompetence: new Competence(),
+      hiddenPopupJet: true,
+      etatJet: {nom:'volonte', type:'caractéristique'},
+      journal: [],
+      hiddenPopupEffetsDementiels: true,
+    };
   },
   getters: {},
   mutations: {

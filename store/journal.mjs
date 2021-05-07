@@ -5,8 +5,10 @@
  * via ...moduleJournal.actions, ...moduleJournal.state
  */
 export const moduleJournal = {
-  state: { 
-    journal: [],
+  state: function() { 
+    return {
+      journal: [],
+    };
   },
   getters: {
   },

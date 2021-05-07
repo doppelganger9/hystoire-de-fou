@@ -10,8 +10,10 @@ import { tirerUnDe20 } from "../metier/trousse-des.mjs";
  * Que du JS ici, pas de dépendance vers du code de framework (Vue/VueX)
  */
 export const modulePersonnage = {
-  state: {
-    perso: new ContextePersonnage(),
+  state: function() { 
+    return {
+      perso: new ContextePersonnage(),
+    };
   },
   getters: {
     creationFinie: function(state) {

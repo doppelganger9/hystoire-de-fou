@@ -9,10 +9,12 @@ export const HdfStore = {
   // décommenter en DEV, pour détecter les mutations sauvages
   // strict: true,
 
-  state: {
-    ...moduleJournal.state,
-    ...moduleView.state,
-    ...modulePersonnage.state,
+  state: function() { 
+    return {
+      ...moduleJournal.state(),
+      ...moduleView.state(),
+      ...modulePersonnage.state(),
+    };
   },
   getters: {
     ...moduleJournal.getters,
