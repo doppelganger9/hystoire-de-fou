@@ -21,13 +21,13 @@ export const modulePersonnage = {
     creationFinie: function(state) {
       const repartitionCaracFinie = state.perso.pointsCaracteristiqueRestant === 0;
       const persoAUneCompetenceProfessionnelle = state.perso.competences.some(_ => _.professionnelle);
-      const etatCivilRempli = state.perso.nom 
-        && state.perso.age 
-        && state.perso.tailleCm 
-        && state.perso.description 
-        && state.perso.poids 
-        && state.perso.motDeDemence 
-        && state.perso.profession;
+      const etatCivilRempli = !!state.perso.nom 
+        && !!state.perso.age 
+        && !!state.perso.tailleCm 
+        && !!state.perso.description 
+        && !!state.perso.poids 
+        && !!state.perso.motDeDemence 
+        && !!state.perso.profession;
 
       return repartitionCaracFinie 
           && persoAUneCompetenceProfessionnelle 
