@@ -62,7 +62,6 @@ export const BlocSanteMentaleComponent = {
             placeholder="Mot de démence du personnage" 
             :readonly="mode==='jeu'" 
             @click="clickedMotDeDemence">
-        <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.tendance">Tendance :</label>
@@ -71,7 +70,6 @@ export const BlocSanteMentaleComponent = {
     <div v-if="mode==='jeu'">
         <label for="perso.totalAccomplissement">Total Accomplissement :</label>
         <input name="perso.totalAccomplissement" v-model="totalAccomplissement" type="number" min="0" class="handwritten">
-        <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.niveauAccomplissement">Niveau Accomplissement :</label>
@@ -80,22 +78,21 @@ export const BlocSanteMentaleComponent = {
     <div v-if="mode==='jeu'">
         <label for="perso.pointsDeCrise">Points de Crise :</label>
         <input name="perso.pointsDeCrise" v-model="pointsDeCrise" type="number" min="0">
-        <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.chocsParano">Chocs Parano :</label>
         <input name="perso.chocsParano" v-model="chocsParano" type="number" min="0">
-        <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.chocsSchizo">Chocs Schizo :</label>
         <input name="perso.chocsSchizo" v-model="chocsSchizo" type="number" min="0">
-        <br/>
     </div>
     <div v-if="mode==='jeu'">
         <label for="perso.chocsProfonds">Chocs Profonds :</label>
         <input name="perso.chocsProfonds" v-model="chocsProfonds" type="number" min="0">
-        <br/>
+    </div>
+    <div v-if="mode==='jeu' && perso.etatDeChoc">
+        <p>En Etat de Choc! pendant : {{ perso.dureeEtatDeChoc }} minute{{ perso.dureeEtatDeChoc > 1 ? 's' : '' }}</p>
     </div>
 </hdf-bloc-fiche>
 `,
