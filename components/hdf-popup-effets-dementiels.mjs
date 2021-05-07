@@ -63,10 +63,10 @@ export const PopupEffetsDementielsComponent = {
         },
     },
     template: `
-<div :class="'popup '+(hiddenPopupEffetsDementiels ? 'hidden' : '')">
+<div :class="'popup popup-effetsdementiels '+(hiddenPopupEffetsDementiels ? 'hidden' : '')">
+    <h3>Effets Démentiels</h3>
     <button class="abs-top-right-10" @click="masqueTout">X</button>
     <div class="contents">
-        <h3>Effets Démentiels</h3>
         <div v-if="!persoEstEnCrise">
             <p>Pour le moment rien ne vous a fait douter que la réalité n'est plus ce qu'elle devrait être.</p>
             <p>Si jamais vous en doutiez, faites votre <button @click="appelDementiel">Appel Démentiel</button> en prononçant votre Mot de Démence pour la première fois !</p>
@@ -90,8 +90,8 @@ export const PopupEffetsDementielsComponent = {
         </div>
 
     </div>
-    <button @click="valide">Valider</button>
-    <button @click="masqueTout">Annuler</button>
+    <button class="valide" @click="valide">Valider</button>
+    <button class="annule" @click="masqueTout">Annuler</button>
 </div>
 `,
 };

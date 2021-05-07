@@ -221,9 +221,9 @@ export const PopupJetComponent = {
     },
     template: `
 <div :class="'popup popup-jet '+(hiddenPopupJet ? 'hidden' : '')">
+    <h3>Faire un Jet de {{ etatJet.type }}</h3>
     <button class="abs-top-right-10" @click="masqueTout">X</button>
     <div class="contents">
-        <h3>Faire un Jet de {{ etatJet.type }}</h3>
         {{ etatJet.nom }} : {{ valorisationATester }}
         <br/>
         <label for="typeAjustement:ajustement">avec Ajustement</label><input id="typeAjustement:ajustement" name="typeAjustement" value="ajustement" type="radio" v-model="typeAjustement">

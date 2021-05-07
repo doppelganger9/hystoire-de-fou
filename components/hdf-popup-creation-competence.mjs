@@ -37,10 +37,10 @@ export const PopupCreationCompetenceComponent = {
         },
     },
     template: `
-<div :class="'popup '+(hiddenPopupCompetence ? 'hidden' : '')">
+<div :class="'popup popup-creationcompetence '+(hiddenPopupCompetence ? 'hidden' : '')">
+    <h3>Nouvelle Compétence {{ nouvelleCompetence.dementielle ? "Démentielle" : ""}}{{ nouvelleCompetence.professionnelle ? "Professionnelle" : ""}}</h3>
     <button class="abs-top-right-10" @click="masqueTout">X</button>
     <div class="contents">
-        <h3>Nouvelle Compétence {{ nouvelleCompetence.dementielle ? "Démentielle" : ""}}{{ nouvelleCompetence.professionnelle ? "Professionnelle" : ""}}</h3>
         <div>
             <label for="nouvelleCompetence.intitule">Intitulé :</label>
             <input name="nouvelleCompetence.intitule" v-model="intitule" type="text" class="handwritten">
@@ -82,8 +82,8 @@ export const PopupCreationCompetenceComponent = {
             <br/>
         </div>
     </div>
-    <button @click="valideAjoutCompetence(nouvelleCompetence)">Valider</button>
-    <button @click="masqueTout">Annuler</button>
+    <button class="valide" @click="valideAjoutCompetence(nouvelleCompetence)">Valider</button>
+    <button class="annule" @click="masqueTout">Annuler</button>
 </div>
 `,
 };

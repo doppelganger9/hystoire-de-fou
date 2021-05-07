@@ -131,17 +131,61 @@ ul.competences {
     padding: 5px;
     margin: 5px;
 }
+.popup-jet h3 {
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 30px 50px 30px;
+    text-align: center;
+    background-color: orange;
+    color: white;
+    text-transform: uppercase;    
+}
 .popup-jet .valide {
     width: 100px;
-    position: absolute;
-    bottom: 20px;
-    left: 40px;
+    margin: 0 calc(25% - 52px) 30px;
 }
 .popup-jet .annule {
     width: 100px;
-    position: absolute;
-    bottom: 20px;
-    right: 40px;
+    margin: 0 calc(25% - 52px) 30px;
+}
+
+.popup-creationcompetence h3 {
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 30px 50px 30px;
+    text-align: center;
+    background-color: greenyellow;
+    text-transform: uppercase;    
+}
+.popup-creationcompetence .valide {
+    width: 100px;
+    margin: 0 calc(25% - 52px) 30px;
+}
+.popup-creationcompetence .annule {
+    width: 100px;
+    margin: 0 calc(25% - 52px) 30px;
+}
+
+
+.popup-effetsdementiels h3 {
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 30px 50px 30px;
+    text-align: center;
+    background-color: rgb(174, 0, 255);
+    color: white;
+    text-transform: uppercase;    
+}
+.popup-effetsdementiels .valide {
+    width: 100px;
+    margin: 0 calc(25% - 52px) 30px;
+}
+.popup-effetsdementiels .annule {
+    width: 100px;
+    margin: 0 calc(25% - 52px) 30px;    
 }
 .popup-infos .ferme {
     width: 100px;
