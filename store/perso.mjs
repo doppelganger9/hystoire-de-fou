@@ -47,6 +47,9 @@ export const modulePersonnage = {
     ajouteCompetenceDementielle: function(state, competence) {
       state.perso.competencesDementielles.push(competence);
     },
+    supprimeToutesLesCompetencesDementielles: function(state) {
+      state.perso.competencesDementielles = [];
+    },
     marqueCroixExperience: function(state, nomCompetence) {
       const comp = state.perso.competences.reduce((found, c) => !found && c.intitule === nomCompetence ? c : found, null);
       comp.croixExperience = true;
@@ -59,8 +62,14 @@ export const modulePersonnage = {
       const comp = state.perso.competences.reduce((found, c) => !found && c.intitule === competence.intitule ? c : found, null);
       comp.xp = comp.xp + 1;
     },
+    supprimeToutesLesCroixExperience: function(state) {
+      state.perso.competences.forEarch(c => c.croixExperience = false);      
+    },
     supprimeLigneDouleur: function(state, indexDouleur) {
       state.perso.douleurs = state.perso.douleurs.filter((_, index) => index !== indexDouleur);
+    },
+    supprimeToutesLesDouleurs: function(state) {
+      state.perso.douleurs = [];
     },
     ajouteLigneDouleur: function(state, nouvelleDouleur) {
       state.perso.douleurs.push(nouvelleDouleur);
@@ -72,6 +81,9 @@ export const modulePersonnage = {
     },
     supprimeLigneEquipement: function(state, indexEquipement) {
       state.perso.equipements = state.perso.equipements.filter((_, index) => index !== indexEquipement);
+    },
+    supprimeToutLEquipement: function(state) {
+      state.perso.equipements = [];
     },
     ajouteLigneEquipement: function(state, nouvelEquipement) {
       state.perso.equipements.push(''+nouvelEquipement);
@@ -116,6 +128,20 @@ export const modulePersonnage = {
     },
     passeEnEtatDeChoc: function(state) {
       state.perso.etatDeChoc = true;
+    },
+    incrementeDureeEtatDeChoc: function(state, valeur = 1) {
+      state.perso.dureeEtatDeChoc = state.perso.dureeEtatDeChoc + valeur;
+    },
+    annuleEtatDeChoc: function(state) {
+      state.perso.etatDeChoc = false;
+      state.perso.dureeEtatDeChoc = 0;
+    },
+    ajouteUnFuturPiegesDuDelireDePersecution: function(state, piege) {
+      // TODO
+      state.perso.futursPiegesDuDelireDePersecution.push(piege);
+    },
+    supprimeLesFutursPiegesDuDelireDePersecution: function(state) {
+      state.perso.futursPiegesDuDelireDePersecution = [];
     },
   },
   actions: {
@@ -163,6 +189,15 @@ export const modulePersonnage = {
       await context.dispatch('ajouteUnPointDeCrise', undefined);
       await context.dispatch('faitUnJetDeCrise', undefined);
     },
+    accomplissement: async function(context) {
+      await context.dispatch('testeProgressionCompetenceAvecCroixExperience');
+      // transforme pt crise en pt d'accomplissement
+      const ptAccomplissement = +context.state.perso.pointsDeCrise;
+      const nouveauTotalAccomplissement = (+context.state.perso.totalAccomplissement) + ptAccomplissement;
+      await context.commit('modifieChampsNombrePerso', {champs: 'totalAccomplissement', valeur: nouveauTotalAccomplissement});
+
+      await context.dispatch('tabulaRasa');
+    },
     testeProgressionCompetenceAvecCroixExperience: async function(context) {
       context.state.perso.competences.forEach(competence => {
         if (competence.croixExperience) {
@@ -173,17 +208,54 @@ export const modulePersonnage = {
         }
       });
     },
+    /**
+     * Pour quitter la crise sans passer par la mort.
+     * La différence c'est qu'on peut s'en sortir au mieux sans choc profonds,
+     * au pire avec 2 chocs profonds comme pour la mort...
+     */
     prendsLesVapes: async function(context) {
       await context.dispatch('ajouteUnPointDeCrise', undefined);
-
-      // TODO supprimer toutes les douleurs
-      // TODO supprimer toutes les croix d'XP sur les competences
-      // TODO supprimer toutes les compétences démentielles
-      // TODO supprimer tous les points de crise
-      // TODO supprimer tous les points de choc parano
-      // TODO supprimer tous les points de choc schizo
-      // TODO si choc profonds, remettre des chocs ancrés entre parano et schizo
-      // TODO supprimer équipement
+      // si en état de choc, cela devient un premier choc profonds
+      await context.dispatch('transformeEtatDeChocEnChocProfonds');
+      await context.dispatch('tabulaRasa');
+    },
+    /**
+     * Pour quitter la crise de la pire façon.
+     * Au pire avec 2 chocs profonds au mieux avec 1 choc profonds.
+     */
+    apresLaMort: async function(context) {
+      // si en état de choc, cela devient un premier choc profonds
+      await context.dispatch('transformeEtatDeChocEnChocProfonds');
+      // et la mort c'est traumatisant, on gagne aussi un choc profonds !
+      context.commit('incrementeChocsProfonds');
+      // ensuite, on fait table rase de la crise en cours... mais mieux vaut prendre les Vapes !
+      await context.dispatch('tabulaRasa');
+    },
+    tabulaRasa: async function(context) {
+      context.commit('annuleEtatDeChoc');
+      context.commit('supprimeLesFutursPiegesDuDelireDePersecution');
+      context.commit('supprimeToutesLesDouleurs');
+      context.commit('supprimeToutLEquipement');
+      context.commit('supprimeToutesLesCroixExperience');
+      context.commit('supprimeToutesLesCompetencesDementielles');
+      context.commit('modifieChampsNombrePerso', {champs: 'pointsDeCrise', valeur: 0});
+      context.commit('modifieChampsNombrePerso', {champs: 'chocsParanos', valeur: 0});
+      context.commit('modifieChampsNombrePerso', {champs: 'chocsSchizos', valeur: 0});
+      if (context.state.perso.chocsProfonds > 0) {
+        // simple algo : on met tous les chocs profonds dans la tendance plus faible
+        if (context.state.perso.tendance == "Parano") {
+          context.commit('modifieChampsNombrePerso', {champs:'chocsSchizos', valeur: +context.state.perso.chocsProfonds});
+        } else {
+          context.commit('modifieChampsNombrePerso', {champs:'chocsParanos', valeur: +context.state.perso.chocsProfonds});
+        }
+      }
+    },
+    // quand un perso passe inconscient, ou juste avant de mourir ou prendre les vapes
+    transformeEtatDeChocEnChocProfonds: async function(context) {
+      if (context.state.perso.etatDeChoc) {
+        context.commit('annuleEtatDeChoc');
+        context.commit('incrementeChocsProfonds');
+      }
     },
     // --- SANTE MENTALE ---
     ajouteUnPointDeCrise: async function(context, caracteristiqueDirectrice) {
@@ -254,7 +326,8 @@ export const modulePersonnage = {
               context.commit('incrementeChocProfonds');
           } else {
               context.commit('ajouteLigneJournal', `jet de choc : raté; entre en état de choc !`);
-              context.commit('passeEnEtatDeChoc');
+              context.commit('passeEnEtatDeChoc', caracteristiqueDirectrice);
+              context.commit('incrementeDureeEtatDeChoc', +chocsEnMalus);
               // TODO : délire de persecutition/hallucination
           }
       }

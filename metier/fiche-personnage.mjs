@@ -42,6 +42,8 @@ export class ContextePersonnage {
     chocsSchizo = 0;
     chocsProfonds = 0;
     etatDeChoc = false;
+    dureeEtatDeChoc = 0;
+    futursPiegesDuDelireDePersecution = [];
     totalAccomplissement = 0;
 
     // Equipement
