@@ -64,7 +64,7 @@ export const modulePersonnage = {
       comp.xp = comp.xp + 1;
     },
     supprimeToutesLesCroixExperience: function(state) {
-      state.perso.competences.forEarch(c => c.croixExperience = false);      
+      state.perso.competences.forEach(c => c.croixExperience = false);      
     },
     supprimeLigneDouleur: function(state, indexDouleur) {
       state.perso.douleurs = state.perso.douleurs.filter((_, index) => index !== indexDouleur);
