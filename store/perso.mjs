@@ -240,13 +240,14 @@ export const modulePersonnage = {
       context.commit('supprimeToutesLesCroixExperience');
       context.commit('supprimeToutesLesCompetencesDementielles');
       context.commit('modifieChampsNombrePerso', {champs: 'pointsDeCrise', valeur: 0});
-      context.commit('modifieChampsNombrePerso', {champs: 'chocsParanos', valeur: 0});
-      context.commit('modifieChampsNombrePerso', {champs: 'chocsSchizos', valeur: 0});
+      context.commit('modifieChampsNombrePerso', {champs: 'chocsParano', valeur: 0});
+      context.commit('modifieChampsNombrePerso', {champs: 'chocsSchizo', valeur: 0});
       if (context.state.perso.chocsProfonds > 0) {
         // simple algo : on met tous les chocs profonds dans la tendance plus faible
         if (context.state.perso.tendance == TENDANCE_PARANO) {
+          context.commit('modifieChampsNombrePerso', {champs:'chocsSchizo', valeur: +context.state.perso.chocsProfonds});
         } else {
-          context.commit('modifieChampsNombrePerso', {champs:'chocsParanos', valeur: +context.state.perso.chocsProfonds});
+          context.commit('modifieChampsNombrePerso', {champs:'chocsParano', valeur: +context.state.perso.chocsProfonds});
         }
       }
     },
