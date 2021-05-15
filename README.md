@@ -26,31 +26,30 @@ L'entrée en état de Choc dépendant du Niveau d'Accomplissement et de la VOLON
 - créer rapidement un personnage sans avoir besoin du livre de jeu : différentes étapes et points à répartir. Explication sur chaque élément de la fiche (popup d'information).
 - suggestions de mots de démence
 - enregistrer un personnage (l'exporter ?),
-- imprimer
+- *TODO* imprimer
 
 ### Utilisation en cours de jeu
 
 - Révéler une compétence (utiliser les points de Génération, s'il en reste)
 - modifier l'équipement (Saint-Frusquin)
 - boutons pour utiliser les Effets Démentiels (pour faire apparaître, cliquer sur Mot de Démence)
-- Mode override : permet de modifier tout sans rien déclencher
+- *TODO* Mode override : permet de modifier tout sans rien déclencher
 - Mode jeu: boutons à cliquer au lieu de faire un jet : jet de compétences, jet opposé, etc. On clique sur une compétence, on voit une table avec des modificateurs/Ajustements, et on valide. Les conséquences sont affichées ensuite, et éventuellement inscrites sur la fiche de personnage (avec animation pour mettre en valeur ce qui vient de changer)
 - croix d'expérience pour les compétences non démentielles avec lesquelles on a fait un test ajusté avec un seuil de 10 ou moins réussi.
 - Accomplissement : effacer Douleurs, Equipement, etc. et gérer les croix d'XP des compétences
 - clic sur une carac : popup de jet, saisir ajustement, saisir le résultat (si on tire notre dé en réel) ou tirer un d20 sur cet écran. Valider pour fermer et journaliser cette action.
 - avoir un journal des différentes actions/jets/effets.
-- clic sur mot de démence : affiche popup avec les Effets Démentiels possibles (Antalgie que si on a des Douleurs, p.ex.). différentes popup de résolution/jets s'enchainent, et le journal s'alimente.
-- Gestion des combats : cliquer sur Esquive vs Ajustements de l'adversaire. Attribuer aux objets des Classes de Dommages + Avoir les tables Dommage des Personnages + la table des Douleurs, ou bien Table de Dommage des Créatures.
-
-
-à tout moment on peut choisir de saisir un résultat ou bien cliquer pour simuler un lancer de dé.
+- *TODO* clic sur mot de démence : affiche popup avec les Effets Démentiels possibles (Antalgie que si on a des Douleurs, p.ex.). différentes popup de résolution/jets s'enchainent, et le journal s'alimente.
+- *TODO* Gestion des combats : cliquer sur Esquive vs Ajustements de l'adversaire. Attribuer aux objets des Classes de Dommages + Avoir les tables Dommage des Personnages + la table des Douleurs, ou bien Table de Dommage des Créatures.
+- *TODO* à tout moment on peut choisir de saisir un résultat ou bien cliquer pour simuler un lancer de dé.
 
 ### Technique
 
-Expérimenter sur une pile JS moderne avec ESModules, VueJS + VueX.
-
-Pendant mes heures de temps libre sur un weekend.
-
+- Expérimenter sur une pile JS moderne avec ESModules, VueJS + VueX.
+- Low maintenance.
+- Pendant mes heures de temps libre sur un weekend.
+- hébergement manuel via la branche `gh-pages` sur https://doppelganger9.github.io/hystoire-de-fou
+- `gh-pages` utilise **Jekyll** et donc on a un peu de config pour ignorer certains fichiers
 ## Design
 
 - [Vue.js](https://vuejs.org/) parce que très simple et facile à injecter dans un html sans à avoir besoin de faire une app d'entreprise/industrielle.

@@ -1,0 +1,5 @@
+exclude:
+  - .editorconfig
+  - README.md
+  - LICENSE
+  - _config.yml
