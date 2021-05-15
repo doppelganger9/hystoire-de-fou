@@ -58,6 +58,15 @@ Pendant mes heures de temps libre sur un weekend.
 - [ESModules](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules) car en 2021 c'est dispo quasi partout (sauf Opera ou browsers obscurs...), ça retire une dépendance envers un bundler/builder
 - pas besoin de `package.json` pour le moment !
 
+### Le Store VueX
+
+- dispatch retourne une promesse.
+- Si le code du dispatch return quelque chose, l'appelant aura ce qqchose a la resolution de la promesse.
+- donc on met async les functions d'action et on await les dispatch si on veut attendre qu'elles se terminent 
+et/ou récupérer ce qu'elle retourne.
+- un commit ne retourne rien (void), il est synchrone.
+- une action peut dispatch une autre action, etc. et appeler des commit, le faire de manière en général asynchrone.
+
 ## Pour lancer et tester
 
 Les ESModules ne se chargent que s'ils sont servis en `http(s)://` (pas en `file://`), donc :
