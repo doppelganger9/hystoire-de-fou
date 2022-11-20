@@ -20,7 +20,6 @@ function simuler() {
         p.volonte = VOLONTE;
         p.sensitif = SENSITIF;
         p.intellect = INTELLECT;
-        p.niveauAccomplissement = 0;
         //p.chocsProfonds = 1;
         //p.chocsParano = 1;
         return p;

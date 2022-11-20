@@ -25,7 +25,7 @@ class SimpleStore {
             throw new Error(`Pas d'action nommée '${actionName}' dans le Store`);
         }
     }
-    commit(mutationName, eventData) {
+    commit(mutationName, ...eventData) {
         if (mutationName in this.mutations) {
             this.mutations[mutationName](this.state, eventData);
         } else {
