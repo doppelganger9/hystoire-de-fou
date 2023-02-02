@@ -1,6 +1,6 @@
 // @ts-check
 import { Competence, initNouvelleCompetence } from "../metier/competences.mjs";
-import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
+import { mapState } from "vuex";
 
 export const BlocCompetencesComponent = {
     data: function() {

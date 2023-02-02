@@ -1,5 +1,5 @@
 //@ts-check
-import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
+import { mapState } from "vuex";
 import { infosMotDeDemence } from "../metier/fiche-personnage.mjs";
 
 /**

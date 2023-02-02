@@ -1,6 +1,6 @@
 // @ts-check
 import { infosCaracteristiques } from "../metier/fiche-personnage.mjs";
-import { mapState } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
+import { mapState } from "vuex";
 
 export const BlocCaracteristiquesComponent = {
     computed: {

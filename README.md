@@ -72,6 +72,23 @@ L'entrée en état de Choc dépendant du Niveau d'Accomplissement et de la VOLON
 - [ESModules](https://developer.mozilla.org/fr/docs/Web/JavaScript/Guide/Modules) car en 2021 c'est dispo quasi partout (sauf Opera ou browsers obscurs...), ça retire une dépendance envers un bundler/builder
 - pas besoin de `package.json` pour le moment !
 
+### Pas de npm ni de builder
+
+- Avec ESModules on peut directement importer les choses. Le mieux c'est d'utiliser une importMap pour ne pas répéter partout les URLs et juste référencer des alias : 
+
+```html
+        <script type="importmap">
+        { "imports": {
+            "vue":  "https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.esm-browser.js",
+            "vuex": "https://cdn.jsdelivr.net/npm/vuex@4.1.0/dist/vuex.esm-browser.js",
+            "@vue/devtools-api": "https://unpkg.com/@vue/devtools-api@6.4.5/lib/esm/index.js"
+        } }
+        </script>
+```
+
+- Dans VS Code on utilise `//@ts-check` pour valider "un peu" les typages implicites du code JavaScript. Oui, ça ne remplace pas du typage TypeScript, mais ça nous économise une étape de transpilation. De la même manière, on vise uniquement les navigateurs capables de comprendre notre code JS, car il n'y a pas de prothèses d'émulation dans le code. Idem, si on voulait augmenter la compatibilité avec les navigateurs, il faudrait revoir cela.
+- il y a très peu d'outillage, au final, autour de ce projet.
+
 ### Le Store VueX
 
 - dispatch retourne une promesse.

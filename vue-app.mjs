@@ -1,5 +1,5 @@
 // @ts-check
-import Vue from "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js";
+import Vue, { defineComponent } from "vue";
 
 import { BlocFicheComponent } from "./components/hdf-bloc-fiche.mjs";
 import { BlocSanteComponent } from "./components/hdf-bloc-sante.mjs";

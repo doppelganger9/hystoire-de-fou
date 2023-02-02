@@ -1,6 +1,6 @@
 // @ts-check
 import { Douleur } from "../metier/douleurs.mjs";
-import { mapState, mapGetters } from "https://cdn.jsdelivr.net/npm/vuex@3/dist/vuex.esm.browser.js";
+import { mapState, mapGetters } from "vuex";
 
 /**
  * TODO Antalgie Démentielle:
