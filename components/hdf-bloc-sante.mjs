@@ -1,6 +1,8 @@
 // @ts-check
 import { Douleur } from "../metier/douleurs.mjs";
-import { mapState, mapGetters } from "vuex";
+import { useStore } from "vuex";
+import { computed, ref } from "vue";
+import { allStyles } from "../styles/all.mjs";
 
 /**
  * TODO Antalgie Démentielle:
@@ -9,31 +11,44 @@ import { mapState, mapGetters } from "vuex";
  * mais Niveau d'Accomplissement en bonus).
  */
 export const BlocSanteComponent = {
-    data: function() {
-        return {
-            nouvelleDouleur: new Douleur(),
-            afficheLigneAjoutDouleur: false,
+    setup() {
+        const store = useStore();
+
+        const totalDouleurs = computed(() => store.getters['totalDouleurs']);
+        const perso = computed(() => store.state['perso']);
+
+        const nouvelleDouleur = ref(new Douleur());
+        const afficheLigneAjoutDouleur = ref(false);
+
+        const supprimeLigneDouleur = (indexDouleur) => {
+            store.commit('supprimeLigneDouleur', indexDouleur);
         };
-    },
-    computed: {
-        ...mapState(['perso']),
-        ...mapGetters(['totalDouleurs']),
-    },
-    methods: {
-        supprimeLigneDouleur: function(indexDouleur) {
-            this.$store.commit('supprimeLigneDouleur', indexDouleur);
-        },
-        ajouteLigneDouleur: function() {
-            this.$store.commit('ajouteLigneDouleur', this.nouvelleDouleur);
-            this.afficheLigneAjoutDouleur = false;
-        },
-        afficheNouvelleDouleur: function() {
-            this.nouvelleDouleur = new Douleur();
-            this.afficheLigneAjoutDouleur = true;
-        },
-        fermeLigneDouleur() {
-            this.afficheLigneAjoutDouleur = false;
-        },
+        const ajouteLigneDouleur = () => {
+            store.commit('ajouteLigneDouleur', nouvelleDouleur.value);
+            afficheLigneAjoutDouleur.value = false;
+        };
+        const afficheNouvelleDouleur = () => {
+            nouvelleDouleur.value = new Douleur();
+            afficheLigneAjoutDouleur.value = true;
+        };
+        const fermeLigneDouleur = () => {
+            afficheLigneAjoutDouleur.value = false;
+        };
+
+        return {
+            // computed
+            // computed state
+            totalDouleurs,
+            perso,
+            // methods
+            supprimeLigneDouleur,
+            ajouteLigneDouleur,
+            afficheNouvelleDouleur,
+            fermeLigneDouleur,
+            // data
+            nouvelleDouleur,
+            afficheLigneAjoutDouleur,
+        };
     },
     template: `
 <hdf-bloc-fiche title="Santé" class="sante">
@@ -59,4 +74,8 @@ export const BlocSanteComponent = {
     </div>
 </hdf-bloc-fiche>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
+
 };

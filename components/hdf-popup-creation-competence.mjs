@@ -1,40 +1,68 @@
 //@ts-check
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed } from "vue";
+import { allStyles } from "../styles/all.mjs";
 
 export const PopupCreationCompetenceComponent = {
-    computed: {
-        ...mapState([ 'mode', 'nouvelleCompetence', 'perso', 'hiddenPopupCompetence' ]),
-        intitule: {
-            get() { return this.$store.state.nouvelleCompetence.intitule },
-            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'intitule', valeur}) },
-        },
-        nomCaracteristiqueDirectrice: {
-            get() { return this.$store.state.nouvelleCompetence.nomCaracteristiqueDirectrice },
-            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'nomCaracteristiqueDirectrice', valeur}) },
-        },
-        base: {
-            get() { return this.$store.state.nouvelleCompetence.base },
-            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'base', valeur}) },
-        },
-        pointsDeGeneration: {
-            get() { return this.$store.state.nouvelleCompetence.pointsDeGeneration },
-            set(valeur) { this.$store.commit('modifieChampsNouvelleCompetence', {champs:'pointsDeGeneration', valeur}) },
-        },
-    },
-    methods: {
-        masqueTout: function() {
-            this.$store.dispatch("masqueTout");
-        },
-        nouvelleCompetenceNomCaracteristiqueDirectriceChanged: function() {
-            this.$store.commit('modifieChampsNouvelleCompetence', {champs:'valeurCaracteristiqueDirectrice', valeur:+this.perso[this.nouvelleCompetence.nomCaracteristiqueDirectrice]});
-        },
-        valideAjoutCompetence: function(competence) {
-            this.$store.dispatch('ajouteCompetence', competence);
-            this.$store.dispatch("masqueTout");
+    setup() {
+        const store = useStore();
+
+        const mode = computed(() => store.state['mode']);
+        const perso = computed(() => store.state['perso']);
+        const nouvelleCompetence = computed(() => store.state['nouvelleCompetence']);
+        const hiddenPopupCompetence = computed(() => store.state['hiddenPopupCompetence']);
+
+        const intitule = computed({
+            get: () => { return store.state.nouvelleCompetence.intitule },
+            set: (valeur) => { store.commit('modifieChampsNouvelleCompetence', {champs:'intitule', valeur}) },
+        });
+        const nomCaracteristiqueDirectrice = computed({
+            get: () => { return store.state.nouvelleCompetence.nomCaracteristiqueDirectrice },
+            set: (valeur) => { store.commit('modifieChampsNouvelleCompetence', {champs:'nomCaracteristiqueDirectrice', valeur}) },
+        });
+        const base = computed({
+            get: () => { return store.state.nouvelleCompetence.base },
+            set: (valeur) => { store.commit('modifieChampsNouvelleCompetence', {champs:'base', valeur}) },
+        });
+        const pointsDeGeneration = computed({
+            get: () => { return store.state.nouvelleCompetence.pointsDeGeneration },
+            set: (valeur) => { store.commit('modifieChampsNouvelleCompetence', {champs:'pointsDeGeneration', valeur}) },
+        });
+
+        const masqueTout = () => {
+            store.dispatch("masqueTout");
+        };
+        const nouvelleCompetenceNomCaracteristiqueDirectriceChanged = () => {
+            store.commit('modifieChampsNouvelleCompetence', {
+                champs:'valeurCaracteristiqueDirectrice', 
+                valeur:+perso.value[nouvelleCompetence.value.nomCaracteristiqueDirectrice]
+            });
+        };
+        const valideAjoutCompetence = (competence) => {
+            store.dispatch('ajouteCompetence', competence);
+            store.dispatch("masqueTout");
             if (competence.dementielle) {
-                this.$store.dispatch('apresAjoutCompetenceDementielle');
+                store.dispatch('apresAjoutCompetenceDementielle');
             }
-        },
+        }
+
+        return {
+            // computed
+            intitule,
+            nomCaracteristiqueDirectrice,
+            base,
+            pointsDeGeneration,
+            // computed state
+            mode,
+            perso,
+            nouvelleCompetence,
+            hiddenPopupCompetence,
+            // methods
+            masqueTout,
+            nouvelleCompetenceNomCaracteristiqueDirectriceChanged,
+            valideAjoutCompetence,
+            // data
+        };
     },
     template: `
 <div :class="'popup popup-creationcompetence '+(hiddenPopupCompetence ? 'hidden' : '')">
@@ -86,4 +114,8 @@ export const PopupCreationCompetenceComponent = {
     <button class="annule" @click="masqueTout">Annuler</button>
 </div>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
+
 };

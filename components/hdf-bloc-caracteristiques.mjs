@@ -1,51 +1,83 @@
 // @ts-check
 import { infosCaracteristiques } from "../metier/fiche-personnage.mjs";
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed } from "vue";
+import { allStyles } from "../styles/all.mjs";
 
 export const BlocCaracteristiquesComponent = {
-    computed: {
-        ...mapState([ 'mode', 'perso' ]),
-        title() {
-            return `Caractéristiques ${this.mode === 'création' ? 'à répartir': ''}`;
-        },
-        volonte: {
-            get () { return this.$store.state.perso.volonte },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'volonte', valeur}) },
-        },
-        intellect: {
-            get () { return this.$store.state.perso.intellect },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'intellect', valeur}) },
-        },
-        sensitif: {
-            get () { return this.$store.state.perso.sensitif },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'sensitif', valeur}) },
-        },
-        charisme: {
-            get () { return this.$store.state.perso.charisme },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'charisme', valeur}) },
-        },
-        constitution: {
-            get () { return this.$store.state.perso.constitution },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'constitution', valeur}) },
-        },
-        perception: {
-            get () { return this.$store.state.perso.perception },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'perception', valeur}) },
-        },
-        agilite: {
-            get () { return this.$store.state.perso.agilite },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'agilite', valeur}) },
-        },
-    },
-    methods: {
-        afficheInfos: function(typeInfos) {
-            this.$store.dispatch('afficheInfos', { titre: typeInfos, contenuHtml: infosCaracteristiques[typeInfos] });
-        },
-        clickedCaracteristique: function(nomCaracteristique) {
-            if (this.mode === 'jeu') {
-                this.$store.dispatch('affichePopupJet', { nom:nomCaracteristique, type:'caractéristique'});
+    setup() {
+        const store = useStore();
+
+        const mode = computed(() => store.state['mode']);
+        const perso = computed(() => store.state['perso']);
+
+        const title = computed(() => {
+            return `Caractéristiques ${mode.value === 'création' ? 'à répartir': ''}`;
+        });
+
+        const volonte = computed({
+            get: () => { return store.state.perso.volonte },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'volonte', valeur}) },
+        });
+
+        const intellect = computed({
+            get: () => { return store.state.perso.intellect },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'intellect', valeur}) },
+        });
+        
+        const sensitif = computed({
+            get: () => { return store.state.perso.sensitif },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'sensitif', valeur}) },
+        });
+        
+        const charisme = computed({
+            get: () => { return store.state.perso.charisme },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'charisme', valeur}) },
+        });
+
+        const constitution = computed({
+            get: () => { return store.state.perso.constitution },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'constitution', valeur}) },
+        });
+
+        const perception = computed({
+            get: () => { return store.state.perso.perception },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'perception', valeur}) },
+        });
+
+        const agilite = computed({
+            get: () => { return store.state.perso.agilite },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'agilite', valeur}) },
+        });
+        
+        const afficheInfos = (typeInfos) => {
+            store.dispatch('afficheInfos', { titre: typeInfos, contenuHtml: infosCaracteristiques[typeInfos] });
+        };
+
+        const clickedCaracteristique = (nomCaracteristique) => {
+            if (mode.value === 'jeu') {
+                store.dispatch('affichePopupJet', { nom:nomCaracteristique, type:'caractéristique'});
             }
-        },
+        };
+
+        return {
+            // computed
+            title,
+            volonte,
+            intellect,
+            sensitif,
+            charisme,
+            constitution,
+            perception,
+            agilite,
+            // computed state
+            mode,
+            perso,
+            // methods
+            afficheInfos,
+            clickedCaracteristique,
+            // data
+        };
     },
     template: `
 <hdf-bloc-fiche :title="title" class="caracteristiques">
@@ -106,4 +138,7 @@ export const BlocCaracteristiquesComponent = {
     </div>
 </hdf-bloc-fiche>
     `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
 };

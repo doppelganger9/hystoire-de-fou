@@ -1,5 +1,7 @@
 //@ts-check
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed } from "vue";
+import { allStyles } from "../styles/all.mjs";
 
 /**
  * Affiché quand on clic sur mot de démence.
@@ -8,54 +10,76 @@ import { mapState } from "vuex";
  * Avec des boutons pour les déclencher et gérer les impacts sur la santé mentale du perso.
  */
 export const PopupEffetsDementielsComponent = {
-    computed: {
-        ...mapState([ 'mode', 'perso', 'hiddenPopupEffetsDementiels' ]),
-        persoEstEnCrise: function() {
-            return this.perso.pointsDeCrise > 0;
-        }
-    },
-    data: function() {
-        return {
+    setup() {
+        const store = useStore();
 
+        const mode = computed(() => store.state['mode']);
+        const perso = computed(() => store.state['perso']);
+        const hiddenPopupEffetsDementiels = computed(() => store.state['hiddenPopupEffetsDementiels']);
+
+        const persoEstEnCrise = computed(() => {
+            return perso.value.pointsDeCrise > 0;
+        });
+
+        const masqueTout = () => {
+            store.dispatch("masqueTout");
         };
-    },
-    methods: {
-        masqueTout: function() {
-            this.$store.dispatch("masqueTout");
-        },
-        valide: function() {
-            this.masqueTout();
-        },
-        appelDementiel: function() {
-            this.$store.dispatch('appelDementiel');
-        },
-        incredire: function() {
+        const valide = () => {
+            masqueTout();
+        };
+        const appelDementiel = () => {
+            store.dispatch('appelDementiel');
+        };
+        const incredire = () => {
             // TODO : suivre une popup de jet ?
-        },
-        antalgieDementielle: function() {
+        };
+        const antalgieDementielle = () => {
             // TODO : ajouter un bouton à côté des douleurs
-        },
-        empathieDementielle: function() {
+        };
+        const empathieDementielle = () => {
             // TODO : faire un jet de charisme...
-        },
-        acquiertCompetenceDementielle: function() {
+        };
+        const acquiertCompetenceDementielle = () => {
             // TODO : dire de voir directement sur la fiche
-        },
-        prendsLesVapes: function() {
-            this.$store.dispatch('prendsLesVapes');
-        },
-        recommencerAction: function() {
+        };
+        const prendsLesVapes = () => {
+            store.dispatch('prendsLesVapes');
+        };
+        const recommencerAction = () => {
             // TODO : dire de voir dans la popup Jet
-        },
-        energieDementielle: function() {
+        };
+        const energieDementielle = () => {
             // TODO : dire de voir dans la popup Jet
-        },
-        mourir: function() {
-            this.$store.dispatch('apresLaMort');
-        },
-        accomplir: function() {
-            this.$store.dispatch('accomplissement');
-        },
+        };
+        const mourir = () => {
+            store.dispatch('apresLaMort');
+        };
+        const accomplir = () => {
+            store.dispatch('accomplissement');
+        };
+
+        return {
+            // computed
+            persoEstEnCrise,
+            // computed state
+            mode,
+            perso,
+            hiddenPopupEffetsDementiels,
+            // methods
+            masqueTout,
+            valide,
+            appelDementiel,
+            incredire,
+            antalgieDementielle,
+            empathieDementielle,
+            acquiertCompetenceDementielle,
+            prendsLesVapes,
+            recommencerAction,
+            energieDementielle,
+            mourir,
+            accomplir,
+            // data
+        };
     },
     template: `
 <div :class="'popup popup-effetsdementiels '+(hiddenPopupEffetsDementiels ? 'hidden' : '')">
@@ -89,4 +113,7 @@ export const PopupEffetsDementielsComponent = {
     <button class="annule" @click="masqueTout">Annuler</button>
 </div>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
 };

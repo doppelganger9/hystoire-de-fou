@@ -1,0 +1,326 @@
+// Ouai j'aurais préféré ne pas en arriver à faire du CSS-in-JS... je sais...
+export const allStyles = `
+* {
+  box-sizing: border-box;
+}
+html {
+  margin: 10px;
+  padding: 0;
+  background-color: lightgrey;
+}
+body {
+  margin: 10px 20px;
+  padding: 10px;
+  background-color: white;
+  font-size: 16px;
+  font-family: 'Garamond', serif;
+}
+.fiche {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.menu {
+  background-color: beige;
+  margin: 5px;
+  padding: 10px;
+}
+.bloc {
+  border: 1px solid lightblue;
+  padding: 10px 10px 30px 10px;
+  margin: 5px;
+}
+.bloc h2 {
+  margin: 0 0 20px 0;
+}
+.w50px {
+  width: 50px;
+}
+.w100px {
+  width: 100px;
+}
+.w150px {
+  width: 150px;
+}
+.w200px {
+  width: 200px;
+}
+.w300px {
+  width: 300px;
+}
+.w350px {
+  width: 350px;
+}
+.w400px {
+  width: 400px;
+}
+.w500px {
+  width: 500px;
+}
+.bloc.caracteristiques {
+  width: 250px;
+}
+.caracteristiques h2 {
+  background-color: yellow;
+}
+.bloc.etatcivil {
+  width: 260px;
+}
+.etatcivil h2 {
+  background-color: blue;
+  color: white;
+}
+.bloc.competences {
+  width: 400px;
+}
+.competences h2 {
+  background-color: violet;
+}
+.bloc.competencesdementielles {
+  width: 400px;
+}
+.competencesdementielles h2 {
+  background-color: rgb(155, 0, 245);
+  color: white;
+}
+.bloc.equipements {
+  width: 400px;
+}
+.equipements h2 {
+  background-color: rgba(129, 33, 33, 0.76);
+  color:white;
+}
+.bloc.sante {
+  width: 300px;
+}
+.sante h2 {
+  background-color: rgb(30, 148, 30);
+  color: white;
+}
+.sante .ajoutdouleur {
+  background-color: lightblue;
+  padding: 5px;
+  margin: 5px;
+}
+.bloc.santementale {
+  width: 300px;
+}
+.santementale h2 {
+  background-color: pink;
+}
+div.santementale input[type='number'] {
+  width: 50px;
+  font-size: 18px;
+}
+div.santementale div.score {
+  display: inline-block;
+  font-size: 18px;
+  width: 50px;
+  text-align: center;
+}
+div.santementale div.texte {
+  display: inline-block;
+  font-size: 18px;
+  width: 100px;
+  text-align: center;
+}
+
+ul.competences {
+  list-style-type: none;
+  display: block;
+  padding: 5px;
+  margin: 5px;
+}
+.popup-jet h3 {
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+  padding: 30px 50px 30px;
+  text-align: center;
+  background-color: orange;
+  color: white;
+  text-transform: uppercase;    
+}
+.popup-jet .valide {
+  width: 100px;
+  margin: 0 calc(25% - 52px) 30px;
+}
+.popup-jet .annule {
+  width: 100px;
+  margin: 0 calc(25% - 52px) 30px;
+}
+
+.popup-creationcompetence h3 {
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+  padding: 30px 50px 30px;
+  text-align: center;
+  background-color: greenyellow;
+  text-transform: uppercase;    
+}
+.popup-creationcompetence .valide {
+  width: 100px;
+  margin: 0 calc(25% - 52px) 30px;
+}
+.popup-creationcompetence .annule {
+  width: 100px;
+  margin: 0 calc(25% - 52px) 30px;
+}
+
+
+.popup-effetsdementiels h3 {
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+  padding: 30px 50px 30px;
+  text-align: center;
+  background-color: rgb(174, 0, 255);
+  color: white;
+  text-transform: uppercase;    
+}
+.popup-effetsdementiels .valide {
+  width: 100px;
+  margin: 0 calc(25% - 52px) 30px;
+}
+.popup-effetsdementiels .annule {
+  width: 100px;
+  margin: 0 calc(25% - 52px) 30px;    
+}
+.popup-infos .ferme {
+  width: 100px;
+  margin: 0 calc(50% - 50px) 30px;
+}
+.popup-infos h3 {
+  margin: 0;
+  display: inline-block;
+  width: 100%;
+  padding: 30px 50px 30px;
+  text-align: center;
+  background-color: lightseagreen;
+  text-transform: uppercase;    
+}
+.popup-infos .exemple {
+  font-family: 'Caveat';
+  padding-left: 10px;
+  font-size: 16px;
+}
+.jet {
+  cursor: hand;
+}
+.jet:hover {
+  color: white;
+  background-color: rgba(255, 127, 80);
+  border-radius: 5px;
+}
+.jet:active {
+  color: white;
+  background-color: rgba(255, 127, 80, 0.281);
+  border-radius: 5px;
+}
+input {
+  padding: 0 5px;
+  margin: 5px 0 0;
+  border: none;
+  border-bottom: 1px solid gray;
+  font-size: 16px;
+  text-align: center;
+  background-color: transparent;
+}
+input:read-only {
+  border: none;
+}
+p.tutoriel {
+  background-color: azure;
+  padding: 5px;
+  margin: 5px 0;
+  border: 2px solid aqua;
+}
+div.carac {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  justify-content: flex-end;
+  align-items: center;
+  width: 220px;
+}
+div.carac div.score {
+  width: 50px;
+  text-align: center;
+  font-size: 18px;
+}
+button.emoji {
+  background: none;
+  margin: 1px;
+  padding: 0 5px;
+  border: none;
+  border-radius: 5px;
+  width: 26px;
+  height: 26px;
+}
+button.emoji:hover {
+  background-color: rgba(255, 127, 80);
+}
+button.emoji:active {
+  background-color: rgba(255, 127, 80, 0.281);;
+}
+textarea {
+  width: 100%;
+}
+label {
+  display: inline-block;
+}
+h1 {
+  font-family: 'Garamond';
+}
+.handwritten {
+  font-family: 'Caveat', cursive;
+  font-size: 17px;
+}
+
+.abs-top-right-10 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+
+.popup {
+  position: fixed;
+  top:50%;
+  left:50%;
+  width:400px;  /* adjust as per your needs */
+  height:400px;   /* adjust as per your needs */
+  margin-left:-200px;   /* negative half of width above */
+  margin-top:-200px;   /* negative half of height above */
+
+  z-index: 10;
+  background-color: white;
+  border: 1px solid black;
+
+  overflow: scroll;
+}
+.popup .contents {
+  padding: 20px;
+}
+.voile {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  background-color: rgba(1,1,1,.6);
+  z-index: 1;
+}
+.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+`;

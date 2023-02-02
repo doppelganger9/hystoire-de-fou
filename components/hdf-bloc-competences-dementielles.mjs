@@ -1,27 +1,40 @@
 // @ts-check
+import { useStore } from "vuex";
+import { computed, ref } from "vue";
 import { Competence, initNouvelleCompetence } from "../metier/competences.mjs";
-import { mapState } from "vuex";
+import { allStyles } from "../styles/all.mjs";
 
 export const BlocCompetencesDementiellesComponent = {
-    data: function() {
-        return {
-            nouvelleCompetence: new Competence(),
-        };
-    },
-    computed: mapState([ 'perso' ]),
-    methods: {
-        acquiertCompetenceDementielle: function() {
-            this.nouvelleCompetence = initNouvelleCompetence();
-            this.nouvelleCompetence.dementielle = true;
+    setup() {
+        const store = useStore();
+        
+        const perso = computed(() => store.state['perso']);
+        
+        const nouvelleCompetence = ref(new Competence());
+        
+        const acquiertCompetenceDementielle = () => {
+            nouvelleCompetence.value = initNouvelleCompetence();
+            nouvelleCompetence.value.dementielle = true;
             
-            this.$store.dispatch('affichePopupCompetence', this.nouvelleCompetence);
-        },
-        clickCompetenceDementielle: function(competenceDementielle) {
-            this.$store.dispatch("affichePopupJet", { 
+            store.dispatch('affichePopupCompetence', nouvelleCompetence.value);
+        };
+
+        const clickCompetenceDementielle = (competenceDementielle) => {
+            store.dispatch("affichePopupJet", { 
                 nom: competenceDementielle.intitule, 
                 type: 'compétence démentielle'
             });
-        },
+        };
+
+        return {
+            // computed state
+            perso,
+            // methods
+            acquiertCompetenceDementielle,
+            clickCompetenceDementielle,
+            // data
+            nouvelleCompetence,
+        };
     },
     template: `
 <hdf-bloc-fiche title="Compétences Démentielles" class="competencesdementielles">
@@ -37,4 +50,8 @@ export const BlocCompetencesDementiellesComponent = {
     <button @click="acquiertCompetenceDementielle">Acquérir une Compétence Démentielle (+1pt de Crise)</button>
 </hdf-bloc-fiche>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
+
 };

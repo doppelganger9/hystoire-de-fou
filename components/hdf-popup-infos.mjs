@@ -1,17 +1,32 @@
 //@ts-check
-import { mapState } from "vuex";
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { allStyles } from "../styles/all.mjs";
 
 export const PopupInfosComponent = {
-    methods: {
-        masqueInfos: function() {
-            this.$store.dispatch("masqueTout");
-        },
-    },
-    computed: {
-        ...mapState([ 'hiddenInfos', 'infos' ]),
-        popupDivClass: function() {
-            return 'popup popup-infos '+(this.hiddenInfos ? 'hidden' : '');
-        },
+    setup() {
+        const store = useStore();
+
+        const masqueInfos = () => {
+            store.dispatch("masqueTout");
+        };
+
+        const hiddenInfos = computed(() => store.state['hiddenInfos']);
+        const infos = computed(() => store.state['infos']);
+
+        const popupDivClass = computed(() => {
+            return 'popup popup-infos '+(hiddenInfos.value ? 'hidden' : '');
+        });
+
+        return {
+            // computed
+            popupDivClass,
+            // computed state
+            hiddenInfos,
+            infos,
+            // methods
+            masqueInfos,
+        };
     },
     template: `
 <div :class="popupDivClass">
@@ -21,4 +36,7 @@ export const PopupInfosComponent = {
     <button class="ferme" @click="masqueInfos">Fermer</button>
 </div>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
 };

@@ -1,36 +1,57 @@
 //@ts-check
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed } from "vue";
+import { allStyles } from "../styles/all.mjs";
 
 export const BlocEtatCivilComponent = {
-    computed: {
-        ...mapState([
-            'mode',
-            'perso',
-        ]),
-        nom: {
-            get () { return this.$store.state.perso.nom },
-            set (valeur) { this.$store.commit('modifieChampsTextePerso', {champs: 'nom', valeur}) },
-        },
-        profession: {
-            get () { return this.$store.state.perso.profession },
-            set (valeur) { this.$store.commit('modifieChampsTextePerso', {champs: 'profession', valeur}) },
-        },
-        age: {
-            get () { return this.$store.state.perso.age },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'age', valeur}) },
-        },
-        poids: {
-            get () { return this.$store.state.perso.poids },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'poids', valeur}) },
-        },
-        tailleCm: {
-            get () { return this.$store.state.perso.tailleCm },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'tailleCm', valeur}) },
-        },
-        description: {
-            get () { return this.$store.state.perso.description },
-            set (valeur) { this.$store.commit('modifieChampsTextePerso', {champs: 'description', valeur}) },
-        },
+    setup() {
+        const store = useStore();
+
+        const mode = computed(() => store.state['mode']);
+        const perso = computed(() => store.state['perso']);
+
+        const nom = computed({
+            get: () => { return store.state.perso.nom },
+            set: (valeur) => { store.commit('modifieChampsTextePerso', {champs: 'nom', valeur}) },
+        });
+
+        const profession = computed({
+            get: () => { return store.state.perso.profession },
+            set: (valeur) => { store.commit('modifieChampsTextePerso', {champs: 'profession', valeur}) },
+        });
+        
+        const age = computed({
+            get: () => { return store.state.perso.age },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'age', valeur}) },
+        });
+
+        const poids = computed({
+            get: () => { return store.state.perso.poids },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'poids', valeur}) },
+        });
+
+        const tailleCm = computed({
+            get: () => { return store.state.perso.tailleCm },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'tailleCm', valeur}) },
+        });
+
+        const description = computed({
+            get: () => { return store.state.perso.description },
+            set: (valeur) => { store.commit('modifieChampsTextePerso', {champs: 'description', valeur}) },
+        });
+
+        return {
+            // computed state
+            mode,
+            perso,
+            // computed
+            nom,
+            profession,
+            age,
+            poids,
+            tailleCm,
+            description,
+        };
     },
     template: `
 <hdf-bloc-fiche title="Etat Civil" class="etatcivil">
@@ -86,4 +107,8 @@ export const BlocEtatCivilComponent = {
     </div>
 </hdf-bloc-fiche>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
+
 };

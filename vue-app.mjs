@@ -1,5 +1,8 @@
 // @ts-check
-import Vue, { defineComponent } from "vue";
+import { defineCustomElement } from "vue";
+import { defineCustomElementWrapper } from "./define-custom-elements.mjs";
+
+import { store } from "./store/store.mjs";
 
 import { BlocFicheComponent } from "./components/hdf-bloc-fiche.mjs";
 import { BlocSanteComponent } from "./components/hdf-bloc-sante.mjs";
@@ -18,22 +21,22 @@ import { FicheAppComponent } from "./components/hdf-fiche-app.mjs";
 import { BlocJournalComponent } from "./components/hdf-bloc-journal.mjs";
 import { MenuLancementComponent } from "./components/hdf-menu-lancement.mjs";
 
-// découpage en sous composants
-Vue.component('hdf-menu-lancement', MenuLancementComponent);
-Vue.component('hdf-voile', VoileComponent);
-Vue.component('hdf-popup-jet', PopupJetComponent);
-Vue.component('hdf-popup-infos', PopupInfosComponent);
-Vue.component('hdf-popup-creation-competence', PopupCreationCompetenceComponent);
-Vue.component('hdf-bloc-etat-civil', BlocEtatCivilComponent);
-Vue.component('hdf-bloc-fiche', BlocFicheComponent);
-Vue.component('hdf-bloc-caracteristiques', BlocCaracteristiquesComponent);
-Vue.component('hdf-bloc-sante', BlocSanteComponent);
-Vue.component('hdf-bloc-sante-mentale', BlocSanteMentaleComponent);
-Vue.component('hdf-bloc-competences', BlocCompetencesComponent);
-Vue.component('hdf-bloc-competences-dementielles', BlocCompetencesDementiellesComponent);
-Vue.component('hdf-bloc-equipement', BlocEquipementComponent);
-Vue.component('hdf-bloc-journal', BlocJournalComponent);
-Vue.component('hdf-popup-effets-dementiels', PopupEffetsDementielsComponent);
+// découpage en sous composants web (custom elements)
+customElements.define('hdf-menu-lancement', defineCustomElement(MenuLancementComponent));
+customElements.define('hdf-voile', defineCustomElement(VoileComponent));
+customElements.define('hdf-popup-jet', defineCustomElement(PopupJetComponent));
+customElements.define('hdf-popup-infos', defineCustomElement(PopupInfosComponent));
+customElements.define('hdf-popup-creation-competence', defineCustomElement(PopupCreationCompetenceComponent));
+customElements.define('hdf-bloc-etat-civil', defineCustomElement(BlocEtatCivilComponent));
+customElements.define('hdf-bloc-fiche', defineCustomElement(BlocFicheComponent));
+customElements.define('hdf-bloc-caracteristiques', defineCustomElement(BlocCaracteristiquesComponent));
+customElements.define('hdf-bloc-sante', defineCustomElement(BlocSanteComponent));
+customElements.define('hdf-bloc-sante-mentale', defineCustomElement(BlocSanteMentaleComponent));
+customElements.define('hdf-bloc-competences', defineCustomElement(BlocCompetencesComponent));
+customElements.define('hdf-bloc-competences-dementielles', defineCustomElement(BlocCompetencesDementiellesComponent));
+customElements.define('hdf-bloc-equipement', defineCustomElement(BlocEquipementComponent));
+customElements.define('hdf-bloc-journal', defineCustomElement(BlocJournalComponent));
+customElements.define('hdf-popup-effets-dementiels', defineCustomElement(PopupEffetsDementielsComponent));
+customElements.define('hdf-app-root', defineCustomElementWrapper(FicheAppComponent, { plugins: [store] }));
 
-// Application Vue
-export const app = new Vue(FicheAppComponent);
+console.log('all custom elements created');

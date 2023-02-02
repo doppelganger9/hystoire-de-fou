@@ -1,6 +1,8 @@
 //@ts-check
-import { mapState } from "vuex";
+import { computed, ref } from 'vue';
+import { useStore } from "vuex";
 import { tirerUnDe6, tirerUnDe20 } from "../metier/trousse-des.mjs";
+import { allStyles } from '../styles/all.mjs';
 
 const SUCCES = 'succès !';
 const SUCCES_CRITIQUE_POSSIBLE = 'succès ... critique ou pas ?';
@@ -29,40 +31,60 @@ const TRICHE = 'triche !';
  * savoir quoi faire.
  */
 export const PopupJetComponent = {
-    computed: {
-        ...mapState([ 'mode', 'perso', 'hiddenPopupJet', 'etatJet' ]),
-        valorisationATester: function() {
-            if (this.etatJet.type.toLowerCase() === 'caractéristique') {
-                return +this.perso[this.etatJet.nom];
-            } else if (this.etatJet.type.toLowerCase() === 'compétence') {
-                const comp = this.perso.competences.reduce((found, c) => !found && c.intitule === this.etatJet.nom ? c : found, null);
+    setup() {
+        const store = useStore();
+
+        const ajustement = ref(0);
+        const critique = ref(false);
+        const premierJet = ref(10);
+        const deuxiemeJet = ref(10);
+        const typeAjustement = ref('ajustement');
+        const nbJet1 = ref(0); // pour compter le nb de d20 simulés (cheater !)
+        const nbJet2 = ref(0); // pour compter le nb de d20 simulés (cheater !)
+        const demandeConfirmationCritique = ref(false);
+        const actionDejaRecommencee = ref(false); // pour tracer l'utilisation de recommencer action
+        const energieDementielle = ref(undefined); // undefined, ou 1 à 6
+
+        // TODO computed() + ...mapState([ 'mode', 'perso', 'hiddenPopupJet', 'etatJet' ]),
+        const mode = computed(() => store.state['mode']);
+        const perso = computed(() => store.state['perso']);
+        const hiddenPopupJet = computed(() => store.state['hiddenPopupJet']);
+        const etatJet = computed(() => store.state['etatJet']);
+
+        const valorisationATester = computed(() => {
+            if (etatJet.value.type.toLowerCase() === 'caractéristique') {
+                return +perso.value[etatJet.value.nom];
+            } else if (etatJet.value.type.toLowerCase() === 'compétence') {
+                const comp = perso.value.competences.reduce((found, c) => !found && c.intitule === etatJet.value.nom ? c : found, null);
                 return +comp.valeur;
-            } else if (this.etatJet.type.toLowerCase() === 'compétence démentielle') {
-                const comp = this.perso.competencesDementielles.reduce((found, c) => !found && c.intitule === this.etatJet.nom ? c : found, null);
+            } else if (etatJet.value.type.toLowerCase() === 'compétence démentielle') {
+                const comp = perso.value.competencesDementielles.reduce((found, c) => !found && c.intitule === etatJet.value.nom ? c : found, null);
                 return +comp.valeur;
             } else {
-                console.error("jet pour "+this.etatJet.type+" pas encore implémenté");
+                console.error("jet pour "+etatJet.value.type+" pas encore implémenté");
                 return undefined;
             }
-        },
-        seuilReussite: function() {
-            this.ajustement = +this.ajustement;
-            if (this.energieDementielle) {
-                this.energieDementielle = +this.energieDementielle;
+        });
+
+        const seuilReussite = computed(() => {
+            ajustement.value = +ajustement.value;
+            if (energieDementielle.value) {
+                energieDementielle.value = +energieDementielle.value;
                 // Seuil Energie Démentielle : au maximum on peut atteindre un seuil de réussite de 16
-                return Math.min(Math.max(16, this.valorisationATester + this.ajustement), +this.valorisationATester + this.ajustement + this.energieDementielle);
+                return Math.min(Math.max(16, valorisationATester.value + ajustement.value), +valorisationATester.value + ajustement.value + energieDementielle.value);
             } else {
-                return +this.valorisationATester + this.ajustement;
+                return +valorisationATester.value + ajustement.value;
             }
-        },
-        recommencerActionPossible: function() {
+        });
+
+        const recommencerActionPossible = computed(() => {
             // est-ce que le personnage a au moins 1 pt de crise ?
-            if (this.perso.pointsDeCrise === 0) return false;
+            if (perso.value.pointsDeCrise === 0) return false;
             // est-ce que l'action s'est terminée sur un échec ou échec critique ?
-            const csq = this.consequence;
+            const csq = consequence.value;
             if (csq !== ECHEC && csq !== ECHEC_CRITIQUE) return false;
             // est-ce que l'on n'a pas déjà recommencé l'action ?
-            if (this.actionDejaRecommencee) return false;
+            if (actionDejaRecommencee.value) return false;
 
             // TODO : pas possible sur jet de Chance (CHARISME)
             // TODO : pas possible sur jet de CONSTITUTION
@@ -76,54 +98,55 @@ export const PopupJetComponent = {
 
             // sinon
             return true;
-        },
-        consequence: function() {
-            this.premierJet= +this.premierJet;
-            this.deuxiemeJet= +this.deuxiemeJet;
-            this.critique = false;
-            this.demandeConfirmationCritique = false;
-            if (this.nbJet1 === 0) {
+        });
+
+        const consequence = computed(() => {
+            premierJet.value= +premierJet.value;
+            deuxiemeJet.value= +deuxiemeJet.value;
+            critique.value = false;
+            demandeConfirmationCritique.value = false;
+            if (nbJet1.value === 0) {
                 return "succès ou échec... ?";
-            } else if (this.nbJet1 === 1) {
-                if (this.premierJet <= this.seuilReussite) {
-                    if (this.nbJet2 === 0) {
-                        if (this.premierJet <= 4) {
-                            this.demandeConfirmationCritique = true;
+            } else if (nbJet1.value === 1) {
+                if (premierJet.value <= seuilReussite.value) {
+                    if (nbJet2.value === 0) {
+                        if (premierJet.value <= 4) {
+                            demandeConfirmationCritique.value = true;
                             return SUCCES_CRITIQUE_POSSIBLE;
                         } else {
-                            this.critique = false;
+                            critique.value = false;
                             return SUCCES;
                         }
-                    } else if (this.nbJet2 === 1) {
-                        if (this.premierJet <= 4 && this.deuxiemeJet <= this.seuilReussite) {
-                            this.demandeConfirmationCritique = true;
-                            this.critique = true;
+                    } else if (nbJet2.value === 1) {
+                        if (premierJet.value <= 4 && deuxiemeJet.value <= seuilReussite.value) {
+                            demandeConfirmationCritique.value = true;
+                            critique.value = true;
                             return SUCCES_CRITIQUE;
                         } else {
-                            this.demandeConfirmationCritique = true;
-                            this.critique = false;
+                            demandeConfirmationCritique.value = true;
+                            critique.value = false;
                             return SUCCES;
                         }
                     } else {
                         return TRICHE;
                     }
                 } else {
-                    if (this.nbJet2 === 0) {
-                        if (this.premierJet >= 17) {
-                            this.demandeConfirmationCritique = true;
+                    if (nbJet2.value === 0) {
+                        if (premierJet.value >= 17) {
+                            demandeConfirmationCritique.value = true;
                             return ECHEC_CRITIQUE_POSSIBLE;
                         } else {
-                            this.critique = false;
+                            critique.value = false;
                             return ECHEC;
                         }
-                    } else if (this.nbJet2 === 1) {
-                        if (this.premierJet >= 17 && this.deuxiemeJet > this.seuilReussite) {
-                            this.demandeConfirmationCritique = true;
-                            this.critique = true;
+                    } else if (nbJet2.value === 1) {
+                        if (premierJet.value >= 17 && deuxiemeJet.value > seuilReussite.value) {
+                            demandeConfirmationCritique.value = true;
+                            critique.value = true;
                             return ECHEC_CRITIQUE;
                         } else {
-                            this.demandeConfirmationCritique = true;
-                            this.critique = false;
+                            demandeConfirmationCritique.value = true;
+                            critique.value = false;
                             return ECHEC;
                         }
                     } else {
@@ -133,91 +156,113 @@ export const PopupJetComponent = {
             } else {
                 return TRICHE;
             }            
-        },
-    },
-    data: function() {
-        return {
-            ajustement: 0,
-            critique: false,
-            premierJet: 10,
-            deuxiemeJet: 10,
-            typeAjustement: 'ajustement',
-            nbJet1: 0, // pour compter le nb de d20 simulés (cheater !)
-            nbJet2: 0, // pour compter le nb de d20 simulés (cheater !)
-            demandeConfirmationCritique: false,
-            actionDejaRecommencee: false, // pour tracer l'utilisation de recommencer action
-            energieDementielle: undefined, // undefined, ou 1 à 6
-        };
-    },
-    methods: {
-        masqueTout: function() {
-            this.ajustement = 0;
-            this.critique = false;
-            this.premierJet = 10;
-            this.deuxiemeJet = 10;
-            this.typeAjustement = 'ajustement';
-            this.nbJet1 = 0;
-            this.nbJet2 = 0;
-            this.demandeConfirmationCritique = false;
-            this.energieDementielle = undefined;
-            this.actionDejaRecommencee = false;
+        });
 
-            this.$store.dispatch("masqueTout");
-        },
-        saisitUnD20: function(numero) {
-            this["nbJet"+numero] = this["nbJet"+numero] + 1;
-        },
-        simuleUnD20: function(numero) {
+        // methods
+        const masqueTout = () => {
+            ajustement.value = 0;
+            critique.value = false;
+            premierJet.value = 10;
+            deuxiemeJet.value = 10;
+            typeAjustement.value = 'ajustement';
+            nbJet1.value = 0;
+            nbJet2.value = 0;
+            demandeConfirmationCritique.value = false;
+            energieDementielle.value = undefined;
+            actionDejaRecommencee.value = false;
+
+            store.dispatch("masqueTout");
+        };
+        const saisitUnD20 = (numero) => {
+            if (numero === 1) {
+                nbJet1.value = +nbJet1.value + 1;
+            } else {
+                nbJet2.value = +nbJet2.value + 1;
+            }
+        };
+        const simuleUnD20 = (numero) => {
             const res = tirerUnDe20();
             if (numero == 1) {
-                this.premierJet = res;
-                this.nbJet1 = this.nbJet1 + 1;
+                premierJet.value = res;
+                nbJet1.value = nbJet1.value + 1;
             } else if(numero == 2) {
-                this.deuxiemeJet = res;
-                this.nbJet2 = this.nbJet2 + 1;
+                deuxiemeJet.value = res;
+                nbJet2.value = nbJet2.value + 1;
             } else {
                 return res;
             }
-        },
-        valide: function() {
+        };
+        const valide = () => {
             // journaliser
-            const ligneJournal = `Jet de ${this.etatJet.type} sur ${this.etatJet.nom} avec ${this.typeAjustement}=${this.ajustement} : (${this.premierJet}) ${this.demandeConfirmationCritique ? '('+this.deuxiemeJet+')' : ''} ${this.consequence}.`;
-            this.$store.commit("ajouteLigneJournal", ligneJournal);
-            const csq = this.consequence;
-            // modifier this.perso éventuellement
-            if (this.etatJet.type === 'compétence' 
-                    && this.seuilReussite <= 10 
+            const ligneJournal = `Jet de ${etatJet.value.type} sur ${etatJet.value.nom} avec ${typeAjustement.value}=${ajustement.value} : (${premierJet.value}) ${demandeConfirmationCritique.value ? '('+deuxiemeJet.value+')' : ''} ${consequence.value}.`;
+            store.commit("ajouteLigneJournal", ligneJournal);
+            const csq = consequence.value;
+            // modifier perso.value éventuellement
+            if (etatJet.value.type === 'compétence' 
+                    && seuilReussite.value <= 10 
                     && (csq === SUCCES || csq === SUCCES_CRITIQUE)) {
-                this.$store.commit("marqueCroixExperience", this.etatJet.nom);
+                store.commit("marqueCroixExperience", etatJet.value.nom);
             }
 
             // il faut payer les conséquence si on avait utilisé 1 ou 2 effets démentiels sur un jet échoué.
             if (csq === ECHEC || csq === ECHEC_CRITIQUE) {
-                if (this.energieDementielle && !this.actionDejaRecommencee) {
+                if (energieDementielle.value && !actionDejaRecommencee.value) {
                     // si on a utilisé uniquement 1 effet démentiel et pas les 2
-                    this.$store.dispatch('apresEchecJetAvecEnergieDementielle');
-                } else if (!this.energieDementielle && this.actionDejaRecommencee) {
+                    store.dispatch('apresEchecJetAvecEnergieDementielle');
+                } else if (!energieDementielle.value && actionDejaRecommencee.value) {
                     // si on a utilisé uniquement 1 effet démentiel et pas les 2
-                    this.$store.dispatch('apresEchecJetAvecRecommencerAction');
-                } else if (this.energieDementielle && this.actionDejaRecommencee) {
+                    store.dispatch('apresEchecJetAvecRecommencerAction');
+                } else if (energieDementielle.value && actionDejaRecommencee.value) {
                     // DOUBLE conséquence Effets Démentiels
-                    this.$store.dispatch('apresEchecJetAvecEnergieDementiellePuisRecommencerAction');
+                    store.dispatch('apresEchecJetAvecEnergieDementiellePuisRecommencerAction');
                 }
             } 
 
-            this.masqueTout();
-        },
-        ajouteEnergieDementiellePlus3: function() {
-            this.energieDementielle = +3;
-        },
-        ajouteEnergieDementiellePlus1D6: function() {
-            this.energieDementielle = +tirerUnDe6();
-        },
-        recommenceAction: function() {
-            this.actionDejaRecommencee = true;
-            this.nbJet1 = 0;
-            this.nbJet2 = 0;
-        }
+            masqueTout();
+        };
+        const ajouteEnergieDementiellePlus3 = () => {
+            energieDementielle.value = +3;
+        };
+        const ajouteEnergieDementiellePlus1D6 = () => {
+            energieDementielle.value = +tirerUnDe6();
+        };
+        const recommenceAction = () => {
+            actionDejaRecommencee.value = true;
+            nbJet1.value = 0;
+            nbJet2.value = 0;
+        };
+
+        return {
+            // computed
+            valorisationATester,
+            seuilReussite,
+            recommencerActionPossible,
+            consequence,
+            // computed store state
+            mode,
+            perso,
+            etatJet,
+            hiddenPopupJet,
+            // methods
+            masqueTout,
+            simuleUnD20,
+            saisitUnD20,
+            valide,
+            ajouteEnergieDementiellePlus3,
+            ajouteEnergieDementiellePlus1D6,
+            recommenceAction,
+            // data
+            ajustement,
+            critique,
+            premierJet,
+            deuxiemeJet,
+            typeAjustement,
+            nbJet1,
+            nbJet2,
+            demandeConfirmationCritique,
+            actionDejaRecommencee,
+            energieDementielle,
+        };
     },
     template: `
 <div :class="'popup popup-jet '+(hiddenPopupJet ? 'hidden' : '')">
@@ -325,4 +370,7 @@ export const PopupJetComponent = {
     <button class="annule" @click="masqueTout">Annuler</button>
 </div>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
 };

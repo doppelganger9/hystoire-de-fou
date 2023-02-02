@@ -1,20 +1,37 @@
 //@ts-check
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed, onMounted } from "vue";
+import { allStyles } from "../styles/all.mjs";
 
 export const MenuLancementComponent = {
-  computed: {
-    ...mapState(['mode']),
-  },
-  methods: {
-    sauvegardePerso: function() {
-      this.$store.commit('sauvegardePerso');
-    },
-    chargePerso: function() {
-      this.$store.dispatch('chargePersonnage');
-    },
-    creeNouveauPerso() {
-      this.$store.commit('passerEnMode', 'création');
-    },
+  setup() {
+    const store = useStore();
+
+    const mode = computed(() => store.state['mode']);
+
+    const sauvegardePerso = () => {
+      store.commit('sauvegardePerso');
+    };
+    const chargePerso = () => {
+      store.dispatch('chargePersonnage');
+    };
+    const creeNouveauPerso = () => {
+      store.commit('passerEnMode', 'création');
+    };
+    onMounted(() => {
+      console.log('MenuLancementComponent mounted');
+    });
+
+    return {
+        // computed
+        // computed state
+        mode,
+        // methods
+        sauvegardePerso,
+        chargePerso,
+        creeNouveauPerso,
+        // data
+    };
   },
   template: `
 <div class="menu">
@@ -28,5 +45,8 @@ export const MenuLancementComponent = {
     Créer un nouveau personnage
   </button>
 </div>
-`
+`,
+  styles: [
+    allStyles // TODO n'importer que les styles de ce composant ?
+  ],
 };

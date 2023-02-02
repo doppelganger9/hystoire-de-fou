@@ -89,6 +89,8 @@ L'entrée en état de Choc dépendant du Niveau d'Accomplissement et de la VOLON
 - Dans VS Code on utilise `//@ts-check` pour valider "un peu" les typages implicites du code JavaScript. Oui, ça ne remplace pas du typage TypeScript, mais ça nous économise une étape de transpilation. De la même manière, on vise uniquement les navigateurs capables de comprendre notre code JS, car il n'y a pas de prothèses d'émulation dans le code. Idem, si on voulait augmenter la compatibilité avec les navigateurs, il faudrait revoir cela.
 - il y a très peu d'outillage, au final, autour de ce projet.
 
+- après coup, j'ai trouvé ce repo : https://github.com/zigomir/buildless-vue qui semble m'avoir ouvert la voie sans que je m'en rende compte ! Merci !
+
 ### Le Store VueX
 
 - dispatch retourne une promesse.

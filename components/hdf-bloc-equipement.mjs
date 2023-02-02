@@ -1,24 +1,37 @@
 // @ts-check
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed, ref } from "vue";
+import { allStyles } from "../styles/all.mjs";
 
 export const BlocEquipementComponent = {
-    data: function() {
-        return {
-            nouvelEquipement: '',
+    setup() {
+        const store = useStore();
+
+        const perso = computed(() => store.state['perso']);
+
+        const nouvelEquipement = ref('');
+
+        const genereEquipementSaintFrusquin = () => {
+            store.commit('genereEquipementSaintFrusquin');
         };
-    },
-    computed: mapState([ 'perso' ]),
-    methods: {
-        genereEquipementSaintFrusquin: function() {
-            this.$store.commit('genereEquipementSaintFrusquin');
-        },
-        supprimeLigneEquipement: function(indexEquipement) {
-            this.$store.commit('supprimeLigneEquipement', indexEquipement);
-        },
-        ajouteLigneEquipement: function() {
-            this.$store.commit('ajouteLigneEquipement', this.nouvelEquipement);
-            this.nouvelEquipement = '';
-        },
+        const supprimeLigneEquipement = (indexEquipement) => {
+            store.commit('supprimeLigneEquipement', indexEquipement);
+        };
+        const ajouteLigneEquipement = () => {
+            store.commit('ajouteLigneEquipement', nouvelEquipement.value);
+            nouvelEquipement.value = '';
+        };
+
+        return {
+            // computed state
+            perso,
+            // methods
+            genereEquipementSaintFrusquin,
+            supprimeLigneEquipement,
+            ajouteLigneEquipement,
+            // data
+            nouvelEquipement,
+        };
     },
     template: `
 <hdf-bloc-fiche title="Equipement" class="equipements">
@@ -33,4 +46,8 @@ export const BlocEquipementComponent = {
     <input v-model="nouvelEquipement" type="text"><button @click="ajouteLigneEquipement">Ajouter</button>
 </hdf-bloc-fiche>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
+
 };

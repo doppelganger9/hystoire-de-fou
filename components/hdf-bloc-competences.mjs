@@ -1,41 +1,58 @@
 // @ts-check
+import { useStore } from "vuex";
+import { computed, ref } from "vue";
 import { Competence, initNouvelleCompetence } from "../metier/competences.mjs";
-import { mapState } from "vuex";
+import { allStyles } from "../styles/all.mjs";
 
 export const BlocCompetencesComponent = {
-    data: function() {
-        return {
-            nouvelleCompetence: new Competence(),
+    setup() {
+        const store = useStore();
+
+        const mode = computed(() => store.state['mode']);
+        const perso = computed(() => store.state['perso']);
+
+        const nouvelleCompetence = ref(new Competence());
+
+        const choisitCompetenceProfessionnelle = () => {
+            nouvelleCompetence.value = initNouvelleCompetence();
+            nouvelleCompetence.value.professionnelle = true;
+            nouvelleCompetence.value.revelee = true;
+
+            store.dispatch("affichePopupCompetence", nouvelleCompetence.value);
         };
-    },
-    computed: {
-        ...mapState(['mode', 'perso']),
-    },
-    methods: {
-        choisitCompetenceProfessionnelle: function() {
-            this.nouvelleCompetence = initNouvelleCompetence();
-            this.nouvelleCompetence.professionnelle = true;
-            this.nouvelleCompetence.revelee = true;
 
-            this.$store.dispatch("affichePopupCompetence", this.nouvelleCompetence);
-        },
-        reveleCompetence: function() {
-            this.nouvelleCompetence = initNouvelleCompetence();
-            this.nouvelleCompetence.revelee = true;
+        const reveleCompetence = () => {
+            nouvelleCompetence.value = initNouvelleCompetence();
+            nouvelleCompetence.value.revelee = true;
 
-            this.$store.dispatch("affichePopupCompetence", this.nouvelleCompetence);
-        },
-        supprimeLigneCompetence: function(indexCompetence) {
-            this.$store.commit('supprimeLigneCompetence', indexCompetence);
-        },
-        clickCompetence: function(competence) {
-            if (this.mode === 'jeu') {
-                this.$store.dispatch("affichePopupJet", { 
+            store.dispatch("affichePopupCompetence", nouvelleCompetence.value);
+        };
+
+        const supprimeLigneCompetence = (indexCompetence) => {
+            store.commit('supprimeLigneCompetence', indexCompetence);
+        };
+
+        const clickCompetence = (competence) => {
+            if (mode.value === 'jeu') {
+                store.dispatch("affichePopupJet", { 
                     nom: competence.intitule, 
                     type: 'compétence'
                 });
             }
-        },
+        };
+        
+        return {
+            // computed state
+            perso,
+            mode,
+            // methods
+            choisitCompetenceProfessionnelle,
+            reveleCompetence,
+            supprimeLigneCompetence,
+            clickCompetence,
+            // data
+            nouvelleCompetence,
+        };
     },
     template: `
 <hdf-bloc-fiche title="Compétences" class="competences">
@@ -76,4 +93,8 @@ export const BlocCompetencesComponent = {
     <button v-if="mode==='jeu'" @click="reveleCompetence">Révéler une Compétence</button>
 </hdf-bloc-fiche>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
+
 };

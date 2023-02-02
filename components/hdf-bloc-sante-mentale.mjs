@@ -1,6 +1,8 @@
 //@ts-check
-import { mapState } from "vuex";
+import { useStore } from "vuex";
+import { computed } from "vue";
 import { infosMotDeDemence } from "../metier/fiche-personnage.mjs";
+import { allStyles } from "../styles/all.mjs";
 
 /**
  * TODO:
@@ -9,42 +11,62 @@ import { infosMotDeDemence } from "../metier/fiche-personnage.mjs";
  */
 
 export const BlocSanteMentaleComponent = {
-    computed: {
-        ...mapState(['mode', 'perso']),
-        motDeDemence: {
-            get () { return this.$store.state.perso.motDeDemence },
-            set (valeur) { this.$store.commit('modifieChampsTextePerso', {champs: 'motDeDemence', valeur}) },
-        },
-        pointsDeCrise: {
-            get () { return this.$store.state.perso.pointsDeCrise },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'pointsDeCrise', valeur}) },
-        },
-        chocsParano: {
-            get () { return this.$store.state.perso.chocsParano },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'chocsParano', valeur}) },
-        },
-        chocsSchizo: {
-            get () { return this.$store.state.perso.chocsSchizo },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'chocsSchizo', valeur}) },
-        },
-        chocsProfonds: {
-            get () { return this.$store.state.perso.chocsProfonds },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'chocsProfonds', valeur}) },
-        },
-        totalAccomplissement: {
-            get () { return this.$store.state.perso.totalAccomplissement },
-            set (valeur) { this.$store.commit('modifieChampsNombrePerso', {champs: 'totalAccomplissement', valeur}) },
-        },
-    },
-    methods: {
-        afficheInfos: function() {
-            this.$store.dispatch('afficheInfos', { titre: 'Mot de Démence', contenuHtml: infosMotDeDemence() });
-        },
-        clickedMotDeDemence: function() {
-            if (this.mode === 'jeu') {
-                this.$store.dispatch('affichePopupEffetsDementiels');
+    setup() {
+        const store = useStore();
+
+        const mode = computed(() => store.state['mode']);
+        const perso = computed(() => store.state['perso']);
+
+        const motDeDemence = computed({
+            get: () => { return store.state.perso.motDeDemence },
+            set: (valeur) => { store.commit('modifieChampsTextePerso', {champs: 'motDeDemence', valeur}) },
+        });
+        const pointsDeCrise = computed({
+            get: () => { return store.state.perso.pointsDeCrise },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'pointsDeCrise', valeur}) },
+        });
+        const chocsParano = computed({
+            get: () => { return store.state.perso.chocsParano },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'chocsParano', valeur}) },
+        });
+        const chocsSchizo = computed({
+            get: () => { return store.state.perso.chocsSchizo },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'chocsSchizo', valeur}) },
+        });
+        const chocsProfonds = computed({
+            get: () => { return store.state.perso.chocsProfonds },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'chocsProfonds', valeur}) },
+        });
+        const totalAccomplissement = computed({
+            get: () => { return store.state.perso.totalAccomplissement },
+            set: (valeur) => { store.commit('modifieChampsNombrePerso', {champs: 'totalAccomplissement', valeur}) },
+        });
+
+        const afficheInfos = () => {
+            store.dispatch('afficheInfos', { titre: 'Mot de Démence', contenuHtml: infosMotDeDemence() });
+        };
+        const clickedMotDeDemence = () => {
+            if (mode.value === 'jeu') {
+                store.dispatch('affichePopupEffetsDementiels');
             }
-        },
+        };
+
+        return {
+            // computed
+            motDeDemence,
+            pointsDeCrise,
+            chocsParano,
+            chocsSchizo,
+            chocsProfonds,
+            totalAccomplissement,
+            // computed state
+            mode,
+            perso,
+            // methods
+            afficheInfos,
+            clickedMotDeDemence,
+            // date
+        };
     },
     template: `
 <hdf-bloc-fiche title="Santé Mentale" class="santementale">
@@ -93,4 +115,8 @@ export const BlocSanteMentaleComponent = {
     </div>
 </hdf-bloc-fiche>
 `,
+    styles: [
+        allStyles // TODO n'importer que les styles de ce composant ?
+    ],
+
 };
