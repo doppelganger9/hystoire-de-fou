@@ -117,6 +117,6 @@ Si besoin de ne pas exposer certains fichiers, les ajouter à la configuration J
 
 - modifier, etc. `main`
 - `git checkout gh-pages`
-- `git rebase master --autostash`
+- `git rebase main --autostash`
 - `git push --force`
 - attendre un peu car Github Pages ne se met pas immédiatement à jour... patience ! aller voir https://doppelganger9.github.io/hystoire-de-fou
